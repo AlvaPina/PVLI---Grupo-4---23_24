@@ -1,5 +1,12 @@
 export class LoadScene extends Phaser.Scene 
 {
+    constructor() {
+        super({ key: 'LoadScene' });
+        this.texts = ["Cargando", "Cargando.", "Cargando..", "Cargando..."];
+        this.contador = 0;
+        this.textNumber = 0;
+        this.loadingText = null;
+    }
 
     preload() {
         const image = this.load.image("background", "img/Logo.png");
@@ -10,15 +17,21 @@ export class LoadScene extends Phaser.Scene
         image.setPosition(this.game.config.width/ 2, this.game.config.height/ 2);
         image.setScale(0.785,0.785);
         this.background = image;
-
-        const loadingText = this.add.text(this.game.config.width / 2, this.game.config.height / 2, "Cargando...", {
+        this.loadingText = this.add.text(this.game.config.width / 2, this.game.config.height / 2, "Cargando...", {
             fontFamily: "Arial",
             fontSize: "26px",
             color: "#ffffff"
         });
-        loadingText.setPosition(650,550)
+        this.loadingText.setPosition(650,550)
+        setInterval(() => {
+            this.updateText();
+        }, 500);
     }
-    update() {
-        //aqui va el contador para el cargado...
+    updateText() {
+        this.loadingText.setText(this.texts[this.textNumber]);
+        this.textNumber++;
+        if (this.textNumber >= this.texts.length) {
+            this.textNumber = 0;
+        }
     }
 }  
