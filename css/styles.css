@@ -1,3 +1,18 @@
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin: 0 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000000;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -10,4 +25,12 @@ h1 {
 
 p {
     color: #2ecc71;
+}
+
+p1 {
+    color: #000000;
+}
+
+.textBlackLittle {
+    color: #000000;
 }
