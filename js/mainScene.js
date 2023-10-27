@@ -1,4 +1,3 @@
-import Proyectile from './Objetos/PocionLanzable.js';
 import Player from './Characters/player.js';
 
 export class MainScene extends Phaser.Scene {
@@ -6,15 +5,14 @@ export class MainScene extends Phaser.Scene {
         super({ key: 'MainScene' });
         this.player = null;
         this.cursors = null;
-        this.Logic = null;
     }
 
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
-        this.load.image('player', 'Assets/WebPage/Img/player.png'); 
+        //this.load.image('player', 'Assets/WebPage/Img/player.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
-        this.load.spritesheet('logic', 'Assets/Characters/Logic_Idle.png', {frameWidth: 192, frameHeight: 100});
+        this.load.spritesheet('player', 'Assets/Characters/Logic_Idle.png', {frameWidth: 96, frameHeight: 100});
     }
 
     create() {
@@ -29,30 +27,35 @@ export class MainScene extends Phaser.Scene {
 
         //crear player
         this.player = new Player(this, 100, 250);
-
+        //Empieza animacion
+        this.player.startAnimation();
+        //Seteamos escala
+        this.player.setScale(3,3);
+        // Dentro de tu escena de Phaser
+        //this.debug.graphic(this.player, { fillStyle: { color: 0xff0000 } });
         // Configurar entradas del teclado
-        this.cursors = this.input.keyboard.addKeys({
+        /*this.cursors = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             right: Phaser.Input.Keyboard.KeyCodes.D,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-        });
+        });*/
 
         // Eventos de raton
-        this.input.on('pointerdown', (pointer) => {
+        /*this.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
                 this.ataqueIzquierdo();
             } else if (pointer.rightButtonDown()) {
                 this.ataqueDerecho();
             }
-        });
+        });*/
 
     }
 
     update() {
         // Input del Jugador
-        if (this.cursors.left.isDown) {
+        /*if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160);
         } else if (this.cursors.right.isDown) {
             this.player.setVelocityX(160);
@@ -60,13 +63,13 @@ export class MainScene extends Phaser.Scene {
             this.player.setVelocityX(0);
         }
 
-        if ((this.cursors.up.isDown || this.cursors.space.isDown) /*&& this.player.body.touching.down*/) {
+        if ((this.cursors.up.isDown || this.cursors.space.isDown) /*&& this.player.body.touching.down) {
             this.player.setVelocityY(-330);
             console.log("Salto");
-        }
+        }*/
     }
 
-    ataqueIzquierdo() {
+    /*ataqueIzquierdo() {
         // L�gica del ataque izquierdo
         console.log("Ataque izquierdo activado");
     }
@@ -74,6 +77,6 @@ export class MainScene extends Phaser.Scene {
     ataqueDerecho() {
         // L�gica del ataque derecho
         console.log("Ataque derecho activado");
-        new Proyectile(this, this.player.x, this.player.y, 'potion');
-    }
+        d
+    }*/
 }
