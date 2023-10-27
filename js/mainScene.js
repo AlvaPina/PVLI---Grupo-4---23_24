@@ -1,4 +1,5 @@
-import Logic from './Characters/LogicChara.js';
+import Proyectile from './Objetos/PocionLanzable.js';
+import Player from './Characters/player.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -12,6 +13,7 @@ export class MainScene extends Phaser.Scene {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('player', 'Assets/WebPage/Img/player.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
+        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
         this.load.spritesheet('logic', 'Assets/Characters/Logic_Idle.png', {frameWidth: 192, frameHeight: 100});
     }
 
@@ -21,21 +23,12 @@ export class MainScene extends Phaser.Scene {
         // Configurar la gravedad
         this.physics.world.gravity.y = 300;
 
-        // Crear el jugador
-        this.player = this.physics.add.sprite(100, 250,'player');
-        this.player.setBounce(0.2);
-        this.player.setCollideWorldBounds(true);
-
-        //Crear a Logic
-        new Logic(this,100,250,'logic',24);
-
         // Crear el suelo
         let ground = this.physics.add.staticGroup();
         ground.create(400, 568, 'ground').setScale(2).refreshBody(); // Asumiendo que tienes una imagen para el suelo
 
-        // A�adir colisi�n entre el jugador y el suelo
-        this.physics.add.collider(this.player, ground);
-        //this.physics.add.collider(this.logic,ground);
+        //crear player
+        this.player = new Player(this, 100, 250);
 
         // Configurar entradas del teclado
         this.cursors = this.input.keyboard.addKeys({
@@ -46,7 +39,7 @@ export class MainScene extends Phaser.Scene {
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
-        // Eventos de rat�n
+        // Eventos de raton
         this.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
                 this.ataqueIzquierdo();
@@ -58,7 +51,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     update() {
-        // Movimiento del jugador
+        // Input del Jugador
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160);
         } else if (this.cursors.right.isDown) {
@@ -81,5 +74,6 @@ export class MainScene extends Phaser.Scene {
     ataqueDerecho() {
         // L�gica del ataque derecho
         console.log("Ataque derecho activado");
+        new Proyectile(this, this.player.x, this.player.y, 'potion');
     }
 }
