@@ -1,18 +1,22 @@
+import Logic from './Characters/LogicChara.js';
+
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         this.player = null;
         this.cursors = null;
+        this.Logic = null;
     }
 
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('player', 'Assets/WebPage/Img/player.png'); 
-        this.load.image('ground', 'Assets/WebPage/Img/ground.png'); 
+        this.load.image('ground', 'Assets/WebPage/Img/ground.png');
+        this.load.spritesheet('logic', 'Assets/Characters/Logic_Idle.png', {frameWidth: 192, frameHeight: 100});
     }
 
     create() {
-        this.add.image(400, 300, 'background'); // Ajusta las coordenadas según necesites
+        this.add.image(400, 300, 'background'); // Ajusta las coordenadas segï¿½n necesites
 
         // Configurar la gravedad
         this.physics.world.gravity.y = 300;
@@ -22,12 +26,16 @@ export class MainScene extends Phaser.Scene {
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
+        //Crear a Logic
+        new Logic(this,100,250,'logic',24);
+
         // Crear el suelo
         let ground = this.physics.add.staticGroup();
         ground.create(400, 568, 'ground').setScale(2).refreshBody(); // Asumiendo que tienes una imagen para el suelo
 
-        // Añadir colisión entre el jugador y el suelo
+        // Aï¿½adir colisiï¿½n entre el jugador y el suelo
         this.physics.add.collider(this.player, ground);
+        //this.physics.add.collider(this.logic,ground);
 
         // Configurar entradas del teclado
         this.cursors = this.input.keyboard.addKeys({
@@ -38,7 +46,7 @@ export class MainScene extends Phaser.Scene {
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
-        // Eventos de ratón
+        // Eventos de ratï¿½n
         this.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
                 this.ataqueIzquierdo();
@@ -66,12 +74,12 @@ export class MainScene extends Phaser.Scene {
     }
 
     ataqueIzquierdo() {
-        // Lógica del ataque izquierdo
+        // Lï¿½gica del ataque izquierdo
         console.log("Ataque izquierdo activado");
     }
 
     ataqueDerecho() {
-        // Lógica del ataque derecho
+        // Lï¿½gica del ataque derecho
         console.log("Ataque derecho activado");
     }
 }
