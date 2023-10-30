@@ -29,36 +29,71 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
     }
     startAnimation() {
+        // Animación de Idle
         this.anims.create({
-            key: 'player_idle',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
             frameRate: 3,
             repeat: -1
         });
-
-        this.anims.load('player_idle');
-        this.play('player_idle');
+        // Animación de Salto
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        // Animación de Movimiento
+        this.anims.create({
+            key: 'move',
+            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.load('idle');
+        this.play('idle');
     }
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
         this.playerInput();
+
+        // Gestión de animaciones
+        if (!this.body.touching.down) {
+            this.play('jump', true);
+            console.log("ASalto");
+        } 
+        else if (this.body.velocity.x !== 0) {
+            this.play('move', true);
+            console.log("AMovimiento");
+        } 
+        else {
+            this.play('idle', true);
+            console.log("Aidle");
+        }
     }
 
-    playerInput(){
-        // Input del Jugador
-        if (this.cursors.left.isDown) {
-            this.setVelocityX(-160);
-        } else if (this.cursors.right.isDown) {
-            this.setVelocityX(160);
-        } else {
-            this.setVelocityX(0);
-        }
 
-        if ((this.cursors.space.isDown) /*&& this.body.touching.down*/) {
+    playerInput() {
+        if ((this.cursors.space.isDown && this.cursors.up.isDown) /*&& this.body.touching.down*/) {
             this.setVelocityY(-330);
             console.log("Salto");
         } 
+        // Input del Jugador
+        else if (this.cursors.left.isDown) {
+            this.setVelocityX(-160);
+            this.play('move', true);
+            console.log("AMovimiento");
+        }
+        else if (this.cursors.right.isDown) {
+            this.setVelocityX(160);
+            this.play('move', true);
+            console.log("AMovimiento");
+        }
+
+        else {
+            this.setVelocityX(0);
+        }
     }
 
     ataqueIzquierdo() {

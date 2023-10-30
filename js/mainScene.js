@@ -9,10 +9,11 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
-        //this.load.image('player', 'Assets/WebPage/Img/player.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
-        this.load.spritesheet('player', 'Assets/Characters/Logic_Idle.png', {frameWidth: 96, frameHeight: 100});
+        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 96, frameHeight: 100 });
+        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 96, frameHeight: 100 });
+        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Move.png', { frameWidth: 96, frameHeight: 100 });
     }
 
     create() {
@@ -33,24 +34,6 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(3,3);
         // Dentro de tu escena de Phaser
         //this.debug.graphic(this.player, { fillStyle: { color: 0xff0000 } });
-        // Configurar entradas del teclado
-        /*this.cursors = this.input.keyboard.addKeys({
-            up: Phaser.Input.Keyboard.KeyCodes.W,
-            left: Phaser.Input.Keyboard.KeyCodes.A,
-            down: Phaser.Input.Keyboard.KeyCodes.S,
-            right: Phaser.Input.Keyboard.KeyCodes.D,
-            space: Phaser.Input.Keyboard.KeyCodes.SPACE
-        });*/
-
-        // Eventos de raton
-        /*this.input.on('pointerdown', (pointer) => {
-            if (pointer.leftButtonDown()) {
-                this.ataqueIzquierdo();
-            } else if (pointer.rightButtonDown()) {
-                this.ataqueDerecho();
-            }
-        });*/
-
     }
 
     update() {
