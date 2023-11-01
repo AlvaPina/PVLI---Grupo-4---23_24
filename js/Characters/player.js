@@ -1,13 +1,23 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'player');
+    constructor(scene, x, y, speed) {
+        super(scene, x, y,speed, 'player');
+        //Instanciamos personaje en escena
         scene.add.existing(this);
+        //Añadimos físicas
         scene.physics.add.existing(this);
+         // Asignamos el spriteSheet al objeto
+        this.setTexture('logic_idle');
+
+        // Obtener el tamaño del frame para hacer collider
+        var width_frame = this.frame.width;
+        var height_frame = this.frame.height;
+
+        // Ajustar el collider
+        this.body.setSize(width_frame, height_frame);
 
         // Configuración de la física del jugador
-        //this.setBounce(0.2);
         this.setCollideWorldBounds(true);
 
 		// Configurar entradas del teclado
@@ -19,21 +29,23 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
-         // Eventos de raton
-         scene.input.on('pointerdown', (pointer) => {
+        this.isAttack = false;
+        // Eventos de raton
+        this.scene.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
-                this.ataqueIzquierdo();
-            } else if (pointer.rightButtonDown()) {
-                this.ataqueDerecho();
+                this.isAttack = true;
+                this.attack();
+                this.isAttack = false;
             }
         });
+        
     }
     startAnimation() {
         // Animación de Idle
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
-            frameRate: 3,
+            frameRate: 5,
             repeat: -1
         });
         // Animación de Salto
@@ -46,62 +58,62 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Animación de Movimiento
         this.anims.create({
             key: 'move',
-            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 3 }),
+            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 7 }),
             frameRate: 10,
             repeat: -1
         });
+        //Animacion de ataque
+        this.anims.create({
+            key: 'attack',
+            frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        
         this.anims.load('idle');
         this.play('idle');
     }
-
+   
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
+        //detectamos input
         this.playerInput();
-
-        // Gestión de animaciones
-        if (!this.body.touching.down) {
-            this.play('jump', true);
-            console.log("ASalto");
-        } 
-        else if (this.body.velocity.x !== 0) {
-            this.play('move', true);
-            console.log("AMovimiento");
-        } 
-        else {
-            this.play('idle', true);
-            console.log("Aidle");
-        }
     }
 
 
     playerInput() {
-        if ((this.cursors.space.isDown && this.cursors.up.isDown) /*&& this.body.touching.down*/) {
-            this.setVelocityY(-330);
+        //Input para salto (Comprobamos si toca el suelo o no)
+        if (this.cursors.space.isDown && this.body.touching.down) {
+            this.setVelocityY(300 * -1);
             console.log("Salto");
         } 
         // Input del Jugador
-        else if (this.cursors.left.isDown) {
-            this.setVelocityX(-160);
+        //Izquierda
+        if (this.cursors.left.isDown && !this.isAttack) { 
+            this.setVelocityX(160 * -1);
+			this.setFlip(true, false);
             this.play('move', true);
-            console.log("AMovimiento");
+            console.log("Izquierda");
         }
-        else if (this.cursors.right.isDown) {
-            this.setVelocityX(160);
+        //Derecha
+        else if (this.cursors.right.isDown && !this.isAttack) {
+            this.setVelocityX(160 * 1);
+            this.setFlip(false,false);
             this.play('move', true);
-            console.log("AMovimiento");
+            console.log("Derecha");
         }
-
+        else if(this.isAttack){
+            this.play('attack', true);
+        }
+        //Si no hay input, idle
         else {
             this.setVelocityX(0);
+            this.play('idle', true);
         }
     }
-
-    ataqueIzquierdo() {
-        console.log("Ataque izquierdo activado");
-    }
-
-    ataqueDerecho() {
-        console.log("Ataque derecho activado");
+    attack() {
         new Proyectile(this.scene, this.x, this.y, 'potion');
+        console.log("Ataque activado");
     }
+    
 }

@@ -11,9 +11,10 @@ export class MainScene extends Phaser.Scene {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
-        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 96, frameHeight: 100 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 96, frameHeight: 100 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Move.png', { frameWidth: 96, frameHeight: 100 });
+        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        //this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 96, frameHeight: 100 });
+        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });
     }
 
     create() {
@@ -22,44 +23,22 @@ export class MainScene extends Phaser.Scene {
         // Configurar la gravedad
         this.physics.world.gravity.y = 300;
 
-        // Crear el suelo
+        //Creamos el suelo
         let ground = this.physics.add.staticGroup();
-        ground.create(400, 568, 'ground').setScale(2).refreshBody(); // Asumiendo que tienes una imagen para el suelo
+        //refreshBody() -> Para detectar colisiones con el player
+        ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250);
+        this.player = new Player(this, 100, 250, 160);
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
-        this.player.setScale(3,3);
-        // Dentro de tu escena de Phaser
-        //this.debug.graphic(this.player, { fillStyle: { color: 0xff0000 } });
+        this.player.setScale(0.5, 0.5);
+        //Añadimos las colisiones entre el player y el suelo
+        this.physics.add.collider(this.player,ground);
     }
 
     update() {
-        // Input del Jugador
-        /*if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-160);
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(160);
-        } else {
-            this.player.setVelocityX(0);
-        }
-
-        if ((this.cursors.up.isDown || this.cursors.space.isDown) /*&& this.player.body.touching.down) {
-            this.player.setVelocityY(-330);
-            console.log("Salto");
-        }*/
+    
     }
-
-    /*ataqueIzquierdo() {
-        // L�gica del ataque izquierdo
-        console.log("Ataque izquierdo activado");
-    }
-
-    ataqueDerecho() {
-        // L�gica del ataque derecho
-        console.log("Ataque derecho activado");
-        d
-    }*/
 }
