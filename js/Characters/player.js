@@ -86,7 +86,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     playerInput() {
         //Input para salto (Comprobamos si toca el suelo o no)
-        if (this.cursors.space.isDown && this.body.touching.down) {
+        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down) {
             this.setVelocityY(300 * -1);
             this.play('jump',true);
             console.log("Salto");
@@ -114,11 +114,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.play('idle', true);
         }
     }
+    //attack() {
+    //    //if(this.sprite.flipX) new Proyectile(this.scene, this.x, this.y, 'potion', -1);
+    //    //else new Proyectile(this.scene, this.x, this.y, 'potion', 1);
+    //    new Proyectile(this.scene, this.x, this.y, 'potion', 1);
+    //    console.log("Ataque activado");
+    //    this.isAttack=false;
+    //}
     attack() {
-        //if(this.sprite.flipX) new Proyectile(this.scene, this.x, this.y, 'potion', -1);
-        //else new Proyectile(this.scene, this.x, this.y, 'potion', 1);
-        new Proyectile(this.scene, this.x, this.y, 'potion', 1);
+        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
         console.log("Ataque activado");
-        this.isAttack=false;
+        this.isAttack = false;
     }
+
 }
