@@ -2,24 +2,24 @@ import Proyectile from '../Objetos/PocionLanzable.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed) {
-        super(scene, x, y,speed, 'player');
+        super(scene, x, y, speed , 'player');
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
         scene.physics.add.existing(this);
-         // Asignamos el spriteSheet al objeto
         this.setTexture('logic_idle');
 
         // Obtener el tamaño del frame para hacer collider
-        var width_frame = this.frame.width;
-        var height_frame = this.frame.height;
+        //var width_frame = this.frame.width;
+        //var height_frame = this.frame.height;
 
         // Ajustar el collider
-        this.body.setSize(width_frame, height_frame);
+        this.body.setSize(this.frame.width, this.frame.height);
 
         // Configuración de la física del jugador
         this.setCollideWorldBounds(true);
 
+        this.isAttack=false;
 		// Configurar entradas del teclado
 		this.cursors = this.scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -28,14 +28,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             right: Phaser.Input.Keyboard.KeyCodes.D,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
-
+        //determina si esta atacando o no
         this.isAttack = false;
+        //determina direccion
+        this.dir = 1;
         // Eventos de raton
         this.scene.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
                 this.isAttack = true;
                 this.attack();
-                this.isAttack = false;
             }
         });
         
@@ -51,7 +52,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Animación de Salto
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 3 }),
+            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
             frameRate: 10,
             repeat: 0
         });
@@ -78,6 +79,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);
         //detectamos input
         this.playerInput();
+        if(this.isAttack === true) thiss.play('attack');
+        if(this.body.touching.down === false) this.play('jump', true);
     }
 
 
@@ -85,25 +88,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Input para salto (Comprobamos si toca el suelo o no)
         if (this.cursors.space.isDown && this.body.touching.down) {
             this.setVelocityY(300 * -1);
+            this.play('jump',true);
             console.log("Salto");
         } 
         // Input del Jugador
         //Izquierda
-        if (this.cursors.left.isDown && !this.isAttack) { 
-            this.setVelocityX(160 * -1);
+        if (this.cursors.left.isDown && !this.isAttack) {
+            this.dir = -1; 
+            this.setVelocityX(160 * this.dir);
 			this.setFlip(true, false);
             this.play('move', true);
             console.log("Izquierda");
         }
         //Derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
-            this.setVelocityX(160 * 1);
+            this.dir = 1;
+            this.setVelocityX(160 * this.dir);
             this.setFlip(false,false);
             this.play('move', true);
             console.log("Derecha");
-        }
-        else if(this.isAttack){
-            this.play('attack', true);
         }
         //Si no hay input, idle
         else {
@@ -112,8 +115,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
     attack() {
-        new Proyectile(this.scene, this.x, this.y, 'potion');
+        //if(this.sprite.flipX) new Proyectile(this.scene, this.x, this.y, 'potion', -1);
+        //else new Proyectile(this.scene, this.x, this.y, 'potion', 1);
+        new Proyectile(this.scene, this.x, this.y, 'potion', 1);
         console.log("Ataque activado");
+        this.isAttack=false;
     }
-    
 }
