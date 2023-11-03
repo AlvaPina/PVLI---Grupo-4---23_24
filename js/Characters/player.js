@@ -122,9 +122,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //    this.isAttack=false;
     //}
     attack() {
-        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
+        // Obtener el vector de velocidad actual del jugador
+        let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
+
+        // Normalizar el vector si el jugador está quieto (para que el proyectil no se quede estático)
+        if (velocityVector.length() === 0) {
+            velocityVector = new Phaser.Math.Vector2(this.dir, 0);
+        }
+
+        new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
         console.log("Ataque activado");
         this.isAttack = false;
     }
+
 
 }
