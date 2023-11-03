@@ -13,7 +13,7 @@ export class MainScene extends Phaser.Scene {
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        //this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 96, frameHeight: 100 });
+        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });
     }
