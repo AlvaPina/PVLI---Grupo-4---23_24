@@ -4,8 +4,8 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.speed = 15;
-        this.setScale(0.1, 0.1);
+        this.speed = 10;
+        this.setScale(0.05, 0.05);
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
     }

@@ -4,8 +4,8 @@ import { MainScene } from "./mainScene.js";
 const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',
-    width: 800,
-    height: 600,
+    width: 960,
+    height: 540,
     scene: [LoadScene, MainScene], // Añade aquí la nueva escena
     physics: {
         default: 'arcade',
