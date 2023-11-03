@@ -9,7 +9,7 @@ export class LoadScene extends Phaser.Scene
     }
 
     preload() {
-        const image = this.load.image("backgroundINI", "Assets/WebPage/Img/Logo.png");
+        const image = this.load.image("backgroundINI", "Assets/WebPage/Img/LoadingScreen.png");
     }
     create() {
         // Agregar imagen de fondo
@@ -21,10 +21,10 @@ export class LoadScene extends Phaser.Scene
         // Configurar texto de carga
         this.loadingText = this.add.text(this.game.config.width / 2, this.game.config.height / 2, "Cargando...", {
             fontFamily: "Arial",
-            fontSize: "26px",
+            fontSize: "30px",
             color: "#ffffff"
         });
-        this.loadingText.setPosition(650, 550);
+        this.loadingText.setPosition(780, 480);
 
         // Evento peri�dico para actualizar texto
         this.time.addEvent({
