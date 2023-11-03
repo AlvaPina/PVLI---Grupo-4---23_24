@@ -43,12 +43,6 @@ export class MainScene extends Phaser.Scene {
         ground.create(50, 390, 'ground').setScale(0.05, 1).refreshBody();
         ground.create(160, 350, 'ground').setScale(0.01, 1).refreshBody();
         ground.create(380, 340, 'ground').setScale(0.01, 0.2).refreshBody();
-        
-        // Crea el suelo con las coordenadas y la escala
-        let suelo = ground.create(200, 390, 'ground').setScale(0.05, 1);
-
-        // Configura el cuerpo de físicas del suelo
-        suelo.body.setSize(width, height).setOffset(offsetX, offsetY).setAngle(angle);
 
         //crear player
         this.player = new Player(this, 100, 250, 160);
