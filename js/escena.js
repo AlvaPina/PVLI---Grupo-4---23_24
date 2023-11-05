@@ -22,6 +22,9 @@ export class LoadScene extends Phaser.Scene
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
         // ... cargar otros spritesheets ...
+        //// ... Cargar assets de enemigos
+        //this.load.spritesheet('enemyType1', 'assets/enemy1.png', { frameWidth: 64, frameHeight: 64 });
+        //this.load.spritesheet('enemyType2', 'assets/enemy2.png', { frameWidth: 64, frameHeight: 64 });
     }
     create() {
         // Crear animaciones aquí

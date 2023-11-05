@@ -1,5 +1,6 @@
 import Player from './Characters/player.js';
 import Proyectile from './Objetos/PocionLanzable.js';
+import Enemy from './Characters/enemy.js';
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
@@ -48,6 +49,18 @@ export class MainScene extends Phaser.Scene {
         //------------------------------- Colisiones 
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player, this.groundLayer);
+        //---------------------------------- Enemigo (inicio)
+        //// Crear enemigos
+        //let enemy1 = new Enemy(this, 300, 250, 1);
+        //let enemy2 = new Enemy(this, 500, 250, 2);
+
+        //// Añadir a un grupo si lo necesitas
+        //this.enemies = this.physics.add.group();
+        //this.enemies.add(enemy1);
+        //this.enemies.add(enemy2);
+
+        //// Añadir colisiones con el jugador si es necesario
+        //this.physics.add.collider(this.player, this.enemies, this.handlePlayerEnemyCollision, null, this);
     }
 
     update() {
