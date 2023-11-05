@@ -9,9 +9,24 @@ export class LoadScene extends Phaser.Scene
     }
 
     preload() {
-        const image = this.load.image("backgroundINI", "Assets/WebPage/Img/LoadingScreen.png");
+        // Preload assets
+        this.load.image('backgroundINI', 'Assets/WebPage/Img/LoadingScreen.png');
+
+        this.load.image('background', 'Assets/Mapa/Img/CapaFondo.png');
+        this.load.image('suelos', 'Assets/Mapa/Img/CapaSuelos.png');
+        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
+        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
+        // Cargar los spritesheets
+        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        // ... cargar otros spritesheets ...
     }
     create() {
+        // Crear animaciones aquí
+        this.createAnimations();
+
         // Agregar imagen de fondo
         let image = this.add.image(0, 0, "backgroundINI");
         image.setOrigin(0.5, 0.5);
@@ -38,6 +53,38 @@ export class LoadScene extends Phaser.Scene
         this.time.delayedCall(3000, () => {
             this.scene.stop('LoadScene');
             this.scene.start('MainScene');
+        });
+    }
+    createAnimations() {
+        // Crear animaciones globales
+
+        // Animación de Idle
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        // Animación de Salto
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        // Animación de Movimiento
+        this.anims.create({
+            key: 'move',
+            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        //Animacion de ataque
+        this.anims.create({
+            key: 'attack',
+            frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
+            frameRate: 10,
+            repeat: -1
         });
     }
 

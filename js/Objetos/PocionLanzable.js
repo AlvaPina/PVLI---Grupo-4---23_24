@@ -26,8 +26,24 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     setLifeTime(duration) {
-        this.scene.time.delayedCall(duration, this.destroy, [], this);
+        this.scene.time.delayedCall(duration, () => {
+            this.playDestroyAnimation(); // Cambiar la lógica para la destrucción aquí
+        }, [], this);
     }
+
+        // Método para manejar la animación antes de la destrucción
+    playDestroyAnimation() {
+        // Ejemplo: Suponiendo que tienes una animación llamada 'potion_destroy'
+        // this.play('potion_destroy');
+        // Esperar a que termine la animación para destruir el objeto, si es necesario
+        // this.on('animationcomplete', () => {
+        //     this.destroy();
+        // });
+        
+        // O si no hay animación, solo destruir el objeto
+        this.destroy();
+    }
+
 }
 
 export default Proyectile;

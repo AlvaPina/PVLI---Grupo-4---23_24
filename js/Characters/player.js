@@ -42,35 +42,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         
     }
     startAnimation() {
-        // Animación de Idle
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        // Animación de Salto
-        this.anims.create({
-            key: 'jump',
-            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        // Animación de Movimiento
-        this.anims.create({
-            key: 'move',
-            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        //Animacion de ataque
-        this.anims.create({
-            key: 'attack',
-            frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        
         this.anims.load('idle');
         this.play('idle');
     }
@@ -114,13 +85,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.play('idle', true);
         }
     }
-    //attack() {
-    //    //if(this.sprite.flipX) new Proyectile(this.scene, this.x, this.y, 'potion', -1);
-    //    //else new Proyectile(this.scene, this.x, this.y, 'potion', 1);
-    //    new Proyectile(this.scene, this.x, this.y, 'potion', 1);
-    //    console.log("Ataque activado");
-    //    this.isAttack=false;
-    //}
     attack() {
         // Obtener el vector de velocidad actual del jugador
         let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
@@ -130,7 +94,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             velocityVector = new Phaser.Math.Vector2(this.dir, 0);
         }
 
-        new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
+        // Crear una nueva poción y añadirla al grupo de proyectiles
+        //let potion = new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
+                        new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
+        //this.scene.projectiles.add(potion);
         console.log("Ataque activado");
         this.isAttack = false;
     }
