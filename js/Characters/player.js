@@ -94,10 +94,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             velocityVector = new Phaser.Math.Vector2(this.dir, 0);
         }
 
-        // Crear una nueva poción y añadirla al grupo de proyectiles
-        //let potion = new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
-                        new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
-        //this.scene.projectiles.add(potion);
+        new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
         console.log("Ataque activado");
         this.isAttack = false;
     }

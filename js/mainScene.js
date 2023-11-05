@@ -5,7 +5,7 @@ export class MainScene extends Phaser.Scene {
         super({ key: 'MainScene' });
         this.player = null;
         this.cursors = null;
-        this.projectiles = null;
+        this.groundLayer = null;
     }
 
     preload() {
@@ -31,12 +31,12 @@ export class MainScene extends Phaser.Scene {
         this.physics.world.gravity.y = 500;
 
         //Creamos el suelo
-        let ground = this.physics.add.staticGroup();
+        this.groundLayer = this.physics.add.staticGroup();
         //refreshBody() -> Para detectar colisiones con el player
         //Creamos los suelos
-        ground.create(50, 390, 'ground').setScale(0.05, 1).refreshBody();
-        ground.create(160, 350, 'ground').setScale(0.01, 1).refreshBody();
-        ground.create(380, 340, 'ground').setScale(0.01, 0.2).refreshBody();
+        this.groundLayer.create(50, 390, 'ground').setScale(0.05, 1).refreshBody();
+        this.groundLayer.create(160, 350, 'ground').setScale(0.01, 1).refreshBody();
+        this.groundLayer.create(380, 340, 'ground').setScale(0.01, 0.2).refreshBody();
 
         //crear player
         this.player = new Player(this, 100, 250, 160);
@@ -47,19 +47,7 @@ export class MainScene extends Phaser.Scene {
 
         //------------------------------- Colisiones 
         //Añadimos las colisiones entre el player y el suelo
-        this.physics.add.collider(this.player, ground);
-        // Grupo para los proyectiles
-        this.projectiles = this.physics.add.group({
-            classType: Proyectile
-        });
-        // Collider entre proyectiles y el suelo
-        this.physics.add.collider(this.projectiles, ground, this.handlePotionHitGround, null, this);
-    }
-
-    handlePotionHitGround(potion, ground) {
-        // Aquí se puede colocar una animación antes de la destrucción.
-        //potion.playDestroyAnimation(); // Método ficticio que se deberá implementar en Proyectile
-        potion.destroy();
+        this.physics.add.collider(this.player, this.groundLayer);
     }
 
     update() {
