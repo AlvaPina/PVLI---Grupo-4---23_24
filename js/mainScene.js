@@ -50,9 +50,10 @@ export class MainScene extends Phaser.Scene {
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player, this.groundLayer);
         //---------------------------------- Enemigo (inicio)
-        //// Crear enemigos
-        //let enemy1 = new Enemy(this, 300, 250, 1);
-        //let enemy2 = new Enemy(this, 500, 250, 2);
+        // Crear instancias de enemigos
+        //let enemyPatroller = new Enemy(this, 100, 200, 1); // Tipo 1
+        //let enemyShooter = new Enemy(this, 200, 200, 2); // Tipo 2
+        //let enemyFlyer = new Enemy(this, 300, 200, 3); // Tipo 3
 
         //// Añadir a un grupo si lo necesitas
         //this.enemies = this.physics.add.group();
