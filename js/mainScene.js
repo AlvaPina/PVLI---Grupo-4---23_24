@@ -16,6 +16,7 @@ export class MainScene extends Phaser.Scene {
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
 
     create() {
@@ -32,17 +33,26 @@ export class MainScene extends Phaser.Scene {
         suelos.setOrigin(0.5, 0.5); // Centra la imagen
         suelos.setScale(0.5, 0.5);
 
-
-        // Configurar la gravedad
-        this.physics.world.gravity.y = 500;
+        //JSON
+        var mapa = this.make.tilemap({ key: 'mapa' });
+        var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
         //Creamos el suelo
         let ground = this.physics.add.staticGroup();
+
+        capaColisiones.objects.forEach(function (objeto) {
+            var colision = this.add.rectangle(objeto.x, objeto.y, objeto.width/2, objeto.height/2);
+            colision.setOrigin(0.5,0);
+            this.physics.world.enable(colision);
+            colision.body.setCollideWorldBounds(true);
+            colision.body.immovable = true;
+        }, this);
+
+        // Configurar la gravedad
+        this.physics.world.gravity.y = 0;
+
         //refreshBody() -> Para detectar colisiones con el player
         //Creamos los suelos
-        ground.create(50, 390, 'ground').setScale(0.05, 1).refreshBody();
-        ground.create(160, 350, 'ground').setScale(0.01, 1).refreshBody();
-        ground.create(380, 340, 'ground').setScale(0.01, 0.2).refreshBody();
 
         //crear player
         this.player = new Player(this, 100, 250, 160);
