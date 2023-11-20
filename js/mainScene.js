@@ -32,7 +32,6 @@ export class MainScene extends Phaser.Scene {
         suelos.setOrigin(0.5, 0.5); // Centra la imagen
         suelos.setScale(0.5, 0.5);
 
-
         // Configurar la gravedad
         this.physics.world.gravity.y = 500;
 
@@ -52,6 +51,12 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(0.2, 0.2);
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player,ground);
+
+        //Camara
+        let camera = this.cameras.main;
+        camera.setBounds(0,0,this.game.config.width,this.game.config.height);
+        camera.startFollow(this.player);
+        camera.setZoom(1.4);
     }
 
     update() {
