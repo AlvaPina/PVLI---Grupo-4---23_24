@@ -2,8 +2,8 @@ import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, speed, iniLives, maxLives) {
-        super(scene, x, y, speed, 'player');
+    constructor(scene, x, y, speed, iniLives, lifeComp) {
+        super(scene, x, y, speed, iniLives,lifeComp, 'player');
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
@@ -39,7 +39,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.isAttack = false;
             }
         });
-        this.LifeComponent = new LifeComponent(iniLives,maxLives);
+        //creamos componente de vida
+        this.lifeComp = new LifeComponent(iniLives, this);
         
     }
     startAnimation() {
@@ -119,7 +120,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     recieveDamage(damage){
-        this.LifeComponent.Damage(damage);
+        this.lifeComp.Damage(damage);
+        console.log("AUUU");
     }
     
 }

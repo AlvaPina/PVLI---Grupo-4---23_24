@@ -31,7 +31,7 @@ export class MainScene extends Phaser.Scene {
         ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250, 160);
+        this.player = new Player(this, 100, 250, 160, 10);
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
@@ -43,9 +43,12 @@ export class MainScene extends Phaser.Scene {
         this.enemy.setScale(0.5, 0.5);
         this.physics.add.collider(this.enemy , ground);
 
-        this.physics.add.collider(this.player, this.enemy);
+        this.physics.add.collider(this.player, this.enemy, this.handleCollision, null, this);
     }
-
+    handleCollision(){
+        this.player.recieveDamage(3);
+        this.enemy.destroy();
+    }
     update() {
     
     }
