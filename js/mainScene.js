@@ -1,9 +1,11 @@
 import Player from './Characters/player.js';
+import Enemy from './Characters/enemy.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         this.player = null;
+        this.enemy = null;
         this.cursors = null;
     }
 
@@ -36,6 +38,12 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(0.5, 0.5);
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player,ground);
+
+        this.enemy= new Enemy(this, 300, 450, 200, 200);
+        this.enemy.setScale(0.5, 0.5);
+        this.physics.add.collider(this.enemy , ground);
+
+        this.physics.add.collider(this.player, this.enemy);
     }
 
     update() {

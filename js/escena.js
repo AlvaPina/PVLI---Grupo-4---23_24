@@ -26,15 +26,15 @@ export class LoadScene extends Phaser.Scene
         });
         this.loadingText.setPosition(650, 550);
 
-        // Evento periódico para actualizar texto
+        // Evento periï¿½dico para actualizar texto
         this.time.addEvent({
             delay: 500,                // intervalo de 500 ms
-            callback: this.updateText, // función a ejecutar
+            callback: this.updateText, // funcion a ejecutar
             callbackScope: this,       // contexto (LoadScene)
             loop: true                 // repetir indefinidamente
         });
 
-        // Cambiar a MainScene después de un tiempo determinado
+        // Cambiar a MainScene despuï¿½s de un tiempo determinado
         this.time.delayedCall(3000, () => {
             this.scene.stop('LoadScene');
             this.scene.start('MainScene');

@@ -1,4 +1,4 @@
-class Proyectile extends Phaser.Physics.Arcade.Sprite {
+export default class Proyectile extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
         scene.add.existing(this);
@@ -15,5 +15,3 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
         this.x += this.speed;
     }
 }
-
-export default Proyectile;
