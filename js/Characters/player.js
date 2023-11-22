@@ -12,8 +12,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setTexture('logic_idle');
 
         // Obtener el tamaño del frame para hacer collider
-        var width_frame = this.frame.width;
-        var height_frame = this.frame.height;
+        var width_frame = this.frame.width - 85;
+        var height_frame = this.frame.height - 5;
 
         // Ajustar el collider
         this.body.setSize(width_frame, height_frame);

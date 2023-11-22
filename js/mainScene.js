@@ -5,7 +5,8 @@ export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         this.player = null;
-        this.enemy = null;
+        //this.enemy = null;
+        this.enemies = []; //Array vacio de enemigos
         this.cursors = null;
     }
 
@@ -38,16 +39,25 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(0.5, 0.5);
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player,ground);
-
-        this.enemy= new Enemy(this, 300, 450, 200, 200);
+        
+        //Creamos enemigos
+        var numEnemies = 3;
+        var posX= 300; 
+        for(let i = 0; i < numEnemies; i++){
+            var enemy = new Enemy(this , posX, 450, 50, 50);
+            this.enemies.push(enemy); //Agregamos enemigo al array
+            this.physics.add.collider(this.enemies[i], ground);
+            this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
+            posX += 200;
+        }
+        /*this.enemy= new Enemy(this, 300, 450, 200, 200);
         this.enemy.setScale(0.5, 0.5);
         this.physics.add.collider(this.enemy , ground);
-
-        this.physics.add.collider(this.player, this.enemy, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.enemy, this.handleCollision, null, this);*/
     }
-    handleCollision(){
-        this.player.recieveDamage(3);
-        this.enemy.destroy();
+    handleCollision(player, enemy){
+        this.player.recieveDamage(4);
+        enemy.destroy();
     }
     update() {
     
