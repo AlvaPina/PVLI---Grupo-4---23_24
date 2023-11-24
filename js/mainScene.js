@@ -41,15 +41,19 @@ export class MainScene extends Phaser.Scene {
         let ground = this.physics.add.staticGroup();
 
         capaColisiones.objects.forEach(function (objeto) {
-            var colision = this.add.rectangle(objeto.x, objeto.y, objeto.width/2, objeto.height/2);
-            colision.setOrigin(0.5,0);
-            this.physics.world.enable(colision);
-            colision.body.setCollideWorldBounds(true);
-            colision.body.immovable = true;
+            var colisionObject = this.add.rectangle(objeto.x/2, objeto.y/2, objeto.width/2, objeto.height/2);
+            colisionObject.setOrigin(0,0);
+            this.physics.world.enable(colisionObject);
+            colisionObject.body.setCollideWorldBounds(true);
+
+            // Creamos el objeto ground en la misma posición y tamaño que la colisionObject
+            ground.create(colisionObject.x, colisionObject.y, 'ground').setOrigin(0,0).setDisplaySize(colisionObject.width, colisionObject.height).refreshBody();
+            //destruimos colisionObject
+            colisionObject.destroy();
         }, this);
 
         // Configurar la gravedad
-        this.physics.world.gravity.y = 0;
+        this.physics.world.gravity.y = 700;
 
         //refreshBody() -> Para detectar colisiones con el player
         //Creamos los suelos
