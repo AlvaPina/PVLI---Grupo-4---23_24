@@ -32,7 +32,7 @@ export class MainScene extends Phaser.Scene {
         let suelos = this.add.image(gameWidth / 2, gameHeight / 2, 'suelos'); 
         suelos.setOrigin(0.5, 0.5); // Centra la imagen
         suelos.setScale(0.5, 0.5);
-
+      
         //JSON
         var mapa = this.make.tilemap({ key: 'mapa' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
@@ -66,6 +66,12 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(0.2, 0.2);
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player,ground);
+
+        //Camara
+        let camera = this.cameras.main;
+        camera.setBounds(0,0,this.game.config.width,this.game.config.height);
+        camera.startFollow(this.player);
+        camera.setZoom(1.4);
     }
 
     update() {
