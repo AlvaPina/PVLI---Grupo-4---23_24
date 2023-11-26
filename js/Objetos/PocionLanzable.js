@@ -26,7 +26,7 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     handleCollisionWithGround() {
-        // Obtiene una referencia a la capa del suelo de la escena
+        // Obtiene una referencia al suelo de la escena
         const groundLayer = this.scene.groundLayer;
 
         // Si no hay una capa de suelo, no hacer nada
@@ -37,10 +37,10 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
             this.destroy(); // Destruye la poción al colisionar con el suelo
         }, null, this);
     }
+
     setLifeTime(duration) {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
 }
 
 export default Proyectile;
-

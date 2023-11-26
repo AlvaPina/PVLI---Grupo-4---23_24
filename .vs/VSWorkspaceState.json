@@ -1,7 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Assets",
     "\\Assets\\WebPage",
     "\\Assets\\WebPage\\Img",
     "\\css",
@@ -10,6 +9,6 @@
     "\\js\\Objetos",
     "\\js\\WebPage"
   ],
-  "SelectedNode": "\\js\\escena.js",
+  "SelectedNode": "\\js\\Characters\\player.js",
   "PreviewInSolutionExplorer": false
 }

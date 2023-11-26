@@ -5,6 +5,7 @@ export class MainScene extends Phaser.Scene {
         super({ key: 'MainScene' });
         this.player = null;
         this.cursors = null;
+        this.groundLayer = null;
     }
 
     preload() {
@@ -20,56 +21,40 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
-         // Dimensiones del juego
-        const gameWidth = this.game.config.width; // Ancho del juego
-        const gameHeight = this.game.config.height; // Alto del juego
+        // Dimensiones y configuración del juego
+        const gameWidth = this.game.config.width;
+        const gameHeight = this.game.config.height;
 
-         // Fondo
-        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background'); 
-        background.setOrigin(0.5, 0.5); // Centra la imagen
-        background.setScale(0.5, 0.5);
+        // Configuración del fondo y otros elementos de la escena
+        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
+        let suelos = this.add.image(gameWidth / 2, gameHeight / 2, 'suelos').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
-        let suelos = this.add.image(gameWidth / 2, gameHeight / 2, 'suelos'); 
-        suelos.setOrigin(0.5, 0.5); // Centra la imagen
-        suelos.setScale(0.5, 0.5);
-      
-        //JSON
+        // Configuración del mapa y las capas de colisiones
         var mapa = this.make.tilemap({ key: 'mapa' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
-        //Creamos el suelo
-        let ground = this.physics.add.staticGroup();
-
-        capaColisiones.objects.forEach(function (objeto) {
-            var colisionObject = this.add.rectangle(objeto.x/2, objeto.y/2, objeto.width/2, objeto.height/2);
-            colisionObject.setOrigin(0,0);
+        // Creación del suelo
+        this.groundLayer = this.physics.add.staticGroup();
+        capaColisiones.objects.forEach(objeto => {
+            var colisionObject = this.add.rectangle(objeto.x / 2, objeto.y / 2, objeto.width / 2, objeto.height / 2).setOrigin(0, 0);
             this.physics.world.enable(colisionObject);
             colisionObject.body.setCollideWorldBounds(true);
-
-            // Creamos el objeto ground en la misma posición y tamaño que la colisionObject
-            ground.create(colisionObject.x, colisionObject.y, 'ground').setOrigin(0,0).setDisplaySize(colisionObject.width, colisionObject.height).refreshBody();
-            //destruimos colisionObject
+            this.groundLayer.create(colisionObject.x, colisionObject.y, 'ground').setOrigin(0, 0).setDisplaySize(colisionObject.width, colisionObject.height).refreshBody();
             colisionObject.destroy();
-        }, this);
+        });
 
-        // Configurar la gravedad
+        // Configuración de la gravedad
         this.physics.world.gravity.y = 700;
 
-        //refreshBody() -> Para detectar colisiones con el player
-        //Creamos los suelos
-
-        //crear player
+        // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 160);
-        //Empieza animacion
         this.player.startAnimation();
-        //Seteamos escala
         this.player.setScale(0.2, 0.2);
-        //Añadimos las colisiones entre el player y el suelo
-        this.physics.add.collider(this.player,ground);
+        this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
 
-        //Camara
+        // Configuración de la cámara
         let camera = this.cameras.main;
-        camera.setBounds(0,0,this.game.config.width,this.game.config.height);
+        camera.setBounds(0, 0, gameWidth, gameHeight);
         camera.startFollow(this.player);
         camera.setZoom(1.4);
     }
