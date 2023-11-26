@@ -114,39 +114,37 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
 
-updateShooter() {
-    
-    // Detectar al jugador y disparar
-    const now = Date.now();
-    const player = this.scene.player; // Asegúrate de que 'player' es accesible en tu escena
-    const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
+    updateShooter() {
 
-    // Lógica de patrulla
-    this.x += this.speed * this.direction * this.scene.game.loop.delta * 0.001;
+        // Detectar al jugador y disparar
+        const now = Date.now();
+        const player = this.scene.player; // Asegúrate de que 'player' es accesible en tu escena
+        const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
 
-    if (this.x < this.patrolRange.start || this.x > this.patrolRange.end) {
-        this.direction *= -1; // Cambia de dirección
+        // Lógica de patrulla
+        this.x += this.speed * this.direction * this.scene.game.loop.delta * 0.001;
+
+        if (this.x < this.patrolRange.start || this.x > this.patrolRange.end) {
+            this.direction *= -1; // Cambia de dirección
+        }
+
+        // Detectar al jugador y seguirlo
+
+        if (distanceToPlayer < this.detectionRange) {
+            // Persigue al jugador
+            this.direction = player.x < this.x ? -1 : 1; // Cambia la dirección hacia el jugador
+            // Aquí podrías ajustar la velocidad para la persecución si es diferente de la patrulla
+        }
+
+        if (distanceToPlayer < this.detectionRange && now - this.lastShot > this.shootDelay) {
+            // Dispara al jugador
+            const direction = player.x < this.x ? -1 : 1;
+            const projectileVelocity = new Phaser.Math.Vector2(direction * 300, 0); // Ajusta la velocidad del proyectil
+
+            new Proyectile(this.scene, this.x, this.y, 'enemyProjectile', projectileVelocity);
+            this.lastShot = now;
+        }
     }
-
-    // Detectar al jugador y seguirlo
-    const player = this.scene.player; // Asegúrate de que 'player' es accesible en tu escena
-    const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
-
-    if (distanceToPlayer < this.detectionRange) {
-        // Persigue al jugador
-        this.direction = player.x < this.x ? -1 : 1; // Cambia la dirección hacia el jugador
-        // Aquí podrías ajustar la velocidad para la persecución si es diferente de la patrulla
-    }
-
-    if (distanceToPlayer < this.detectionRange && now - this.lastShot > this.shootDelay) {
-        // Dispara al jugador
-        const direction = player.x < this.x ? -1 : 1;
-        const projectileVelocity = new Phaser.Math.Vector2(direction * 300, 0); // Ajusta la velocidad del proyectil
-
-        new Proyectile(this.scene, this.x, this.y, 'enemyProjectile', projectileVelocity);
-        this.lastShot = now;
-    }
-}
 
     updateFlyer() {
         // Mover arriba y abajo dentro del rango de vuelo
@@ -171,3 +169,4 @@ updateShooter() {
             // Aquí podrías agregar una animación de ataque o de persecución
         }
     }
+}
