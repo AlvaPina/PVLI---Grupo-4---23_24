@@ -6,8 +6,10 @@
     "\\Assets\\WebPage\\Img",
     "\\css",
     "\\js",
+    "\\js\\Characters",
+    "\\js\\Objetos",
     "\\js\\WebPage"
   ],
-  "SelectedNode": "\\Assets\\WebPage\\Img\\player.png",
+  "SelectedNode": "\\js\\escena.js",
   "PreviewInSolutionExplorer": false
 }

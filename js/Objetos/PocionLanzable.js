@@ -8,9 +8,6 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
         this.speed = 700;
         this.velocityVector = velocityVector.normalize().scale(this.speed);
 
-        // Ajusta la gravedad específica para este proyectil si es necesario
-        this.body.setGravityY(500); // Ajusta a lo que sea adecuado para tu juego
-
         // Establecer la velocidad inicial
         this.body.velocity.copy(this.velocityVector);
 
@@ -23,8 +20,23 @@ class Proyectile extends Phaser.Physics.Arcade.Sprite {
 
         // Destruir el proyectil después de su tiempo de vida
         this.setLifeTime(this.lifespan);
+
+        // Llama a esta función para manejar la colisión con el suelo.
+        this.handleCollisionWithGround();
     }
 
+    handleCollisionWithGround() {
+        // Obtiene una referencia a la capa del suelo de la escena
+        const groundLayer = this.scene.groundLayer;
+
+        // Si no hay una capa de suelo, no hacer nada
+        if (!groundLayer) return;
+
+        // Añadir colisionador con el suelo
+        this.scene.physics.add.collider(this, groundLayer, () => {
+            this.destroy(); // Destruye la poción al colisionar con el suelo
+        }, null, this);
+    }
     setLifeTime(duration) {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
