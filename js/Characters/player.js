@@ -42,16 +42,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         
     }
     startAnimation() {
-        this.anims.load('idle');
-        this.play('idle');
+        this.anims.load('l_idle');
+        this.play('l_idle');
     }
    
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
         //detectamos input
         this.playerInput();
-        if(this.isAttack === true) thiss.play('attack');
-        if(this.body.touching.down === false) this.play('jump', true);
+        if(this.isAttack === true) thiss.play('l_attack');
+        if(this.body.touching.down === false) this.play('l_jump', true);
     }
 
 
@@ -59,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Input para salto (Comprobamos si toca el suelo o no)
         if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down) {
             this.setVelocityY(300 * -1);
-            this.play('jump',true);
+            this.play('l_jump',true);
             console.log("Salto");
         } 
         // Input del Jugador
@@ -68,7 +68,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.dir = -1; 
             this.setVelocityX(160 * this.dir);
 			this.setFlip(true, false);
-            this.play('move', true);
+            this.play('l_move', true);
             console.log("Izquierda");
         }
         //Derecha
@@ -76,13 +76,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.dir = 1;
             this.setVelocityX(160 * this.dir);
             this.setFlip(false,false);
-            this.play('move', true);
+            this.play('l_move', true);
             console.log("Derecha");
         }
         //Si no hay input, idle
         else {
             this.setVelocityX(0);
-            this.play('idle', true);
+            this.play('l_idle', true);
         }
     }
     attack() {
