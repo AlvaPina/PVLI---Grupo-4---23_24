@@ -1,4 +1,4 @@
-import Player from './Characters/player.js';
+import Player from './Characters/Player/player.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -52,7 +52,7 @@ export class MainScene extends Phaser.Scene {
         // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 160);
         this.player.startAnimation();
-        this.player.setScale(0.2, 0.2);
+        this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
 
         // Configuración de la cámara

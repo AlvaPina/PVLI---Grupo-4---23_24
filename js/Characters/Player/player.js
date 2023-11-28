@@ -1,8 +1,9 @@
-import Proyectile from '../Objetos/PocionLanzable.js';
+import Proyectile from '../../Objetos/Proyectil.js';
+import SerVivo from '../serVivo.js';
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, speed) {
-        super(scene, x, y, speed , 'player');
+export default class Player extends SerVivo {
+    constructor(scene, x, y, speed, life) {
+        super(scene, x, y, speed, life, 'player');
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
