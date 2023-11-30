@@ -47,8 +47,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.lifeComp = new LifeComponent(iniLives, this);
         this.spriteId = spriteId;
         this.speed = speed;
-        var index = 0;
-        this.indexPersona = index;
+        this.indexPersona = 0;
     }
     startAnimation() {
         //Animacion por defecto será idle

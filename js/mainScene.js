@@ -21,17 +21,17 @@ export class MainScene extends Phaser.Scene {
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });
         //SpriteSheets de Protagonista
         this.load.spritesheet('protagonist_idle', 'Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('protagonist_jump', 'Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('protagonist_jump', 'Assets/Characters/Protagonist_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('protagonist_move', 'Assets/Characters/Protagonist_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('protagonist_attack', 'Assets/Characters/Protagonist_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //SpriteSheets de Defensor
         this.load.spritesheet('defender_idle', 'Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('defender_jump', 'Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('defender_jump', 'Assets/Characters/Defender_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('defender_move', 'Assets/Characters/Defender_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('defender_attack', 'Assets/Characters/Defender_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //SpriteSheets de Virtuoso
         this.load.spritesheet('virtuous_idle', 'Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('virtuous_move', 'Assets/Characters/Virtuous_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('virtuous_attack', 'Assets/Characters/Virtuous_Attack.png', { frameWidth: 300, frameHeight: 300 });
     }
@@ -50,7 +50,7 @@ export class MainScene extends Phaser.Scene {
         ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250, 160, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 160, 10, null, 'v');
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
@@ -68,10 +68,6 @@ export class MainScene extends Phaser.Scene {
             this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
             posX += 200;
         }
-        /*this.enemy= new Enemy(this, 300, 450, 200, 200);
-        this.enemy.setScale(0.5, 0.5);
-        this.physics.add.collider(this.enemy , ground);
-        this.physics.add.collider(this.player, this.enemy, this.handleCollision, null, this);*/
     }
 //#region Creacion de animaciones para los personajes
     createAnimations() {
