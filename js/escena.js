@@ -12,6 +12,7 @@ export class LoadScene extends Phaser.Scene
         const image = this.load.image("backgroundINI", "Assets/WebPage/Img/Logo.png");
     }
     create() {
+
         // Agregar imagen de fondo
         let image = this.add.image(0, 0, "backgroundINI");
         image.setOrigin(0.5, 0.5);
@@ -40,7 +41,6 @@ export class LoadScene extends Phaser.Scene
             this.scene.start('MainScene');
         });
     }
-
     updateText() {
         if (this.loadingText) {
             this.loadingText.setText(this.texts[this.textNumber]);
