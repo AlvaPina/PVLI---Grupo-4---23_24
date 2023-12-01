@@ -1,4 +1,4 @@
-import SerVivo from "../Characters/serVivo";
+import SerVivo from "../Characters/serVivo.js";
 
 class Proyectile extends SerVivo {
     constructor(scene, x, y, texture, velocityVector) {
