@@ -55,6 +55,9 @@ export class MainScene extends Phaser.Scene {
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
 
+        // Crear enemigo
+        this.enemy = new Enemy(this, 300, 250, '')
+
         // Configuración de la cámara
         let camera = this.cameras.main;
         camera.setBounds(0, 0, gameWidth, gameHeight);
