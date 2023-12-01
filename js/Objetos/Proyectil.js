@@ -1,4 +1,6 @@
-class Proyectile extends Phaser.Physics.Arcade.Sprite {
+import SerVivo from "../Characters/serVivo.js";
+
+class Proyectile extends SerVivo {
     constructor(scene, x, y, texture, velocityVector) {
         super(scene, x, y, texture);
         scene.add.existing(this);
