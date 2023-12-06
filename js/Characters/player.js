@@ -1,5 +1,6 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
+import { SelectionMenu } from '../selectionMenu.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -33,14 +34,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             space: Phaser.Input.Keyboard.KeyCodes.SPACE,
             control: Phaser.Input.Keyboard.KeyCodes.CTRL
         });
-
         this.isAttack = false;
         // Eventos de raton
         this.scene.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
                 this.isAttack = true; // Activar el ataque
                 this.attack();
-                //this.isAttack = false;
             }
         });
         //creamos componente de vida
@@ -61,8 +60,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.playerInput();
         //Controlamos animaciones
         this.animationManager();
-        //Controlamos cambio de personaje
-        this.changePersonality(this.indexPersona);
+        //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
+        if(this.changePersonality()) this.scene.changeToSelection();
     }
 
 
@@ -155,13 +154,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    changePersonality(index){
-        var personalities = ['l', 'd', 'p', 'v'];
+    //Metodo booleano para comprobar si el jugador, ha pulsado la tecla control
+    changePersonality(){
         if(this.cursors.control.isDown){
-            if(index < personalities.length){index++;} 
-            else {index = 0};
-            this.spriteId = personalities[index];
-            console.log("SWITCH");
+            return true;
         }
+        return false;
     }
 }

@@ -50,7 +50,7 @@ export class MainScene extends Phaser.Scene {
         ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250, 160, 10, null, 'v');
+        this.player = new Player(this, 100, 250, 160, 10, null, 'l');
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
@@ -68,6 +68,8 @@ export class MainScene extends Phaser.Scene {
             this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
             posX += 200;
         }
+        //Booleano para determinar primer acceso al menu de seleccion
+        this.firstChange= true;
     }
 //#region Creacion de animaciones para los personajes
     createAnimations() {
@@ -178,6 +180,20 @@ export class MainScene extends Phaser.Scene {
         this.player.recieveDamage(4);
         enemy.destroy();
     }
+    //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
+    changeToSelection(){
+        this.scene.pause();
+        if(this.firstChange){
+            this.scene.launch('SelectionMenu');
+            console.log("Has accedido por primera vez al menu de seleccion!");
+            this.firstChange = false; 
+        }
+        else {
+            this.scene.resume('SelectionMenu');
+        }
+        console.log("Estas en el menú de cambio de personaje...");
+    }
+    
     update() {
     
     }
