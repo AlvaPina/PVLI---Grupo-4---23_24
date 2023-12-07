@@ -61,7 +61,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Controlamos animaciones
         this.animationManager();
         //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
-        if(this.changePersonality()) this.scene.changeToSelection();
+        if(this.changePersonality()) this.scene.changeToSelection(this.spriteId);
     }
 
 

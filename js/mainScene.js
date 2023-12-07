@@ -181,16 +181,19 @@ export class MainScene extends Phaser.Scene {
         enemy.destroy();
     }
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
-    changeToSelection(){
+    changeToSelection(spriteId){
         this.scene.pause();
-        if(this.firstChange){
-            this.scene.launch('SelectionMenu');
+        /*if(this.firstChange){
             console.log("Has accedido por primera vez al menu de seleccion!");
             this.firstChange = false; 
+            this.scene.launch('SelectionMenu');
         }
         else {
             this.scene.resume('SelectionMenu');
-        }
+            console.log("Ya has accedido aqui antes....")
+        }*/
+        //Vamos al menu de seleccion pasando el spriteId del player
+        this.scene.launch('SelectionMenu', {data: spriteId});
         console.log("Estas en el menú de cambio de personaje...");
     }
     
