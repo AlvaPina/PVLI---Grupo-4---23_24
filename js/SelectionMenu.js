@@ -56,46 +56,40 @@ export class SelectionMenu extends Phaser.Scene {
         virtuousPanel.setInteractive();
         protagonistPanel.setInteractive();
 
-        // Agregar un evento de clic a la imagen
+        // Agregamos un evento de clic a la imagen de cada personalidad, cunado el jugador pulsa, volvemos al nivel
         logicPanel.on('pointerdown', () => {
             console.log("has elegido a Logica");
-            this.returnToGame();
+            this.returnToGame('l');
         });
-        // Agregar un evento de clic a la imagen
         defenderPanel.on('pointerdown', function () {
             console.log("Has elegido a Defensor");
-            this.returnToGame();
+            this.returnToGame('d');
         },this);
-        // Agregar un evento de clic a la imagen
         virtuousPanel.on('pointerdown', function () {
             console.log("Has elegido a Virtuoso");
-            this.returnToGame();
+            this.returnToGame('v');
         },this);
-        // Agregar un evento de clic a la imagen
         protagonistPanel.on('pointerdown', function () {
             console.log("Has elegido a Protagonista");
-            this.returnToGame();
+            this.returnToGame('p');
         },this);
-
-        // Método init para recibir los datos pasados desde la escena origen
-        /*init(data) 
-        {
-        console.log(data.data); // Accediendo al dato pasado desde la escena origen
-        // Puedes hacer lo que necesites con el dato recibido aquí dentro de init()
-        }*/
     }
     
 
     //Metodo para volver al juego de nuevo (simpre y cuando el jugador este en este menu de seleccion)
-    returnToGame(){ 
-        this.scene.resume('MainScene');
+    returnToGame(spriteId){ 
+        //Volvemos a la escena del nivel
+        this.scene.resume('MainScene', (spriteId));
+        //Paramos esta escena...
         this.scene.stop();
         console.log("Cambio de escena...");
     }
     //Metodo update
     update(){
+        //Si volvemos a pulsar la tecla control salimos del menu sin hacer cambios
         if(this.cursors.control.isDown){
-           this.returnToGame();
+            //Devolvemos un char que no hace ningun cambio
+           this.returnToGame('x');
         }
     }
 

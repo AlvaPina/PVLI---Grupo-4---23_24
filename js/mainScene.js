@@ -1,19 +1,19 @@
 import Player from './Characters/player.js';
-import Enemy from './Characters/enemy.js';
+//import Enemy from './Characters/enemy.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
-        this.player = null;
+        //this.player = null;
         //this.enemy = null;
-        this.enemies = []; //Array vacio de enemigos
-        this.cursors = null;
+        //this.enemies = []; //Array vacio de enemigos
+        //this.cursors = null;
     }
 
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
+        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
         //SpriteSheets de Lógica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
@@ -37,9 +37,12 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+         
         //Creamos animaciones de los personajes
         this.createAnimations();
-        this.add.image(400, 300, 'background'); // Ajusta las coordenadas seg�n necesites
+
+        //Fondo
+        this.add.image(400, 300, 'background');
 
         // Configurar la gravedad
         this.physics.world.gravity.y = 300;
@@ -61,15 +64,22 @@ export class MainScene extends Phaser.Scene {
         //Creamos enemigos
         var numEnemies = 3;
         var posX= 300; 
-        for(let i = 0; i < numEnemies; i++){
+        /*for(let i = 0; i < numEnemies; i++){
             var enemy = new Enemy(this , posX, 450, 50, 50);
             this.enemies.push(enemy); //Agregamos enemigo al array
             this.physics.add.collider(this.enemies[i], ground);
             this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
             posX += 200;
-        }
+        }*/
         //Booleano para determinar primer acceso al menu de seleccion
-        this.firstChange= true;
+        //this.firstChange= true;
+
+         //Metodo asociado al resume de esta escena, con los parametros scene y el id actual del jugador
+         this.events.on('resume', (scene , id) =>{
+            //Llama al metodo de confirmar cambios ubicado en el player
+            this.player.confirmChange(id);
+        });
+      
     }
 //#region Creacion de animaciones para los personajes
     createAnimations() {
@@ -85,7 +95,7 @@ export class MainScene extends Phaser.Scene {
             key: 'l_jump',
             frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
             frameRate: 10,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: 'l_move',
@@ -96,7 +106,7 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'l_attack',
             frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
-            frameRate: 15,
+            frameRate: 10,
             repeat: -1
         });
         //--ANIMACIONES PARA PROTAGONISTA--
@@ -110,7 +120,7 @@ export class MainScene extends Phaser.Scene {
             key: 'p_jump',
             frames: this.anims.generateFrameNumbers('protagonist_jump', { start: 0, end: 0 }),
             frameRate: 10,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: 'p_move',
@@ -135,7 +145,7 @@ export class MainScene extends Phaser.Scene {
             key: 'd_jump',
             frames: this.anims.generateFrameNumbers('defender_jump', { start: 0, end: 0 }),
             frameRate: 10,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: 'd_move',
@@ -160,7 +170,7 @@ export class MainScene extends Phaser.Scene {
             key: 'v_jump',
             frames: this.anims.generateFrameNumbers('virtuous_jump', { start: 0, end: 0 }),
             frameRate: 10,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: 'v_move',
@@ -174,6 +184,7 @@ export class MainScene extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+        console.log("Se han creado las animaciones!");
     }
 //#endregion
     handleCollision(player, enemy){
@@ -181,19 +192,11 @@ export class MainScene extends Phaser.Scene {
         enemy.destroy();
     }
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
-    changeToSelection(spriteId){
+    changeToSelection(){
+        //Pausamos el menu de juego...
         this.scene.pause();
-        /*if(this.firstChange){
-            console.log("Has accedido por primera vez al menu de seleccion!");
-            this.firstChange = false; 
-            this.scene.launch('SelectionMenu');
-        }
-        else {
-            this.scene.resume('SelectionMenu');
-            console.log("Ya has accedido aqui antes....")
-        }*/
-        //Vamos al menu de seleccion pasando el spriteId del player
-        this.scene.launch('SelectionMenu', {data: spriteId});
+        //Vamos al menu de seleccion
+        this.scene.launch('SelectionMenu');
         console.log("Estas en el menú de cambio de personaje...");
     }
     

@@ -1,10 +1,9 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
-import { SelectionMenu } from '../selectionMenu.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
-        super(scene, x, y, speed, iniLives, lifeComp, spriteId, 'player');
+        super(scene, x, y, speed, iniLives, lifeComp, spriteId);
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
@@ -48,12 +47,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.speed = speed;
         this.indexPersona = 0;
     }
+    //Metodo para confirmar el cambio
+    confirmChange(id){
+        //Si el id es 'x', no se hace nada y se deja el id igual
+        if(id === 'x') return 
+        //Sino, actualizamos el sprite id tras la seleccion en el selection menu
+        else this.spriteId = id;
+    }
+    //Metodo para empezar la animacion inicial
     startAnimation() {
-        //Animacion por defecto será idle
-        this.anims.load(this.spriteId + '_idle');
+        //Reproducimos la animacion de idle
         this.play(this.spriteId + '_idle');
     }
-   
+    //PreUpdate
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
         //detectamos input
@@ -61,11 +67,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Controlamos animaciones
         this.animationManager();
         //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
-        if(this.changePersonality()) this.scene.changeToSelection(this.spriteId);
+        if(this.changePersonality()) this.scene.changeToSelection(this.SpriteId);
     }
 
-
-    playerInput() { // Input del Jugador
+    //Input del Jugador
+    playerInput() { 
         //Input para salto (Comprobamos si toca el suelo o no)
         if (this.cursors.space.isDown && this.body.touching.down) {
             this.setVelocityY(300 * -1);
@@ -112,12 +118,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
     
-
+//#region Ataques de las distintas personalidades
     logicAttack(){
         this.setVelocityX(0);
         //Instanciamos una nueva pocion lanzable
         new Proyectile(this.scene, this.x, this.y, 'potion');
-        console.log("Ataque activado");
+        console.log("Pocion lanzada");
     }
 
     protagonistAttack(){
@@ -128,7 +134,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     virtuousAttack(){
     }
-
+//#endregion
     //Metodo para controlar la vida del jugador
     recieveDamage(damage){
         this.lifeComp.Damage(damage);
@@ -138,7 +144,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
     animationManager(){
         if(!this.body.onFloor()){ //Si esta en el aire
-            if(this.anims.currentAnim.key !== this.spriteId + '_jump') { this.play(this.spriteId + '_jump'); }
+            if(this.anims.currentAnim.key !== this.spriteId + '_jump') { 
+                this.play(this.spriteId + '_jump'); }
         }
         else if(this.body.velocity.x != 0){ //Si esta en movimiento
             if(this.anims.currentAnim.key !== this.spriteId + '_move'){ this.play(this.spriteId + '_move'); }
@@ -154,9 +161,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    //Metodo booleano para comprobar si el jugador, ha pulsado la tecla control
+    //Metodo booleano para comprobar si el jugador, ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){
         if(this.cursors.control.isDown){
+            console.log(this.spriteId);
             return true;
         }
         return false;
