@@ -7,13 +7,15 @@ export class MainScene extends Phaser.Scene {
         //this.player = null;
         //this.enemy = null;
         //this.enemies = []; //Array vacio de enemigos
-        //this.cursors = null;
     }
 
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
+        //Imagenes objetos
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
+        this.load.image('turret', 'Assets/Objetos/Torreta.png');
+        this.load.image('bullet', 'Assets/Objetos/Bala.png');
         //SpriteSheets de Lógica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
@@ -48,18 +50,22 @@ export class MainScene extends Phaser.Scene {
         this.physics.world.gravity.y = 300;
 
         //Creamos el suelo
-        let ground = this.physics.add.staticGroup();
+        this.ground = this.physics.add.staticGroup();
         //refreshBody() -> Para detectar colisiones con el player
-        ground.create(400, 600, 'ground').setScale().refreshBody();
+        this.ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250, 160, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 300, 10, null, 'v');
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
         this.player.setScale(0.5 , 0.5);
         //Añadimos las colisiones entre el player y el suelo
-        this.physics.add.collider(this.player,ground);
+        this.physics.add.collider(this.player,this.ground);
+
+        //Torreta que funciona como controlador de instancias de las torretas
+        this.oneTurret = null;
+
         
         //Creamos enemigos
         var numEnemies = 3;
@@ -79,7 +85,6 @@ export class MainScene extends Phaser.Scene {
             //Llama al metodo de confirmar cambios ubicado en el player
             this.player.confirmChange(id);
         });
-      
     }
 //#region Creacion de animaciones para los personajes
     createAnimations() {
@@ -107,7 +112,8 @@ export class MainScene extends Phaser.Scene {
             key: 'l_attack',
             frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
             frameRate: 10,
-            repeat: -1
+            repeat: -1,
+            lenght: 5
         });
         //--ANIMACIONES PARA PROTAGONISTA--
         this.anims.create({
@@ -132,7 +138,8 @@ export class MainScene extends Phaser.Scene {
             key: 'p_attack',
             frames: this.anims.generateFrameNumbers('protagonist_attack', { start: 0, end: 4 }),
             frameRate: 10,
-            repeat: -1
+            repeat: -1,
+            lenght: 5
         });
         //--ANIMACIONES PARA DEFENSOR--
         this.anims.create({
@@ -182,7 +189,8 @@ export class MainScene extends Phaser.Scene {
             key: 'v_attack',
             frames: this.anims.generateFrameNumbers('virtuous_attack', { start: 0, end: 5 }),
             frameRate: 10,
-            repeat: -1
+            repeat: -1,   
+            lenght: 6
         });
         console.log("Se han creado las animaciones!");
     }
@@ -199,7 +207,13 @@ export class MainScene extends Phaser.Scene {
         this.scene.launch('SelectionMenu');
         console.log("Estas en el menú de cambio de personaje...");
     }
-    
+    /*getGround(){
+        console.log("ground");
+        return this.ground; 
+    }
+    addTurret(turret){
+        this.turrets.push(turret);
+    }*/
     update() {
     
     }

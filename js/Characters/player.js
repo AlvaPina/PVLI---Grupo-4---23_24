@@ -1,5 +1,6 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
+import Turret from '../Objetos/Turret.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -33,7 +34,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             space: Phaser.Input.Keyboard.KeyCodes.SPACE,
             control: Phaser.Input.Keyboard.KeyCodes.CTRL
         });
+
+        //Booleanos
+        //Controla el ataque
         this.isAttack = false;
+        
+
         // Eventos de raton
         this.scene.input.on('pointerdown', (pointer) => {
             if (pointer.leftButtonDown()) {
@@ -45,7 +51,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.lifeComp = new LifeComponent(iniLives, this);
         this.spriteId = spriteId;
         this.speed = speed;
-        this.indexPersona = 0;
+        this.scene = scene;
+        //this.indexPersona = 0;
     }
     //Metodo para confirmar el cambio
     confirmChange(id){
@@ -74,7 +81,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     playerInput() { 
         //Input para salto (Comprobamos si toca el suelo o no)
         if (this.cursors.space.isDown && this.body.touching.down) {
-            this.setVelocityY(300 * -1);
+            this.setVelocityY(this.speed * -1);
             console.log("Salto");
         } 
         //Izquierda
@@ -119,6 +126,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
 //#region Ataques de las distintas personalidades
+    //Ataque de logica (pocion lanzable)
     logicAttack(){
         this.setVelocityX(0);
         //Instanciamos una nueva pocion lanzable
@@ -127,12 +135,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     protagonistAttack(){
+
     }
 
     defenderAttack(){
     }
-
+    //Ataque del vitruoso (instanciar torreta)
     virtuousAttack(){
+        this.setVelocityX(0);
+        //Controlamos las instancias de las torretas (recordemos que solo puede haber una)
+        // Si ya hay una torreta existente, la destruimos antes de crear una nueva
+        if (this.scene.oneTurret) {
+            this.scene.oneTurret.destroy();
+        }
+        // Sino, instanciamos una nueva torreta (añadimos un poco de distancia entre la instancia y el jugador) y la igualamos
+        // a la nueva torreta
+        this.scene.oneTurret = new Turret(this.scene, this.x + 150, this.y - 150, 'turret');
     }
 //#endregion
     //Metodo para controlar la vida del jugador
@@ -143,11 +161,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
     animationManager(){
-        if(!this.body.onFloor()){ //Si esta en el aire
+        //Si esta en el aire
+        if(!this.body.onFloor()){ 
             if(this.anims.currentAnim.key !== this.spriteId + '_jump') { 
                 this.play(this.spriteId + '_jump'); }
         }
-        else if(this.body.velocity.x != 0){ //Si esta en movimiento
+        
+        else if(this.body.velocity.x != 0){ 
             if(this.anims.currentAnim.key !== this.spriteId + '_move'){ this.play(this.spriteId + '_move'); }
         }
         else if(this.isAttack == true){ //Si esta atacando
