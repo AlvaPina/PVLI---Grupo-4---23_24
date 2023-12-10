@@ -55,7 +55,7 @@ export class MainScene extends Phaser.Scene {
         this.ground.create(400, 600, 'ground').setScale().refreshBody();
 
         //crear player
-        this.player = new Player(this, 100, 250, 300, 10, null, 'v');
+        this.player = new Player(this, 100, 250, 300, 10, null, 'p');
         //Empieza animacion
         this.player.startAnimation();
         //Seteamos escala
@@ -99,7 +99,7 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'l_jump',
             frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
-            frameRate: 10,
+            frameRate: 1,
             repeat: -1
         });
         this.anims.create({
@@ -111,9 +111,8 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'l_attack',
             frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1,
-            lenght: 5
+            frameRate: 20,
+            repeat: 0
         });
         //--ANIMACIONES PARA PROTAGONISTA--
         this.anims.create({
@@ -137,9 +136,8 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'p_attack',
             frames: this.anims.generateFrameNumbers('protagonist_attack', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1,
-            lenght: 5
+            frameRate: 7,
+            repeat: 0,
         });
         //--ANIMACIONES PARA DEFENSOR--
         this.anims.create({
@@ -163,8 +161,8 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'd_attack',
             frames: this.anims.generateFrameNumbers('defender_attack', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
+            frameRate: 7,
+            repeat: 0
         });
         //--ANIMACIONES PARA VIRTUOSO--
         this.anims.create({
@@ -188,9 +186,8 @@ export class MainScene extends Phaser.Scene {
         this.anims.create({
             key: 'v_attack',
             frames: this.anims.generateFrameNumbers('virtuous_attack', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1,   
-            lenght: 6
+            frameRate: 7,
+            repeat: 0
         });
         console.log("Se han creado las animaciones!");
     }

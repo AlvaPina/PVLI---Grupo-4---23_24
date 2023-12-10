@@ -11,16 +11,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         // Obtener el tamaño del frame del spritesheet
-        const spriteWidth = 300;
-        const spriteHeight = 300;
+        //const spriteWidth = 300;
+        //const spriteHeight = 300;
 
         // Ajustar el tamaño y la posición del collider para que se centre en el jugador
-        const colliderWidth = spriteWidth;
-        const colliderHeight = spriteHeight;
+        const colliderWidth = 300;
+        const colliderHeight = 300;
+        this.setOrigin(0.5);
+        // Ajustar el collider del jugador
+        this.body.setSize(colliderWidth - 170, colliderHeight - 10);
+        //Establecer el desplazamiento del collider para centrarlo
+        this.body.setOffset((300 - (colliderWidth - 170)) / 2, (300 - (colliderHeight - 10)) / 2);
+        
+        //this.body.setOffset(0, 0);
 
-        // Ajustar el collider
-        this.body.setSize(colliderWidth, colliderHeight);
-        this.body.setOffset((spriteWidth - colliderWidth) / 2, (spriteHeight - colliderHeight) / 2);
 
         // Configuración de la física del jugador
         this.setCollideWorldBounds(true);
@@ -35,14 +39,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             control: Phaser.Input.Keyboard.KeyCodes.CTRL
         });
 
-        //Booleanos
-        //Controla el ataque
+        //Booleano que controla el ataque
         this.isAttack = false;
-        
 
-        // Eventos de raton
+        // Eventos de raton para realizar ataque 
         this.scene.input.on('pointerdown', (pointer) => {
-            if (pointer.leftButtonDown()) {
+            //Solo si el jugador esta en el suelo y se pulsa click izquerdo, se realiza el ataque
+            if (pointer.leftButtonDown() && this.body.touching.down) {
                 this.isAttack = true; // Activar el ataque
                 this.attack();
             }
@@ -52,7 +55,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.spriteId = spriteId;
         this.speed = speed;
         this.scene = scene;
-        //this.indexPersona = 0;
     }
     //Metodo para confirmar el cambio
     confirmChange(id){
@@ -79,31 +81,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     //Input del Jugador
     playerInput() { 
-        //Input para salto (Comprobamos si toca el suelo o no)
-        if (this.cursors.space.isDown && this.body.touching.down) {
+        //El jugador salta si se pulsa la tecla, toca el suelo, y si no está atacando
+        if (this.cursors.space.isDown && this.body.touching.down && !this.isAttack) {
             this.setVelocityY(this.speed * -1);
             console.log("Salto");
         } 
-        //Izquierda
+        //Moverse a la izquierda
         if (this.cursors.left.isDown && !this.isAttack) { 
             this.setVelocityX(this.speed * -1);
 			this.setFlip(true, false);
             console.log("Izquierda");
         }
-        //Derecha
+        //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
             this.setVelocityX(this.speed * 1);
             this.setFlip(false, false);
             console.log("Derecha");
         }
-        //Si no hay input, idle
+        //Si no hay input, nos quedamos quietos
         else {
             this.setVelocityX(0);
         }
     }
 
     attack() {
-        //Depndiendo del spriteId seleccionado, se hace un ataque u otro
+        //Mientras se realiza el ataque, el jugador no se podra mover
+        this.setVelocityX(0);
+        //Dependiendo del spriteId seleccionado, se hace un ataque u otro
         switch(this.spriteId)
         {
             //Ataque de Logica
@@ -128,21 +132,34 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack(){
-        this.setVelocityX(0);
         //Instanciamos una nueva pocion lanzable
         new Proyectile(this.scene, this.x, this.y, 'potion');
         console.log("Pocion lanzada");
     }
-
+    //Ataque de protagonista (espadazo)
     protagonistAttack(){
+        //El ataque consiste en un rectangulo invisible que representa el área de ataque de la espada
+        //Diemnsiones
+        const rectWidth = 80 , rectHeight = 80; 
+        //Area de ataque
+        const swordAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
+        //this.scene.physics.add.existing(swordAttackArea);
+        //swordAttackArea.setSize(rectWidth, rectHeight);
+        swordAttackArea.setVisible(true);
 
+        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
+           swordAttackArea.setVisible(false);
+           swordAttackArea.destroy();
+        });
     }
-
+    //Ataque de defensor (puñetazo)
     defenderAttack(){
+
+
     }
+
     //Ataque del vitruoso (instanciar torreta)
     virtuousAttack(){
-        this.setVelocityX(0);
         //Controlamos las instancias de las torretas (recordemos que solo puede haber una)
         // Si ya hay una torreta existente, la destruimos antes de crear una nueva
         if (this.scene.oneTurret) {
@@ -166,25 +183,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             if(this.anims.currentAnim.key !== this.spriteId + '_jump') { 
                 this.play(this.spriteId + '_jump'); }
         }
-        
+        //Si se mueve en cualquier direccion en el suelo
         else if(this.body.velocity.x != 0){ 
             if(this.anims.currentAnim.key !== this.spriteId + '_move'){ this.play(this.spriteId + '_move'); }
         }
-        else if(this.isAttack == true){ //Si esta atacando
+        //Si esta atacando
+        else if(this.isAttack){ 
             if(this.anims.currentAnim.key !== this.spriteId + '_attack'){
+                //Reproducimos animacion de atatque
                 this.play(this.spriteId + '_attack');
-                this.isAttack = false; // Asegúrate de restablecer la bandera después de ejecutar la animación
+                //Cuando se finaliza la animacion de ataque, se ejecuta lo que hay dentro
+                this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
+                    console.log('La animación ha terminado:', this.anims.currentAnim.key);
+                    //Ponemos booleano de ataque a false
+                    this.isAttack = false;
+                });
             }
         }
+        //Si esta quieto
         else {
             if(this.anims.currentAnim.key !== this.spriteId + '_idle'){ this.play(this.spriteId + '_idle'); }
         }
     }
 
-    //Metodo booleano para comprobar si el jugador, ha pulsado la tecla control para acceder al menu de seleccion
+    //Metodo booleano para comprobar si el jugador ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){
         if(this.cursors.control.isDown){
-            console.log(this.spriteId);
+            //console.log(this.spriteId);
             return true;
         }
         return false;
