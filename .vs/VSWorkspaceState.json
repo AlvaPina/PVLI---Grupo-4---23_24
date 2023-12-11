@@ -1,14 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Assets\\WebPage",
-    "\\Assets\\WebPage\\Img",
+    "\\Assets",
+    "\\Assets\\Mapa",
+    "\\Assets\\Mapa\\Img",
     "\\css",
     "\\js",
     "\\js\\Characters",
     "\\js\\Objetos",
     "\\js\\WebPage"
   ],
-  "SelectedNode": "\\js\\Characters\\player.js",
+  "SelectedNode": "\\js\\Nivel4.js",
   "PreviewInSolutionExplorer": false
 }

@@ -10,7 +10,7 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         //Elementos del escenario
-        this.load.image('background', 'Assets/Mapa/Img/CapaFondo.png'); 
+        this.load.image('background1', 'Assets/Mapa/Img/CapaFondo.png'); 
         this.load.image('suelos', 'Assets/Mapa/Img/CapaSuelos.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
@@ -22,14 +22,17 @@ export class MainScene extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
-
+    // Método llamado cuando el jugador colisiona con el punto de cambio
+    onOverlapChangeScene(player, changeScenePoint) {
+        this.scene.start('Nivel2'); // Cambia a la nueva escena
+    }
     create() {
         // Dimensiones y configuración del juego
         const gameWidth = this.game.config.width;
         const gameHeight = this.game.config.height;
 
         // Configuración del fondo y otros elementos de la escena
-        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
+        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background1').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
         let suelos = this.add.image(gameWidth / 2, gameHeight / 2, 'suelos').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
         // Configuración del mapa y las capas de colisiones
@@ -60,6 +63,14 @@ export class MainScene extends Phaser.Scene {
         camera.setBounds(0, 0, gameWidth, gameHeight);
         camera.startFollow(this.player);
         camera.setZoom(1.4);
+
+
+        // Creación del punto de cambio de escena
+        this.changeScenePoint = this.add.rectangle(100, 100, 100, 100, 0x0000ff, 0); // x, y, width, height son los parámetros de la posición y tamaño
+        this.physics.add.existing(this.changeScenePoint, true); // 'true' hace que sea estático
+
+        // Configuración de la colisión entre el jugador y el punto de cambio
+        this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
     }
 
     update() {
