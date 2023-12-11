@@ -1,7 +1,7 @@
 import Player from './Characters/player.js';
-export class Nivel2 extends Phaser.Scene {
+export class Nivel3 extends Phaser.Scene {
     constructor() {
-        super({ key: 'Nivel2' });
+        super({ key: 'Nivel3' });
         this.player = null;
         this.cursors = null;
         this.groundLayer = null;
@@ -22,7 +22,7 @@ export class Nivel2 extends Phaser.Scene {
     }
     // Método llamado cuando el jugador colisiona con el punto de cambio
     onOverlapChangeScene(player, changeScenePoint) {
-        this.scene.start('Nivel3'); // Cambia a la escena MainScene
+        this.scene.start('Nivel4'); // Cambia a la escena MainScene
     }
     create() {
         const gameWidth = this.game.config.width;
@@ -56,6 +56,8 @@ export class Nivel2 extends Phaser.Scene {
         // Configuración de la colisión para cambiar de escena
         this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
     }
+
+
 
     update() {
         // Lógica de actualización para cada frame
