@@ -1,12 +1,12 @@
 import Player from './Characters/player.js';
-//import Enemy from './Characters/enemy.js';
+import Enemy from './Characters/enemy.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         //this.player = null;
         //this.enemy = null;
-        //this.enemies = []; //Array vacio de enemigos
+        this.enemies = []; //Array vacio de enemigos
     }
 
     preload() {
@@ -63,22 +63,11 @@ export class MainScene extends Phaser.Scene {
         //Añadimos las colisiones entre el player y el suelo
         this.physics.add.collider(this.player,this.ground);
 
+        //Creamos a los enemigos
+        this.createEnemies();
+
         //Torreta que funciona como controlador de instancias de las torretas
         this.oneTurret = null;
-
-        
-        //Creamos enemigos
-        var numEnemies = 3;
-        var posX= 300; 
-        /*for(let i = 0; i < numEnemies; i++){
-            var enemy = new Enemy(this , posX, 450, 50, 50);
-            this.enemies.push(enemy); //Agregamos enemigo al array
-            this.physics.add.collider(this.enemies[i], ground);
-            this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
-            posX += 200;
-        }*/
-        //Booleano para determinar primer acceso al menu de seleccion
-        //this.firstChange= true;
 
          //Metodo asociado al resume de esta escena, con los parametros scene y el id actual del jugador
          this.events.on('resume', (scene , id) =>{
@@ -192,10 +181,6 @@ export class MainScene extends Phaser.Scene {
         console.log("Se han creado las animaciones!");
     }
 //#endregion
-    handleCollision(player, enemy){
-        this.player.recieveDamage(4);
-        enemy.destroy();
-    }
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
     changeToSelection(){
         //Pausamos el menu de juego...
@@ -203,6 +188,24 @@ export class MainScene extends Phaser.Scene {
         //Vamos al menu de seleccion
         this.scene.launch('SelectionMenu');
         console.log("Estas en el menú de cambio de personaje...");
+    }
+
+    createEnemies(){
+        //Creamos enemigos
+        let numEnemies = 3;
+        let posX = 300; 
+        for(let i = 0; i < numEnemies; i++){
+            var enemy = new Enemy(this , posX, 450, 50, 50);
+            this.enemies.push(enemy); //Agregamos enemigo al array
+            this.physics.add.collider(this.enemies[i], this.ground);
+            this.physics.add.collider(this.player, this.enemies[i], this.handleCollision, null, this);
+            posX += 200;
+        }
+    }
+    
+    handleCollision(player, enemy){
+        this.player.recieveDamage(4);
+        enemy.destroy();
     }
     /*getGround(){
         console.log("ground");

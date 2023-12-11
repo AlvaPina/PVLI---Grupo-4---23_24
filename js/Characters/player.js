@@ -24,8 +24,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setOffset((300 - (colliderWidth - 170)) / 2, (300 - (colliderHeight - 10)) / 2);
         
         //this.body.setOffset(0, 0);
-
-
+        
         // Configuración de la física del jugador
         this.setCollideWorldBounds(true);
 
@@ -154,7 +153,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     //Ataque de defensor (puñetazo)
     defenderAttack(){
+        //El ataque consiste en un rectangulo invisible que representa el área de ataque del puñetazo
+        //Diemnsiones
+        const rectWidth = 80 , rectHeight = 80; 
+        //Area de ataque
+        const punchAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
+        //this.scene.physics.add.existing(swordAttackArea);
+        //swordAttackArea.setSize(rectWidth, rectHeight);
+        punchAttackArea.setVisible(true);
 
+        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
+           punchAttackArea.setVisible(false);
+           punchAttackArea.destroy();
+        });
 
     }
 
