@@ -1,4 +1,4 @@
-import Player from './Characters/Player/player.js';
+import Player from './Characters/player.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -14,6 +14,8 @@ export class MainScene extends Phaser.Scene {
         this.load.image('suelos', 'Assets/Mapa/Img/CapaSuelos.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
+        this.load.image('turret', 'Assets/Objetos/Torreta.png');
+        this.load.image('bullet', 'Assets/Objetos/Bala.png');
         //Animaciones de Logica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
@@ -53,7 +55,7 @@ export class MainScene extends Phaser.Scene {
         this.physics.world.gravity.y = 700;
 
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 160);
+        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
@@ -71,6 +73,21 @@ export class MainScene extends Phaser.Scene {
 
         // Configuración de la colisión entre el jugador y el punto de cambio
         this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
+
+        //Metodo asociado al resume de esta escena, con los parametros scene y el id actual del jugador
+         this.events.on('resume', (scene , id) =>{
+            //Llama al metodo de confirmar cambios ubicado en el player
+            this.player.confirmChange(id);
+        });
+    }
+
+     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
+     changeToSelection(){
+        //Pausamos el menu de juego...
+        this.scene.pause();
+        //Vamos al menu de seleccion
+        this.scene.launch('SelectionMenu');
+        console.log("Estas en el menú de cambio de personaje...");
     }
 
     update() {

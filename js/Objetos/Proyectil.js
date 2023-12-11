@@ -7,7 +7,7 @@ class Proyectile extends SerVivo {
         scene.physics.add.existing(this);
 
         // Definir la velocidad del proyectil
-        this.speed = 700;
+        this.speed = 9;
         this.velocityVector = velocityVector.normalize().scale(this.speed);
 
         // Establecer la velocidad inicial

@@ -51,9 +51,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
         //creamos componente de vida
         this.lifeComp = new LifeComponent(iniLives, this);
+        //Id del sprite de personalidad
         this.spriteId = spriteId;
+        //Velocidad del jugador
         this.speed = speed;
+        //escena
         this.scene = scene;
+        //Direccion del jugador (1 -> derecha / -1 -> izquierda)
+        this.dir = 1;
     }
     //Metodo para confirmar el cambio
     confirmChange(id){
@@ -87,13 +92,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         } 
         //Moverse a la izquierda
         if (this.cursors.left.isDown && !this.isAttack) { 
-            this.setVelocityX(this.speed * -1);
+            this.dir = -1;
+            this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
             console.log("Izquierda");
         }
         //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
-            this.setVelocityX(this.speed * 1);
+            this.dir = 1;
+            this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
             console.log("Derecha");
         }
@@ -131,9 +138,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack(){
-        //Instanciamos una nueva pocion lanzable
-        new Proyectile(this.scene, this.x, this.y, 'potion');
-        console.log("Pocion lanzada");
+       // Obtener el vector de velocidad actual del jugador
+       let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
+
+       // Normalizar el vector si el jugador está quieto (para que el proyectil no se quede estático)
+       if (velocityVector.length() === 0) {
+           velocityVector = new Phaser.Math.Vector2(this.dir, 0);
+       }
+
+       new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
+       console.log("Ataque activado");
+       //this.isAttack = false;
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -220,7 +235,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Metodo booleano para comprobar si el jugador ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){
         if(this.cursors.control.isDown){
-            //console.log(this.spriteId);
+            console.log(this.spriteId);
             return true;
         }
         return false;

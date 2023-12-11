@@ -24,17 +24,17 @@ export class LoadScene extends Phaser.Scene
         // ... cargar otros spritesheets ...
          //SpriteSheets de Protagonista
          this.load.spritesheet('protagonist_idle', 'Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
-         this.load.spritesheet('protagonist_jump', 'Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
+         this.load.spritesheet('protagonist_jump', 'Assets/Characters/Protagonist_Jump.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('protagonist_move', 'Assets/Characters/Protagonist_Walk.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('protagonist_attack', 'Assets/Characters/Protagonist_Attack.png', { frameWidth: 300, frameHeight: 300 });
          //SpriteSheets de Defensor
          this.load.spritesheet('defender_idle', 'Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
-         this.load.spritesheet('defender_jump', 'Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
+         this.load.spritesheet('defender_jump', 'Assets/Characters/Defender_Jump.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('defender_move', 'Assets/Characters/Defender_Walk.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('defender_attack', 'Assets/Characters/Defender_Attack.png', { frameWidth: 300, frameHeight: 300 });
          //SpriteSheets de Virtuoso
          this.load.spritesheet('virtuous_idle', 'Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
-         this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
+         this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Jump.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('virtuous_move', 'Assets/Characters/Virtuous_Walk.png', { frameWidth: 300, frameHeight: 300 });
          this.load.spritesheet('virtuous_attack', 'Assets/Characters/Virtuous_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //// ... Cargar assets de enemigos
@@ -75,114 +75,112 @@ export class LoadScene extends Phaser.Scene
         });
     }
 
-    createAnimations() {
-        // Crear animaciones globales
-        //--ANIMACIONES PARA LOGICA--
-        // Animación de Idle
-        this.anims.create({
-            key: 'l_idle',
-            frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        // Animación de Salto
-        this.anims.create({
-            key: 'l_jump',
-            frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        // Animación de Movimiento
-        this.anims.create({
-            key: 'l_move',
-            frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        //Animacion de ataque
-        this.anims.create({
-            key: 'l_attack',
-            frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        //--ANIMACIONES PARA PROTAGONISTA--
-        this.anims.create({
-            key: 'p_idle',
-            frames: this.anims.generateFrameNumbers('protagonist_idle', { start: 0, end: 3 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'p_jump',
-            frames: this.anims.generateFrameNumbers('protagonist_jump', { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'p_move',
-            frames: this.anims.generateFrameNumbers('protagonist_move', { start: 0, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'p_attack',
-            frames: this.anims.generateFrameNumbers('protagonist_attack', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        //--ANIMACIONES PARA DEFENSOR--
-        this.anims.create({
-            key: 'd_idle',
-            frames: this.anims.generateFrameNumbers('defender_idle', { start: 0, end: 3 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'd_jump',
-            frames: this.anims.generateFrameNumbers('defender_jump', { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'd_move',
-            frames: this.anims.generateFrameNumbers('defender_move', { start: 0, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'd_attack',
-            frames: this.anims.generateFrameNumbers('defender_attack', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        //--ANIMACIONES PARA VIRTUOSO--
-        this.anims.create({
-            key: 'v_idle',
-            frames: this.anims.generateFrameNumbers('virtuous_idle', { start: 0, end: 3 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'v_jump',
-            frames: this.anims.generateFrameNumbers('virtuous_jump', { start: 0, end: 0 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'v_move',
-            frames: this.anims.generateFrameNumbers('virtuous_move', { start: 0, end: 7 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'v_attack',
-            frames: this.anims.generateFrameNumbers('virtuous_attack', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    }
+   //#region Creacion de animaciones para los personajes
+   createAnimations() {
+    // Crear animaciones globales
+    //--ANIMACIONES PARA LOGICA--
+    this.anims.create({
+        key: 'l_idle',
+        frames: this.anims.generateFrameNumbers('logic_idle', { start: 0, end: 3 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'l_jump',
+        frames: this.anims.generateFrameNumbers('logic_jump', { start: 0, end: 0 }),
+        frameRate: 1,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'l_move',
+        frames: this.anims.generateFrameNumbers('logic_move', { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'l_attack',
+        frames: this.anims.generateFrameNumbers('logic_attack', { start: 0, end: 4 }),
+        frameRate: 20,
+        repeat: 0
+    });
+    //--ANIMACIONES PARA PROTAGONISTA--
+    this.anims.create({
+        key: 'p_idle',
+        frames: this.anims.generateFrameNumbers('protagonist_idle', { start: 0, end: 3 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'p_jump',
+        frames: this.anims.generateFrameNumbers('protagonist_jump', { start: 0, end: 0 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'p_move',
+        frames: this.anims.generateFrameNumbers('protagonist_move', { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'p_attack',
+        frames: this.anims.generateFrameNumbers('protagonist_attack', { start: 0, end: 4 }),
+        frameRate: 7,
+        repeat: 0,
+    });
+    //--ANIMACIONES PARA DEFENSOR--
+    this.anims.create({
+        key: 'd_idle',
+        frames: this.anims.generateFrameNumbers('defender_idle', { start: 0, end: 3 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'd_jump',
+        frames: this.anims.generateFrameNumbers('defender_jump', { start: 0, end: 0 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'd_move',
+        frames: this.anims.generateFrameNumbers('defender_move', { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'd_attack',
+        frames: this.anims.generateFrameNumbers('defender_attack', { start: 0, end: 5 }),
+        frameRate: 7,
+        repeat: 0
+    });
+    //--ANIMACIONES PARA VIRTUOSO--
+    this.anims.create({
+        key: 'v_idle',
+        frames: this.anims.generateFrameNumbers('virtuous_idle', { start: 0, end: 3 }),
+        frameRate: 5,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'v_jump',
+        frames: this.anims.generateFrameNumbers('virtuous_jump', { start: 0, end: 0 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'v_move',
+        frames: this.anims.generateFrameNumbers('virtuous_move', { start: 0, end: 7 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'v_attack',
+        frames: this.anims.generateFrameNumbers('virtuous_attack', { start: 0, end: 5 }),
+        frameRate: 7,
+        repeat: 0
+    });
+    console.log("Se han creado las animaciones!");
+}
+//#endregion
 
     updateText() {
         if (this.loadingText) {

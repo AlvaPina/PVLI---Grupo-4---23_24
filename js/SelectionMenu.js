@@ -39,10 +39,10 @@ export class SelectionMenu extends Phaser.Scene {
         this.add.image(this.game.config.width/2 , this.game.config.height/1.8 , 'up').setScale(0.5);
         this.add.image(this.game.config.width/2 , 60, 'text').setScale(0.5);
         //Añadimos parte de seleccion de personaje
-        let logicPanel = this.add.image(this.game.config.width / 2 , this.game.config.height/3.2 , 'logic').setScale(0.5);
-        let defenderPanel = this.add.image(this.game.config.width-263 , this.game.config.height/1.82 , 'defender').setScale(0.5);
-        let virtuousPanel = this.add.image(this.game.config.width-540 , this.game.config.height/1.8 , 'virtuous').setScale(0.5);
-        let protagonistPanel = this.add.image(this.game.config.width/2 , this.game.config.height-121 , 'protagonist').setScale(0.5);
+        let logicPanel = this.add.image(this.game.config.width / 2 , this.game.config.height/3.5 , 'logic').setScale(0.5);
+        let defenderPanel = this.add.image(this.game.config.width / 1.55 , this.game.config.height/ 1.82 , 'defender').setScale(0.5);
+        let virtuousPanel = this.add.image(this.game.config.width / 2.85, this.game.config.height/ 1.8, 'virtuous').setScale(0.5);
+        let protagonistPanel = this.add.image(this.game.config.width / 2 , this.game.config.height/ 1.21, 'protagonist').setScale(0.5);
         
         //Manejamos la visbilidad de las opciones disponibles
         logicPanel.visible = true;
@@ -74,8 +74,6 @@ export class SelectionMenu extends Phaser.Scene {
             this.returnToGame('p');
         },this);
     }
-    
-
     //Metodo para volver al juego de nuevo (simpre y cuando el jugador este en este menu de seleccion)
     returnToGame(spriteId){ 
         //Volvemos a la escena del nivel

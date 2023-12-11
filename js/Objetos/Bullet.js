@@ -7,7 +7,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
         //Añadimos fisicas al objeto
         scene.physics.add.existing(this);
         //Ajustamos escala
-        this.setScale(0.1);
+        this.setScale(0.05);
         //Ponemos limites con el mundo
         this.setCollideWorldBounds(true);
 

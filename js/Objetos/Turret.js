@@ -8,9 +8,9 @@ export default class Turret extends Phaser.Physics.Arcade.Sprite {
         //Añadimos fisicas al objeto
         scene.physics.add.existing(this);
         
-        this.setScale(0.4, 0.4);
+        this.setScale(0.1);
         //Añadimos las colisiones entre la torreta y el suelo
-        this.scene.physics.add.collider(this, this.scene.ground);
+        this.scene.physics.add.collider(this, this.scene.groundLayer);
         //this.scene.physics.add.collider(this , this.scene.player);
 
         //Tiempo de vida de la torreta
