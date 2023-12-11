@@ -44,7 +44,6 @@ export class LoadScene extends Phaser.Scene
     create() {
         // Crear animaciones aquí
         this.createAnimations();
-
         // Agregar imagen de fondo
         let image = this.add.image(0, 0, "backgroundINI");
         image.setOrigin(0.5, 0.5);
@@ -62,7 +61,9 @@ export class LoadScene extends Phaser.Scene
         // Evento peri�dico para actualizar texto
         this.time.addEvent({
             delay: 500,                // intervalo de 500 ms
-            callback: this.updateText, // funci�n a ejecutar
+
+            callback: this.updateText, // funcion a ejecutar
+
             callbackScope: this,       // contexto (LoadScene)
             loop: true                 // repetir indefinidamente
         });
@@ -73,6 +74,7 @@ export class LoadScene extends Phaser.Scene
             this.scene.start('MainScene');
         });
     }
+
     createAnimations() {
         // Crear animaciones globales
         //--ANIMACIONES PARA LOGICA--
