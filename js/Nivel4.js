@@ -35,10 +35,11 @@ export class Nivel4 extends Phaser.Scene {
         var mapa = this.make.tilemap({ key: 'mapa' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
-        // Creaci�n y configuraci�n del jugador
-        this.player = new Player(this, 100, 250, 160); // Ajusta la posici�n seg�n sea necesario
+        // Creación y configuración del jugador
+        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
         this.player.startAnimation();
-        this.player.setScale(0.2, 0.2);
+        this.player.setScale(0.18, 0.18);
+        this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
 
         // Creaci�n del suelo b�sico en l�nea recta
         this.groundLayer = this.physics.add.staticGroup();

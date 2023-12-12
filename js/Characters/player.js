@@ -86,7 +86,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Input del Jugador
     playerInput() { 
         //El jugador salta si se pulsa la tecla, toca el suelo, y si no está atacando
-        if (this.cursors.space.isDown && this.body.touching.down && !this.isAttack) {
+        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down && !this.isAttack) {
             this.setVelocityY(this.speed * -1);
             console.log("Salto");
         } 
@@ -213,34 +213,39 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
-    animationManager(){
-        //Si esta en el aire
-        if(!this.body.onFloor()){ 
-            if(this.anims.currentAnim.key !== this.spriteId + '_jump') { 
-                this.play(this.spriteId + '_jump'); }
+    animationManager() {
+        // Verificar si currentAnim es null antes de acceder a su propiedad key
+        const currentAnimKey = this.anims.currentAnim ? this.anims.currentAnim.key : null;
+
+        // Si está en el aire
+        if (!this.body.onFloor()) {
+            if (currentAnimKey !== this.spriteId + '_jump') {
+                this.play(this.spriteId + '_jump');
+            }
         }
-        //Si se mueve en cualquier direccion en el suelo
-        else if(this.body.velocity.x != 0){ 
-            if(this.anims.currentAnim.key !== this.spriteId + '_move'){ this.play(this.spriteId + '_move'); }
+        // Si se mueve en cualquier dirección en el suelo
+        else if (this.body.velocity.x != 0) {
+            if (currentAnimKey !== this.spriteId + '_move') {
+                this.play(this.spriteId + '_move');
+            }
         }
-        //Si esta atacando
-        else if(this.isAttack){ 
-            if(this.anims.currentAnim.key !== this.spriteId + '_attack'){
-                //Reproducimos animacion de atatque
+        // Si está atacando
+        else if (this.isAttack) {
+            if (currentAnimKey !== this.spriteId + '_attack') {
                 this.play(this.spriteId + '_attack');
-                //Cuando se finaliza la animacion de ataque, se ejecuta lo que hay dentro
                 this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-                    console.log('La animación ha terminado:', this.anims.currentAnim.key);
-                    //Ponemos booleano de ataque a false
                     this.isAttack = false;
                 });
             }
         }
-        //Si esta quieto
+        // Si está quieto
         else {
-            if(this.anims.currentAnim.key !== this.spriteId + '_idle'){ this.play(this.spriteId + '_idle'); }
+            if (currentAnimKey !== this.spriteId + '_idle') {
+                this.play(this.spriteId + '_idle');
+            }
         }
     }
+
 
     //Metodo booleano para comprobar si el jugador ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){

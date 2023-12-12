@@ -50,7 +50,7 @@ export class MainScene extends Phaser.Scene {
         });
 
         // Configuración de la gravedad
-        this.physics.world.gravity.y = 700;
+        this.physics.world.gravity.y = 100;
 
         // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 280, 10, null, 'l');
