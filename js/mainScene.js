@@ -10,8 +10,7 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         //Elementos del escenario
-        this.load.image('background1', 'Assets/Mapa/Img/CapaFondo.png'); 
-        this.load.image('suelos', 'Assets/Mapa/Img/CapaSuelos.png'); 
+        this.load.image('background1', 'Assets/Mapa/Img/TutorialFinal.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
         this.load.image('turret', 'Assets/Objetos/Torreta.png');
@@ -35,7 +34,6 @@ export class MainScene extends Phaser.Scene {
 
         // Configuración del fondo y otros elementos de la escena
         let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background1').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
-        let suelos = this.add.image(gameWidth / 2, gameHeight / 2, 'suelos').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
         // Configuración del mapa y las capas de colisiones
         var mapa = this.make.tilemap({ key: 'mapa' });

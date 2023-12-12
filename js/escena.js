@@ -12,8 +12,7 @@ export class LoadScene extends Phaser.Scene
         // Preload assets
         this.load.image('backgroundINI', 'Assets/WebPage/Img/LoadingScreen.png');
 
-        this.load.image('background', 'Assets/Mapa/Img/CapaFondo.png');
-        this.load.image('suelos', 'Assets/Mapa/Img/CapaSuelos.png');
+        this.load.image('background', 'Assets/Mapa/Img/TutorialFinal.png');
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
         // Cargar los spritesheets

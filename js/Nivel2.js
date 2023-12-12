@@ -18,9 +18,9 @@ export class Nivel2 extends Phaser.Scene {
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa2JSON.json');
     }
-    // Método llamado cuando el jugador colisiona con el punto de cambio
+    // Mï¿½todo llamado cuando el jugador colisiona con el punto de cambio
     onOverlapChangeScene(player, changeScenePoint) {
         this.scene.start('Nivel3'); // Cambia a la escena MainScene
     }
@@ -28,37 +28,41 @@ export class Nivel2 extends Phaser.Scene {
         const gameWidth = this.game.config.width;
         const gameHeight = this.game.config.height;
 
-        // Configuración del fondo y otros elementos de la escena
+        // Configuraciï¿½n del fondo y otros elementos de la escena
         let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background2').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
-        // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 160); // Ajusta la posición según sea necesario
+        // ConfiguraciÃ³n del mapa y las capas de colisiones
+        var mapa = this.make.tilemap({ key: 'mapa' });
+        var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
+
+        // Creaciï¿½n y configuraciï¿½n del jugador
+        this.player = new Player(this, 100, 250, 160); // Ajusta la posiciï¿½n segï¿½n sea necesario
         this.player.startAnimation();
         this.player.setScale(0.2, 0.2);
 
-        // Creación del suelo básico en línea recta
+        // Creaciï¿½n del suelo bï¿½sico en lï¿½nea recta
         this.groundLayer = this.physics.add.staticGroup();
-        this.groundLayer.create(gameWidth / 2, gameHeight - 20, 'ground').setScale(gameWidth / 64, 1).refreshBody(); // Ajusta según el tamaño de tu imagen 'ground'
+        this.groundLayer.create(gameWidth / 2, gameHeight - 20, 'ground').setScale(gameWidth / 64, 1).refreshBody(); // Ajusta segï¿½n el tamaï¿½o de tu imagen 'ground'
 
-        // Colisión entre el jugador y el suelo
+        // Colisiï¿½n entre el jugador y el suelo
         this.physics.add.collider(this.player, this.groundLayer);
 
-        // Configuración de la cámara
+        // Configuraciï¿½n de la cï¿½mara
         let camera = this.cameras.main;
         camera.setBounds(0, 0, gameWidth, gameHeight);
         camera.startFollow(this.player);
         camera.setZoom(1.4);
 
-        // Creación del punto de cambio de escena
-        this.changeScenePoint = this.add.rectangle(gameWidth - 100, gameHeight / 2, 100, gameHeight, 0x0000ff, 0); // Ajusta según la posición deseada
+        // Creaciï¿½n del punto de cambio de escena
+        this.changeScenePoint = this.add.rectangle(gameWidth - 100, gameHeight / 2, 100, gameHeight, 0x0000ff, 0); // Ajusta segï¿½n la posiciï¿½n deseada
         this.physics.add.existing(this.changeScenePoint, true);
 
-        // Configuración de la colisión para cambiar de escena
+        // Configuraciï¿½n de la colisiï¿½n para cambiar de escena
         this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
     }
 
     update() {
-        // Lógica de actualización para cada frame
+        // Lï¿½gica de actualizaciï¿½n para cada frame
     }
 }
 
