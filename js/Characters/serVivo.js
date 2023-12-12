@@ -1,4 +1,4 @@
-class SerVivo extends Phaser.Physics.Arcade.Sprite{
+export default class SerVivo extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, speed, life, key){
         super(scene, x, y , key);
         this.life = life // null si no tiene vida
@@ -17,5 +17,3 @@ class SerVivo extends Phaser.Physics.Arcade.Sprite{
         
     }
 }
-
-export default SerVivo;

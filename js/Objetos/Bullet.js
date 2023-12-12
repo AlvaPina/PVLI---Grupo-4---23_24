@@ -1,6 +1,6 @@
 //Constructor de la bala instanciada por torreta   
 export default class Bullet extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture) {
+    constructor(scene, x, y, texture, dir) {
         super(scene, x, y, texture)
         //Añadimos torreta a la escena
         scene.add.existing(this);
@@ -17,6 +17,8 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.timeLife = 5;
         //Tiempo transcurrido
         this.elapsedTime = 0;
+        //Direccion a la que apunta la torreta
+        this.dir = dir;
 
     }
 
@@ -26,7 +28,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
         //Incrementamos elapsedTime
         this.elapsedTime += dt / 1000;
         //Incrementamos velocidad de la bala
-        this.x += this.speed;
+        this.x += this.speed * this.dir;
         if(this.elapsedTime >= this.timeLife){
             this.destroy();
         }

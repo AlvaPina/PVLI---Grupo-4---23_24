@@ -1,6 +1,6 @@
 import SerVivo from "../Characters/serVivo.js";
 
-class Proyectile extends SerVivo {
+export default class Proyectile extends SerVivo {
     constructor(scene, x, y, texture, velocityVector) {
         super(scene, x, y, texture);
         scene.add.existing(this);
@@ -43,6 +43,8 @@ class Proyectile extends SerVivo {
     setLifeTime(duration) {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
-}
 
-export default Proyectile;
+    preUpdate(t, dt){
+        super.preUpdate(t, dt);
+    }
+}

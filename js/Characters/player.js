@@ -93,6 +93,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Moverse a la izquierda
         if (this.cursors.left.isDown && !this.isAttack) { 
             this.dir = -1;
+            console.log(this.dir);
             this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
             console.log("Izquierda");
@@ -100,6 +101,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
             this.dir = 1;
+            console.log(this.dir);
             this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
             console.log("Derecha");
@@ -144,11 +146,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
        // Normalizar el vector si el jugador está quieto (para que el proyectil no se quede estático)
        if (velocityVector.length() === 0) {
            velocityVector = new Phaser.Math.Vector2(this.dir, 0);
+           console.log(velocityVector);
        }
 
-       new Proyectile(this.scene, this.x, this.y, 'potion', velocityVector);
+       new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
        console.log("Ataque activado");
-       //this.isAttack = false;
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -193,8 +195,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
         // Sino, instanciamos una nueva torreta (añadimos un poco de distancia entre la instancia y el jugador) y la igualamos
         // a la nueva torreta
-        this.scene.oneTurret = new Turret(this.scene, this.x + 150, this.y - 150, 'turret');
+        if(this.dir == 1){ // si virtuoso apunta a la derecha
+            this.scene.oneTurret = new Turret(this.scene, this.x + 30, this.y - 150, 'turret', this.dir);
+        }
+        else { //Si apunta a la izquerda
+            this.scene.oneTurret = new Turret(this.scene, this.x - 30, this.y - 150, 'turret', this.dir);
+            //Invertimos la torreta
+            this.scene.oneTurret.setFlip(true, false);
+        }
     }
+
 //#endregion
     //Metodo para controlar la vida del jugador
     recieveDamage(damage){
@@ -235,7 +245,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Metodo booleano para comprobar si el jugador ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){
         if(this.cursors.control.isDown){
-            console.log(this.spriteId);
+            //console.log(this.spriteId);
             return true;
         }
         return false;
