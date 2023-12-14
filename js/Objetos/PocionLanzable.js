@@ -23,9 +23,6 @@ export default class Proyectile extends Phaser.Physics.Arcade.Sprite {
 
         this.dir = dir;
         this.damage = damage;
-
-
-
     }
 
     handleCollisionWithGround() {

@@ -1,3 +1,4 @@
+import { MenuInicial } from "./Menu.js";
 import { LoadScene } from "./PantallaCarga.js";
 import { MainScene } from "./mainScene.js";
 import { SelectionMenu } from "./SelectionMenu.js";
@@ -10,7 +11,7 @@ const config = {
     parent: 'phaser-example',
     width: 960,
     height: 540,
-    scene: [LoadScene, MainScene, Nivel2, Nivel3, Nivel4, SelectionMenu], // Añade aquí la nueva escena
+    scene: [MenuInicial ,LoadScene, MainScene, Nivel2, Nivel3, Nivel4, SelectionMenu], // Añade aquí la nueva escena
     physics: {
         default: 'arcade',
         arcade: {
