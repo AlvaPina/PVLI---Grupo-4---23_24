@@ -1,5 +1,6 @@
 import Player from './Characters/player.js';
 import Enemy from './Characters/enemy.js';
+import RedBull from './Objetos/RedBull.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -12,10 +13,18 @@ export class MainScene extends Phaser.Scene {
     preload() {
         this.load.image('background', 'Assets/WebPage/Img/background.png'); 
         this.load.image('ground', 'Assets/WebPage/Img/ground.png');
+        //Elementos de la UI
+        this.load.image('heart', 'Assets/UI/Heart.png');
+        this.load.image('no_heart', 'Assets/UI/No-Heart.png');
+        this.load.image('l_icon', 'Assets/Characters/Logic_Icon.png');
+        this.load.image('d_icon', 'Assets/Characters/Defender_Icon.png');
+        this.load.image('p_icon', 'Assets/Characters/Protagonist_Icon.png');
+        this.load.image('v_icon', 'Assets/Characters/Virtuous_Icon.png');
         //Imagenes objetos
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
         this.load.image('turret', 'Assets/Objetos/Torreta.png');
         this.load.image('bullet', 'Assets/Objetos/Bala.png');
+        this.load.image('redbull' , 'Assets/Objetos/RedBull.png');
         //SpriteSheets de Lógica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
@@ -65,7 +74,7 @@ export class MainScene extends Phaser.Scene {
 
         //Creamos a los enemigos
         this.createEnemies();
-
+        let redB = new RedBull(this, 40, 0);
         //Torreta que funciona como controlador de instancias de las torretas
         this.oneTurret = null;
 
@@ -203,15 +212,18 @@ export class MainScene extends Phaser.Scene {
         }
     }
     
+    getEnemies(){
+        return this.enemies;
+    }
     handleCollision(player, enemy){
-        this.player.recieveDamage(4);
+        this.player.recieveDamage(enemy.damageAmount);
         enemy.destroy();
     }
-    /*getGround(){
+    getGround(){
         console.log("ground");
         return this.ground; 
     }
-    addTurret(turret){
+    /*addTurret(turret){
         this.turrets.push(turret);
     }*/
     update() {

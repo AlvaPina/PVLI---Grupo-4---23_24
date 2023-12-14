@@ -1,6 +1,7 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
 import Turret from '../Objetos/Turret.js';
+import UI from '../UI.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -54,6 +55,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.spriteId = spriteId;
         this.speed = speed;
         this.scene = scene;
+
+        //Creamos la instancia de la UI
+        this.ui = new UI(scene, this);
     }
     //Metodo para confirmar el cambio
     confirmChange(id){
@@ -76,6 +80,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.animationManager();
         //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
         if(this.changePersonality()) this.scene.changeToSelection(this.SpriteId);
+        //Actualizamos UI
+        this.ui.updateUI();
     }
 
     //Input del Jugador
@@ -141,30 +147,57 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Diemnsiones
         const rectWidth = 80 , rectHeight = 80; 
         //Area de ataque
-        const swordAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
-        //this.scene.physics.add.existing(swordAttackArea);
-        //swordAttackArea.setSize(rectWidth, rectHeight);
-        swordAttackArea.setVisible(true);
-
-        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-           swordAttackArea.setVisible(false);
-           swordAttackArea.destroy();
+        const swordAttackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        //Añadimos fisicas y hacemos que no tenga gravedad
+        this.scene.physics.add.existing(swordAttackArea);
+        swordAttackArea.body.setAllowGravity(false);
+        //lo desactivamos y lo dejamos invisible en un principio
+        swordAttackArea.setActive(false);
+        swordAttackArea.setVisible(false);
+        this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
+            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
+                swordAttackArea.setActive(true);
+                //swordAttackArea.setVisible(true);
+                //Hacemos evento overlap para controlar el numero de daño que le hace y evitar que haga mas daño de la cuenta
+                this.scene.physics.add.overlap(swordAttackArea, this.scene.getEnemies(), function (sword, enemy) {
+                    //Si el area de ataque esta activa
+                    if (sword.active) {
+                        //Hacemos daño al enemigo
+                        enemy.enemyRecieveDamage(1);
+                        // Desactivamos el área de ataque después de dañar a un enemigo
+                        sword.setActive(false); 
+                    }
+                });
+            //}
+             // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
+             this.scene.time.delayedCall(100, () => {
+                swordAttackArea.destroy();
+            });
         });
     }
     //Ataque de defensor (puñetazo)
     defenderAttack(){
-        //El ataque consiste en un rectangulo invisible que representa el área de ataque del puñetazo
-        //Diemnsiones
+        //El ataque consiste en un rectangulo invisible que representa el área de ataque del puño
+        //Dimensiones
         const rectWidth = 80 , rectHeight = 80; 
         //Area de ataque
-        const punchAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
-        //this.scene.physics.add.existing(swordAttackArea);
-        //swordAttackArea.setSize(rectWidth, rectHeight);
-        punchAttackArea.setVisible(true);
-
-        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-           punchAttackArea.setVisible(false);
-           punchAttackArea.destroy();
+        const punchAtackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        //Añadimos fisicas y hacemos que no tenga gravedad
+        this.scene.physics.add.existing(punchAtackArea);
+        punchAtackArea.body.setAllowGravity(false);
+        //lo desactivamos y lo dejamos invisible en un principio
+        punchAtackArea.setActive(false);
+        punchAtackArea.setVisible(false);
+        this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
+            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
+                punchAtackArea.setActive(true);
+                //swordAttackArea.setVisible(true);
+                this.scene.physics.add.overlap(punchAtackArea, this.scene.getEnemies(), this.onMeetEnemy);
+            //}
+             // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
+             this.scene.time.delayedCall(100, () => {
+                punchAtackArea.destroy();
+            });
         });
 
     }
@@ -181,10 +214,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.oneTurret = new Turret(this.scene, this.x + 150, this.y - 150, 'turret');
     }
 //#endregion
+    onMeetEnemy(player, enemy) {
+        enemy.enemyRecieveDamage(1);
+    }
     //Metodo para controlar la vida del jugador
     recieveDamage(damage){
         this.lifeComp.Damage(damage);
-        console.log("AUUU");
+        //console.log("AUUU");
     }
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
@@ -224,5 +260,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return true;
         }
         return false;
+    }
+
+    getLives(){
+        return this.lifeComp.getCurrentLives();
     }
 }

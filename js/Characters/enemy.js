@@ -1,3 +1,4 @@
+import LifeComponent from "../LifeComponent.js";
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, width, height) {
         super(scene, x, y, width, height); // Rectángulo rojo (puedes cambiar el color)
@@ -14,6 +15,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         //Ajustamos collider
         this.body.setSize(width, height);
         // Propiedades específicas del enemigo
-        this.damageAmount = 1; // Cantidad de daño que el enemigo inflige al jugador
+        this.damageAmount = 5; // Cantidad de daño que el enemigo inflige al jugador
+
+        this.lifeComp = new LifeComponent(5, this);
+    }
+
+    enemyRecieveDamage(damage){
+        this.lifeComp.Damage(damage);
+        console.log("Has hecho " + damage + " de daño a un enemigo!");
     }
 }

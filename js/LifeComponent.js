@@ -10,12 +10,12 @@ export default class LifeComponent {
     //Metodo para manejar el daño de vida
     Damage(damageLives){
         this.lives -= damageLives;
-        console.log(this.lives);
         //Controlamos que no se salga de los limites
         if(this.lives <= 0){
             this.lives = 0;
             this.Die();
         }
+        console.log(this.lives);
     }
 
     //Metodo para manejar el aumento de vida
@@ -24,12 +24,16 @@ export default class LifeComponent {
 
         //Controlamos que no se salga de los limites
         if(this.lives > this.maxLives){
-            this.lives = this.maxLivesM;
+            this.lives = this.maxLives;
         }
     }
-
+    //Metodo que destruye el gameObject asociado al LifeComponent cuando muere
     Die(){
         this.gameObject.destroy();
+    }
+    //Metodo que devuelve las vidas actuales de la entidad asociada
+    getCurrentLives(){
+        return this.lives;
     }
 
 }
