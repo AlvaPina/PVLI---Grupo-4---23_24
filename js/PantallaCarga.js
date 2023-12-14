@@ -11,10 +11,19 @@ export class LoadScene extends Phaser.Scene
     preload() {
         // Preload assets
         this.load.image('backgroundINI', 'Assets/WebPage/Img/LoadingScreen.png');
-
         this.load.image('background', 'Assets/Mapa/Img/TutorialFinal.png');
+
+        //Cargamos objetos
         this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
+        this.load.image('redbull' , 'Assets/Objetos/RedBull.png');
+        //Elementos de la UI
+        this.load.image('heart', 'Assets/UI/Heart.png');
+        this.load.image('no_heart', 'Assets/UI/No-Heart.png');
+        this.load.image('l_icon', 'Assets/UI/Logic_Icon.png');
+        this.load.image('d_icon', 'Assets/UI/Defender_Icon.png');
+        this.load.image('p_icon', 'Assets/UI/Protagonist_Icon.png');
+        this.load.image('v_icon', 'Assets/UI/Virtuous_Icon.png');
         // Cargar los spritesheets
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });

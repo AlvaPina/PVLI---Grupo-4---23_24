@@ -1,4 +1,5 @@
 import Player from './Characters/player.js';
+import RedBull from './Objetos/RedBull.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -87,7 +88,13 @@ export class MainScene extends Phaser.Scene {
         this.scene.launch('SelectionMenu');
         console.log("Estas en el menú de cambio de personaje...");
     }
-
+    getEnemies(){
+        return this.enemies;
+    }
+    handleCollision(player, enemy){
+        this.player.recieveDamage(enemy.damageAmount);
+        enemy.destroy();
+    }
     update() {
     
     }

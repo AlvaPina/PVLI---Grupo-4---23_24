@@ -1,6 +1,7 @@
 import Proyectile from '../Objetos/PocionLanzable.js';
 import LifeComponent from '../LifeComponent.js';
 import Turret from '../Objetos/Turret.js';
+import UI from '../UI.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -51,14 +52,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
         //creamos componente de vida
         this.lifeComp = new LifeComponent(iniLives, this);
-        //Id del sprite de personalidad
-        this.spriteId = spriteId;
-        //Velocidad del jugador
-        this.speed = speed;
-        //escena
-        this.scene = scene;
-        //Direccion del jugador (1 -> derecha / -1 -> izquierda)
+        //Parametros del player
         this.dir = 1;
+        this.spriteId = spriteId;
+        this.speed = speed;
+        this.scene = scene;
+
+        //Creamos la instancia de la UI
+        this.ui = new UI(this.scene, this);
     }
     //Metodo para confirmar el cambio
     confirmChange(id){
@@ -81,6 +82,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.animationManager();
         //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
         if(this.changePersonality()) this.scene.changeToSelection(this.SpriteId);
+        //Actualizamos UI
+        this.ui.updateUI();
     }
 
     //Input del Jugador
@@ -91,9 +94,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             console.log("Salto");
         } 
         //Moverse a la izquierda
-        if (this.cursors.left.isDown && !this.isAttack) { 
-            this.dir = -1;
-            console.log(this.dir);
+        if (this.cursors.left.isDown && !this.isAttack) {
+            this.dir = -1; 
             this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
             console.log("Izquierda");
@@ -101,7 +103,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
             this.dir = 1;
-            console.log(this.dir);
             this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
             console.log("Derecha");
@@ -140,17 +141,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack(){
-       // Obtener el vector de velocidad actual del jugador
-       let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
-
-       // Normalizar el vector si el jugador está quieto (para que el proyectil no se quede estático)
-       if (velocityVector.length() === 0) {
-           velocityVector = new Phaser.Math.Vector2(this.dir, 0);
-           console.log(velocityVector);
-       }
-
-       new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
-       console.log("Ataque activado");
+        //Instanciamos una nueva pocion lanzable
+        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
+        console.log("Pocion lanzada");
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -158,30 +151,57 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Diemnsiones
         const rectWidth = 80 , rectHeight = 80; 
         //Area de ataque
-        const swordAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
-        //this.scene.physics.add.existing(swordAttackArea);
-        //swordAttackArea.setSize(rectWidth, rectHeight);
-        swordAttackArea.setVisible(true);
-
-        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-           swordAttackArea.setVisible(false);
-           swordAttackArea.destroy();
+        const swordAttackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        //Añadimos fisicas y hacemos que no tenga gravedad
+        this.scene.physics.add.existing(swordAttackArea);
+        swordAttackArea.body.setAllowGravity(false);
+        //lo desactivamos y lo dejamos invisible en un principio
+        swordAttackArea.setActive(false);
+        swordAttackArea.setVisible(false);
+        this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
+            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
+                swordAttackArea.setActive(true);
+                //swordAttackArea.setVisible(true);
+                //Hacemos evento overlap para controlar el numero de daño que le hace y evitar que haga mas daño de la cuenta
+                this.scene.physics.add.overlap(swordAttackArea, this.scene.getEnemies(), function (sword, enemy) {
+                    //Si el area de ataque esta activa
+                    if (sword.active) {
+                        //Hacemos daño al enemigo
+                        enemy.enemyRecieveDamage(1);
+                        // Desactivamos el área de ataque después de dañar a un enemigo
+                        sword.setActive(false); 
+                    }
+                });
+            //}
+             // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
+             this.scene.time.delayedCall(100, () => {
+                swordAttackArea.destroy();
+            });
         });
     }
     //Ataque de defensor (puñetazo)
     defenderAttack(){
-        //El ataque consiste en un rectangulo invisible que representa el área de ataque del puñetazo
-        //Diemnsiones
+        //El ataque consiste en un rectangulo invisible que representa el área de ataque del puño
+        //Dimensiones
         const rectWidth = 80 , rectHeight = 80; 
         //Area de ataque
-        const punchAttackArea = this.scene.add.rectangle(this.x + 73, this.y, rectWidth, rectHeight, 0x000FF);
-        //this.scene.physics.add.existing(swordAttackArea);
-        //swordAttackArea.setSize(rectWidth, rectHeight);
-        punchAttackArea.setVisible(true);
-
-        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-           punchAttackArea.setVisible(false);
-           punchAttackArea.destroy();
+        const punchAtackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        //Añadimos fisicas y hacemos que no tenga gravedad
+        this.scene.physics.add.existing(punchAtackArea);
+        punchAtackArea.body.setAllowGravity(false);
+        //lo desactivamos y lo dejamos invisible en un principio
+        punchAtackArea.setActive(false);
+        punchAtackArea.setVisible(false);
+        this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
+            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
+                punchAtackArea.setActive(true);
+                //swordAttackArea.setVisible(true);
+                this.scene.physics.add.overlap(punchAtackArea, this.scene.getEnemies(), this.onMeetEnemy);
+            //}
+             // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
+             this.scene.time.delayedCall(100, () => {
+                punchAtackArea.destroy();
+            });
         });
 
     }
@@ -204,48 +224,48 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.oneTurret.setFlip(true, false);
         }
     }
-
 //#endregion
+    onMeetEnemy(player, enemy) {
+        enemy.enemyRecieveDamage(1);
+    }
     //Metodo para controlar la vida del jugador
     recieveDamage(damage){
         this.lifeComp.Damage(damage);
-        console.log("AUUU");
+        //console.log("AUUU");
     }
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
     animationManager() {
         // Verificar si currentAnim es null antes de acceder a su propiedad key
         const currentAnimKey = this.anims.currentAnim ? this.anims.currentAnim.key : null;
-
         // Si está en el aire
         if (!this.body.onFloor()) {
             if (currentAnimKey !== this.spriteId + '_jump') {
                 this.play(this.spriteId + '_jump');
             }
         }
-        // Si se mueve en cualquier dirección en el suelo
-        else if (this.body.velocity.x != 0) {
-            if (currentAnimKey !== this.spriteId + '_move') {
-                this.play(this.spriteId + '_move');
-            }
+        //Si se mueve en cualquier direccion en el suelo
+        else if(this.body.velocity.x != 0){ 
+            if(currentAnimKey !== this.spriteId + '_move'){ this.play(this.spriteId + '_move'); }
         }
-        // Si está atacando
-        else if (this.isAttack) {
-            if (currentAnimKey !== this.spriteId + '_attack') {
+        //Si esta atacando
+        else if(this.isAttack){ 
+            if(currentAnimKey !== this.spriteId + '_attack'){
+                //Reproducimos animacion de atatque
                 this.play(this.spriteId + '_attack');
+                //Cuando se finaliza la animacion de ataque, se ejecuta lo que hay dentro
                 this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
+                    console.log('La animación ha terminado:', this.anims.currentAnim.key);
+                    //Ponemos booleano de ataque a false
                     this.isAttack = false;
                 });
             }
         }
-        // Si está quieto
+        //Si esta quieto
         else {
-            if (currentAnimKey !== this.spriteId + '_idle') {
-                this.play(this.spriteId + '_idle');
-            }
+            if(currentAnimKey !== this.spriteId + '_idle'){ this.play(this.spriteId + '_idle'); }
         }
     }
-
 
     //Metodo booleano para comprobar si el jugador ha pulsado la tecla control para acceder al menu de seleccion
     changePersonality(){
@@ -254,5 +274,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return true;
         }
         return false;
+    }
+
+    getLives(){
+        return this.lifeComp.getCurrentLives();
     }
 }
