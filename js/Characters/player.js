@@ -11,10 +11,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Añadimos físicas
         scene.physics.add.existing(this);
 
-        // Obtener el tamaño del frame del spritesheet
-        //const spriteWidth = 300;
-        //const spriteHeight = 300;
-
         // Ajustar el tamaño y la posición del collider para que se centre en el jugador
         const colliderWidth = 300;
         const colliderHeight = 300;
@@ -58,6 +54,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.speed = speed;
         this.scene = scene;
 
+        //Stats de daño dependiendo a los enemigos de las diferentes personalidades
+        this.logicDamage = 5;
+        this.defenderDamage = 7;
+        this.protagonistDamage = 8;
+        this.virtuousDamage = 6;
+
         //Creamos la instancia de la UI
         this.ui = new UI(this.scene, this);
     }
@@ -84,6 +86,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if(this.changePersonality()) this.scene.changeToSelection(this.SpriteId);
         //Actualizamos UI
         this.ui.updateUI();
+        //Si nos preciciptamos al vacio... morimos
+        if(this.y > 510) this.lifeComp.Die();
+        
     }
 
     //Input del Jugador
@@ -112,7 +117,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(0);
         }
     }
-
+    
     attack() {
         //Mientras se realiza el ataque, el jugador no se podra mover
         this.setVelocityX(0);
@@ -142,7 +147,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Ataque de logica (pocion lanzable)
     logicAttack(){
         //Instanciamos una nueva pocion lanzable
-        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir);
+        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
         console.log("Pocion lanzada");
     }
     //Ataque de protagonista (espadazo)
@@ -166,8 +171,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.scene.physics.add.overlap(swordAttackArea, this.scene.getEnemies(), function (sword, enemy) {
                     //Si el area de ataque esta activa
                     if (sword.active) {
-                        //Hacemos daño al enemigo
-                        enemy.enemyRecieveDamage(1);
+                        //Hacemos daño al enemigo enviando la cantidad de daño infligida por el protagonista
+                        enemy.enemyRecieveDamage(this.protagonistAttack);
                         // Desactivamos el área de ataque después de dañar a un enemigo
                         sword.setActive(false); 
                     }
@@ -185,22 +190,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Dimensiones
         const rectWidth = 80 , rectHeight = 80; 
         //Area de ataque
-        const punchAtackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        const fistAttackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
         //Añadimos fisicas y hacemos que no tenga gravedad
-        this.scene.physics.add.existing(punchAtackArea);
-        punchAtackArea.body.setAllowGravity(false);
+        this.scene.physics.add.existing(fistAttackArea);
+        fistAttackArea.body.setAllowGravity(false);
         //lo desactivamos y lo dejamos invisible en un principio
-        punchAtackArea.setActive(false);
-        punchAtackArea.setVisible(false);
+        fistAttackArea.setActive(false);
+        fistAttackArea.setVisible(false);
         this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
             //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
-                punchAtackArea.setActive(true);
+                fistAttackArea.setActive(true);
                 //swordAttackArea.setVisible(true);
-                this.scene.physics.add.overlap(punchAtackArea, this.scene.getEnemies(), this.onMeetEnemy);
+                this.scene.physics.add.overlap(fistAttackArea, this.scene.getEnemies(), function (fist, enemy) {
+                    //Si el area de ataque esta activa
+                    if (fist.active) {
+                        //Hacemos daño al enemigo enviando la cantidad de daño infligida por defensor
+                        enemy.enemyRecieveDamage(this.defenderAttack);
+                        // Desactivamos el área de ataque después de dañar a un enemigo
+                        fist.setActive(false); 
+                    }
+                });
             //}
              // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
              this.scene.time.delayedCall(100, () => {
-                punchAtackArea.destroy();
+                fistAttackArea.destroy();
             });
         });
 
@@ -216,18 +229,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Sino, instanciamos una nueva torreta (añadimos un poco de distancia entre la instancia y el jugador) y la igualamos
         // a la nueva torreta
         if(this.dir == 1){ // si virtuoso apunta a la derecha
-            this.scene.oneTurret = new Turret(this.scene, this.x + 30, this.y - 150, 'turret', this.dir);
+            this.scene.oneTurret = new Turret(this.scene, this.x + 30, this.y - 150, 'turret', this.dir, this.virtuousDamage);
         }
         else { //Si apunta a la izquerda
-            this.scene.oneTurret = new Turret(this.scene, this.x - 30, this.y - 150, 'turret', this.dir);
+            this.scene.oneTurret = new Turret(this.scene, this.x - 30, this.y - 150, 'turret', this.dir, this.virtuousDamage);
             //Invertimos la torreta
             this.scene.oneTurret.setFlip(true, false);
         }
     }
 //#endregion
-    onMeetEnemy(player, enemy) {
-        enemy.enemyRecieveDamage(1);
-    }
     //Metodo para controlar la vida del jugador
     recieveDamage(damage){
         this.lifeComp.Damage(damage);

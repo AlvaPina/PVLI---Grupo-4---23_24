@@ -1,7 +1,7 @@
 import Bullet from  './Bullet.js';
 //Constructor de la torreta (ataque propio del virtuoso)  
 export default class Turret extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, dir) {
+    constructor(scene, x, y, texture, dir, damage) {
         super(scene, x, y, texture, dir)
         //Añadimos torreta a la escena
         scene.add.existing(this);
@@ -23,10 +23,12 @@ export default class Turret extends Phaser.Physics.Arcade.Sprite {
         this.elapsedTimeShot = 0;
         //Direccion a la que apunta la torreta
         this.dir = dir;
+        //Daño que produce la bala (pasada desde el player.js)
+        this.bulletDamage = damage;
     };
     //Metodo para disparar
     shoot(){
-        new Bullet(this.scene, this.x, this.y, 'bullet', this.dir);
+        new Bullet(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage);
     }
     preUpdate(t, dt){
         super.preUpdate(t, dt);

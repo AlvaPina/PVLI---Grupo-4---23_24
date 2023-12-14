@@ -1,6 +1,6 @@
 //Constructor de la bala instanciada por torreta   
 export default class Bullet extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, dir) {
+    constructor(scene, x, y, texture, dir, damage) {
         super(scene, x, y, texture)
         //Añadimos torreta a la escena
         scene.add.existing(this);
@@ -11,6 +11,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
         //Ponemos limites con el mundo
         this.setCollideWorldBounds(true);
 
+        //Parametros de la bala
         //velocidad de la bala
         this.speed = 3;
         //Tiempo de vida de la bala (en segundos)
@@ -19,7 +20,19 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.elapsedTime = 0;
         //Direccion a la que apunta la torreta
         this.dir = dir;
+        //Llama a esta funcion para manejar la colision de las pociones con un enemigo de la escena
+        this.handleCollisionWithEnemies();
+    }
 
+    handleCollisionWithEnemies(){
+        //Obtenemos a los enemigos de la escena con getEnemies
+        let enemies = this.scene.getEnemies();
+        this.scene.physics.add.collider(this, enemies, () => {
+            //Daña a los enemigos (aun no tenemos enemigos, por eso lo comento) 
+            //enemies.lifeComp.Damage(this.damage);
+            //Destruimos pocion
+            this.destroy();
+        });
     }
 
     preUpdate(t, dt) {

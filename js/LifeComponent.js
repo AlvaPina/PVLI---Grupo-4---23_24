@@ -29,6 +29,7 @@ export default class LifeComponent {
     }
     //Metodo que destruye el gameObject asociado al LifeComponent cuando muere
     Die(){
+        console.log("muelto");
         this.gameObject.destroy();
     }
     //Metodo que devuelve las vidas actuales de la entidad asociada

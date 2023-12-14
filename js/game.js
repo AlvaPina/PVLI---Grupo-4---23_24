@@ -1,6 +1,6 @@
-import { LoadScene } from "./escena.js";
+import { LoadScene } from "./PantallaCarga.js";
 import { MainScene } from "./mainScene.js";
-import  {SelectionMenu} from "./SelectionMenu.js";
+import { SelectionMenu } from "./SelectionMenu.js";
 import { Nivel2 } from "./Nivel2.js";
 import { Nivel3 } from "./Nivel3.js";
 import { Nivel4 } from "./Nivel4.js";

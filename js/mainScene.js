@@ -65,7 +65,6 @@ export class MainScene extends Phaser.Scene {
         camera.startFollow(this.player);
         camera.setZoom(1.4);
 
-
         // Creación del punto de cambio de escena
         this.changeScenePoint = this.add.rectangle(100, 100, 100, 100, 0x0000ff, 0); // x, y, width, height son los parámetros de la posición y tamaño
         this.physics.add.existing(this.changeScenePoint, true); // 'true' hace que sea estático
@@ -91,7 +90,7 @@ export class MainScene extends Phaser.Scene {
     getEnemies(){
         return this.enemies;
     }
-    handleCollision(player, enemy){
+    handleCollision(enemy){
         this.player.recieveDamage(enemy.damageAmount);
         enemy.destroy();
     }
