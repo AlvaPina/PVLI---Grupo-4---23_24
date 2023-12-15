@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.pantalla-animada {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+.pantalla-animada img {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    transform: translate(-50%, 0);
+    animation: mover-imagen 3s ease-in-out;
+}
+
+@keyframes mover-imagen {
+    0% {
+        top: -50%;
+    }
+    100% {
+        top: 50%;
+    }
+}
+
+.texto-grande {
+    display: none;
+    text-align: center;
+    font-size: 48px;
+    color: white;
+    background-color: black;
+}
+
+.contenido-pestañas {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.tablinks {
+    background-color: inherit;
+    color: black;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+.tablinks:hover {
+    background-color: #ddd;
+}
+
+.tablinks.active {
+    background-color: #ccc;
+}
+
+#juego {
+    display: block;
+    margin: 0 auto;
+}
+
+textarea {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100px;
+    resize: none;
+}

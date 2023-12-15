@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Assets/WebPage/Img/LogoDummy.png">
+    <title>Dummy Studios</title>
+    <link rel="stylesheet" href="css/newstyle.css">
+    <script src="js/phaser.min.js"></script> <!--Libreria phaser-->
+</head>
+
+<nav>
+    <ul> <!--Modificar los enlaces de las distintas secciones, y su css-->
+        <li><a href="Html/Pantalla_De_Juego.html"Juego></a></li>
+        <li><a href="Html/Quienes_Somos.html">Quienes somos</a></li>
+        <li><a href="Html/Historia.html">Historia</a></li>
+    </ul>
+</nav>
+
+<body>
+    <div class="pantalla-animada">
+        <img src= "Assets/WebPage/Img/LogoDummy.png" alt="El Dummy">
+    </div>
+
+    <div class="texto-grande">
+        <h1>Texto grande</h1>
+    </div>
+
+    <div class="contenido-pestañas">
+        <button class="tablinks" onclick="openTab(event, 'Historia')">Historia</button>
+        <button class="tablinks" onclick="openTab(event, 'Juego')">Juego</button>
+        <button class="tablinks" onclick="openTab(event, 'Quiénes somos')">Quienes somos</button>
+    </div>
+
+    <div id="Historia" class="tabcontent">
+        <h2>Título Historia</h2>
+        <p>Primer párrafo de la historia</p>
+        <img src="ruta/de/la/imagen.jpg" alt="Imagen en la historia">
+        <p>Segundo párrafo de la historia</p>
+    </div>
+
+    <div id="Juego" class="tabcontent">
+        <h2>Título Juego</h2>
+        <canvas id="juego" width="480" height="320"></canvas>
+        <h3>Comentarios</h3>
+        <textarea id="comentarios" rows="4" cols="50"></textarea>
+        <br>
+        <a href="https://twitter.com/DummyStudiosUCM" target="_blank">Enlace a red social</a>
+    </div>
+
+    <div id="Quienes somos" class="tabcontent">
+        <h2>Título Quienes somos</h2>
+        <p>Primer párrafo de quienes somos</p>
+        <p>Segundo párrafo de quienes somos</p>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+</html>
