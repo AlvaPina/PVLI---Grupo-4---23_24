@@ -99,21 +99,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //El jugador salta si se pulsa la tecla, toca el suelo, y si no está atacando
         if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down && !this.isAttack) {
             this.setVelocityY(this.speed * -1);
-            console.log("Salto");
         } 
         //Moverse a la izquierda
         if (this.cursors.left.isDown && !this.isAttack) {
             this.dir = -1; 
             this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
-            console.log("Izquierda");
         }
         //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
             this.dir = 1;
             this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
-            console.log("Derecha");
         }
         //Si no hay input, nos quedamos quietos
         else {
@@ -151,7 +148,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     logicAttack(){
         //Instanciamos una nueva pocion lanzable
         new Proyectile(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
-        console.log("Pocion lanzada");
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){

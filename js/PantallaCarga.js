@@ -45,9 +45,9 @@ export class LoadScene extends Phaser.Scene
         this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('virtuous_move', 'Assets/Characters/Virtuous_Walk.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('virtuous_attack', 'Assets/Characters/Virtuous_Attack.png', { frameWidth: 300, frameHeight: 300 });
-        //// ... Cargar assets de enemigos
-        //this.load.spritesheet('enemyType1', 'assets/enemy1.png', { frameWidth: 64, frameHeight: 64 });
-        //this.load.spritesheet('enemyType2', 'assets/enemy2.png', { frameWidth: 64, frameHeight: 64 });
+        //Cargar assets de puton
+        this.load.spritesheet('puton_idle', 'Assets/Enemies/Lady/Idle.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_move', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
     }
     create() {
         // Crear animaciones aquí
@@ -185,6 +185,13 @@ export class LoadScene extends Phaser.Scene
         frames: this.anims.generateFrameNumbers('virtuous_attack', { start: 0, end: 5 }),
         frameRate: 7,
         repeat: 0
+    });
+    //--ANIMACIONES PARA PUTON--
+    this.anims.create({
+        key: 'puton_idle_anim',
+        frames: this.anims.generateFrameNumbers('puton_idle', { start: 0, end: 4 }),
+        frameRate: 7,
+        repeat: -1
     });
     console.log("Se han creado las animaciones!");
 }

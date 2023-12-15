@@ -1,5 +1,6 @@
 import Player from './Characters/player.js';
 import RedBull from './Objetos/RedBull.js';
+import Puton from './Characters/Enemy/puton.js';
 
 export class MainScene extends Phaser.Scene {
     constructor() {
@@ -77,6 +78,11 @@ export class MainScene extends Phaser.Scene {
             //Llama al metodo de confirmar cambios ubicado en el player
             this.player.confirmChange(id);
         });
+
+        // Creacicón de enemigos
+        this.enemigo1 = new Puton(this, 200, 250)
+        this.enemigo1.setScale(0.15, 0.15);
+        this.physics.add.collider(this.enemigo1, this.groundLayer);
     }
 
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
