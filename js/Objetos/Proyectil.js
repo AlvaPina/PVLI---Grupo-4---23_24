@@ -1,19 +1,13 @@
-import SerVivo from "../Characters/serVivo.js";
+import LifeComponent from "../Characters/lifeComponent.js";
 
-export default class Proyectile extends SerVivo {
-    constructor(scene, x, y, texture, velocityVector) {
+export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture, dir, damage) {
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        // Definir la velocidad del proyectil
-        this.speed = 9;
-        this.velocityVector = velocityVector.normalize().scale(this.speed);
-
-        // Establecer la velocidad inicial
-        this.body.velocity.copy(this.velocityVector);
-
-        this.setScale(0.05, 0.05);
+        this.speed = 8;
+        this.setScale(0.05);
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
 
@@ -22,9 +16,15 @@ export default class Proyectile extends SerVivo {
 
         // Destruir el proyectil después de su tiempo de vida
         this.setLifeTime(this.lifespan);
-
+  
         // Llama a esta función para manejar la colisión con el suelo.
         this.handleCollisionWithGround();
+
+        //Llama a esta funcion para manejar la colision de los proyectiles con un enemigo de la escena
+        this.handleCollisionWithEnemies();
+
+        this.dir = dir;
+        this.damage = damage;
     }
 
     handleCollisionWithGround() {
@@ -44,7 +44,18 @@ export default class Proyectile extends SerVivo {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
 
-    preUpdate(t, dt){
+    handleCollisionWithEnemies(){
+        //Obtenemos a los enemigos de la escena con getEnemies
+        let enemies = this.scene.getEnemies();
+        this.scene.physics.add.collider(this, enemies, () => {
+            //Daña a los enemigos (aun no tenemos enemigos, por eso lo comento) 
+            //enemies.lifeComp.Damage(this.damage);
+            //Destruimos proyectil
+            this.destroy();
+        });
+    }
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
+        this.x += this.speed * this.dir;
     }
 }

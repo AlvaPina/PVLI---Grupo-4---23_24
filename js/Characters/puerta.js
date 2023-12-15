@@ -1,4 +1,4 @@
-import SerVivo from "./serVivo";
+import LifeComponent from './lifeComponent.js';
 
 class Puerta extends SerVivo{
     constructor(scene, x, y) {

@@ -1,7 +1,7 @@
-import Proyectile from '../Objetos/PocionLanzable.js';
-import LifeComponent from '../LifeComponent.js';
+import LifeComponent from './lifeComponent.js';
 import Turret from '../Objetos/Turret.js';
 import UI from '../UI.js';
+import Proyectil from '../Objetos/Proyectil.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -99,21 +99,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //El jugador salta si se pulsa la tecla, toca el suelo, y si no está atacando
         if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down && !this.isAttack) {
             this.setVelocityY(this.speed * -1);
-            console.log("Salto");
         } 
         //Moverse a la izquierda
         if (this.cursors.left.isDown && !this.isAttack) {
             this.dir = -1; 
             this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
-            console.log("Izquierda");
         }
         //Moverse a la derecha
         else if (this.cursors.right.isDown && !this.isAttack) {
             this.dir = 1;
             this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
-            console.log("Derecha");
         }
         //Si no hay input, nos quedamos quietos
         else {
@@ -123,7 +120,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     attack() {
         //Mientras se realiza el ataque, el jugador no se podra mover
-        this.setVelocityX(0);
+        //this.setVelocityX(0);
         //Dependiendo del spriteId seleccionado, se hace un ataque u otro
         switch(this.spriteId)
         {
@@ -149,9 +146,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack(){
-        //Instanciamos una nueva pocion lanzable
-        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
-        console.log("Pocion lanzada");
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
