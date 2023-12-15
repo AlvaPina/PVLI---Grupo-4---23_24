@@ -17,10 +17,10 @@ export class MainScene extends Phaser.Scene {
         this.load.image('turret', 'Assets/Objetos/Torreta.png');
         this.load.image('bullet', 'Assets/Objetos/Bala.png');
         //Animaciones de Logica
-        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        /*this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });
+        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });*/
 
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
@@ -79,14 +79,22 @@ export class MainScene extends Phaser.Scene {
         });
     }
 
-     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
-     changeToSelection(){
+    //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
+    changeToSelection(){
         //Pausamos el menu de juego...
         this.scene.pause();
         //Vamos al menu de seleccion
         this.scene.launch('SelectionMenu');
         console.log("Estas en el menú de cambio de personaje...");
     }
+    //Metodo para ir al menu de GameOver
+    GameOver(){
+        this.player.lifeComp.Die();
+        this.scene.stop('MainScene');
+        this.scene.start('GameOver');
+        console.log("Has muerto D:");
+    }
+    //Getter de todos los enemigos del nivel
     getEnemies(){
         return this.enemies;
     }

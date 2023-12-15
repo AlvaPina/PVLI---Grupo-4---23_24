@@ -29,7 +29,7 @@ export class MenuInicial extends Phaser.Scene{
                   ease: 'Sine.easeInOut',
                   yoyo: true,
                   repeat: -1,
-                  delay: 2000
+                  //delay: 2000
         });
 
         //Boton de start

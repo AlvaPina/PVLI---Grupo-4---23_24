@@ -41,7 +41,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Eventos de raton para realizar ataque 
         this.scene.input.on('pointerdown', (pointer) => {
             //Solo si el jugador esta en el suelo y se pulsa click izquerdo, se realiza el ataque
-            if (pointer.leftButtonDown() && this.body.touching.down) {
+            if (pointer.leftButtonDown()) {
                 this.isAttack = true; // Activar el ataque
                 this.attack();
             }
@@ -87,7 +87,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Actualizamos UI
         this.ui.updateUI();
         //Si nos preciciptamos al vacio... morimos
-        if(this.y > 510) this.lifeComp.Die();
+        if(this.y > 510) {
+            //Vamos a la pantalla de GameOver
+            this.scene.GameOver();
+        }
         
     }
 
