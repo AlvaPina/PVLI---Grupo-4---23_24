@@ -1,7 +1,7 @@
-import Proyectile from '../Objetos/PocionLanzable.js';
-import LifeComponent from '../LifeComponent.js';
+import LifeComponent from './lifeComponent.js';
 import Turret from '../Objetos/Turret.js';
 import UI from '../UI.js';
+import Proyectil from '../Objetos/Proyectil.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -120,7 +120,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     attack() {
         //Mientras se realiza el ataque, el jugador no se podra mover
-        this.setVelocityX(0);
+        //this.setVelocityX(0);
         //Dependiendo del spriteId seleccionado, se hace un ataque u otro
         switch(this.spriteId)
         {
@@ -146,8 +146,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack(){
-        //Instanciamos una nueva pocion lanzable
-        new Proyectile(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){

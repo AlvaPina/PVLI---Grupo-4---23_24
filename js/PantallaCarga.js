@@ -48,6 +48,8 @@ export class LoadScene extends Phaser.Scene
         //Cargar assets de puton
         this.load.spritesheet('puton_idle', 'Assets/Enemies/Lady/Idle.png', { frameWidth: 182, frameHeight: 300 });
         this.load.spritesheet('puton_move', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_kiss', 'Assets/Enemies/Lady/Kiss.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_heart', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 150, frameHeight: 150 });
     }
     create() {
         // Crear animaciones aquí
@@ -190,6 +192,24 @@ export class LoadScene extends Phaser.Scene
     this.anims.create({
         key: 'puton_idle_anim',
         frames: this.anims.generateFrameNumbers('puton_idle', { start: 0, end: 4 }),
+        frameRate: 7,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'puton_move_anim',
+        frames: this.anims.generateFrameNumbers('puton_move', { start: 0, end: 3 }),
+        frameRate: 7,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'puton_kiss_anim',
+        frames: this.anims.generateFrameNumbers('puton_kiss', { start: 0, end: 2 }),
+        frameRate: 7,
+        repeat: 0
+    });
+    this.anims.create({
+        key: 'puton_heart_anim',
+        frames: this.anims.generateFrameNumbers('puton_heart', { start: 0, end: 1 }),
         frameRate: 7,
         repeat: -1
     });
