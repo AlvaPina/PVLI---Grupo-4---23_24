@@ -80,9 +80,12 @@ export class MainScene extends Phaser.Scene {
         });
 
         // Creacicón de enemigos
+        this.enemiesGroup = this.physics.add.group();
+
         this.enemigo1 = new Puton(this, 200, 250)
         this.enemigo1.setScale(0.15, 0.15);
         this.physics.add.collider(this.enemigo1, this.groundLayer);
+        this.enemiesGroup.add(this.enemigo1);
     }
 
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
