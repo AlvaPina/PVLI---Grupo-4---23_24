@@ -155,8 +155,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage, true);
-        console.log("Ataque activado");
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, true);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
