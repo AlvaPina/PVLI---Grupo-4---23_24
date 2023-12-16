@@ -2,6 +2,11 @@ export class SelectionMenu extends Phaser.Scene {
     constructor(){
         super({ key: 'SelectionMenu' });
     }
+
+    init(data){
+        console.log(data.scene);
+        this.previousScene = data.scene;
+    }
     preload(){
         //Cargamos todos los recursos necesarios para el renderizado de la rueda
         this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png'); 
@@ -77,7 +82,7 @@ export class SelectionMenu extends Phaser.Scene {
     //Metodo para volver al juego de nuevo (simpre y cuando el jugador este en este menu de seleccion)
     returnToGame(spriteId){ 
         //Volvemos a la escena del nivel
-        this.scene.resume('MainScene', (spriteId));
+        this.scene.resume(this.previousScene, (spriteId));
         //Paramos esta escena...
         this.scene.stop();
         console.log("Cambio de escena...");

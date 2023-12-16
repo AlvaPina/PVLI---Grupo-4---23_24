@@ -1,5 +1,4 @@
 import Player from './Characters/player.js';
-
 export class Nivel2 extends Phaser.Scene {
     constructor() {
         super({ key: 'Nivel2' });
@@ -9,7 +8,10 @@ export class Nivel2 extends Phaser.Scene {
         this.groundLayer = null; // Referencia a la capa del suelo
         this.changeScenePoint = null; // Referencia al punto para cambiar de escena
     }
-
+    init(data){
+        this.previousSpriteId = data.player.spriteId;
+        this.previousLives = data.player.getLives();
+    }
     preload() {
         // Cargar los recursos necesarios para la escena
         this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
@@ -40,7 +42,7 @@ export class Nivel2 extends Phaser.Scene {
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 280, this.previousLives, null, this.previousSpriteId);
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
@@ -59,11 +61,25 @@ export class Nivel2 extends Phaser.Scene {
         camera.setZoom(1.4);
 
         // Crear el punto de cambio de escena
-        this.changeScenePoint = this.add.rectangle(gameWidth - 100, gameHeight / 2, 100, gameHeight, 0x0000ff, 0); // Ajustar la posición y tamaño
+        this.changeScenePoint = this.add.rectangle(gameWidth, gameHeight / 2, 100, 200, 0x0000ff, 0); // Ajustar la posición y tamaño
         this.physics.add.existing(this.changeScenePoint, true); // Hacerlo estático
+        //Metodo asociado al resume de esta escena, con los parametros scene y el id actual del jugador
+        this.events.on('resume', (scene , id) =>{
+            //Llama al metodo de confirmar cambios ubicado en el player
+            this.player.confirmChange(id);
+        });
 
         // Configurar la colisión para cambiar de escena
         this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
+    }
+
+    //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
+    changeToSelection(){
+        //Pausamos el menu de juego...
+        this.scene.pause();
+        //Vamos al menu de seleccion
+        this.scene.launch('SelectionMenu', {scene: this});
+        console.log("Estas en el menú de cambio de personaje...");
     }
 
     // Método para crear las animaciones del jugador
@@ -79,9 +95,9 @@ export class Nivel2 extends Phaser.Scene {
 
     // Método llamado cuando el jugador colisiona con el punto de cambio de escena
     onOverlapChangeScene(player, changeScenePoint) {
-        this.scene.start('Nivel3'); // Cambiar a la escena 'Nivel3'
+        this.scene.start('Nivel3', {player: this.player}); // Cambiar a la escena 'Nivel3'
     }
-
+    
     update() {
         // Lógica de actualización para cada frame
     }

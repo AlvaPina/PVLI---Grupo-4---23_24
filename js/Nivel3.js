@@ -7,10 +7,13 @@ export class Nivel3 extends Phaser.Scene {
         this.groundLayer = null;
         this.changeScenePoint = null;
     }
-
+    init(data){
+        this.previousSpriteId = data.player.spriteId;
+        this.previousLives = data.player.getLives();
+    }
     preload() {
         //Elementos del escenario
-        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
+        this.load.image('background3', 'Assets/Mapa/Img/Museo.png');
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
         //Animaciones de Logica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
@@ -19,10 +22,6 @@ export class Nivel3 extends Phaser.Scene {
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa3JSON.json');
-    }
-    // M�todo llamado cuando el jugador colisiona con el punto de cambio
-    onOverlapChangeScene(player, changeScenePoint) {
-        this.scene.start('Nivel4'); // Cambia a la escena MainScene
     }
     create() {
         const gameWidth = this.game.config.width;
@@ -36,7 +35,7 @@ export class Nivel3 extends Phaser.Scene {
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
         
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 280, this.previousLives, null, this.previousSpriteId);
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
@@ -54,14 +53,18 @@ export class Nivel3 extends Phaser.Scene {
         camera.startFollow(this.player);
         camera.setZoom(1.4);
 
-        // Creaci�n del punto de cambio de escena
+        // Creacion del punto de cambio de escena
         this.changeScenePoint = this.add.rectangle(gameWidth - 100, gameHeight / 2, 100, gameHeight, 0x0000ff, 0); // Ajusta seg�n la posici�n deseada
         this.physics.add.existing(this.changeScenePoint, true);
 
-        // Configuraci�n de la colisi�n para cambiar de escena
+        // Configuracion de la colision para cambiar de escena
         this.physics.add.overlap(this.player, this.changeScenePoint, this.onOverlapChangeScene, null, this);
     }
 
+    // Metodo llamado cuando el jugador colisiona con el punto de cambio
+    onOverlapChangeScene(player, changeScenePoint) {
+        this.scene.start('Nivel4', {player: this.player}); // Cambia al siguiente nivel
+    }
 
 
     update() {
