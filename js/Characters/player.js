@@ -1,7 +1,7 @@
 import LifeComponent from './lifeComponent.js';
 import Turret from '../Objetos/Turret.js';
 import UI from '../UI.js';
-import Proyectil     from '../Objetos/Proyectil.js';
+import Proyectil from '../Objetos/Proyectil.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
@@ -155,7 +155,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage, true);
+        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage);
         console.log("Ataque activado");
     }
     //Ataque de protagonista (espadazo)

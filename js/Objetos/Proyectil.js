@@ -1,31 +1,35 @@
 import LifeComponent from "../Characters/lifeComponent.js";
-import Player from "../Characters/player.js";
 
 export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, dir, damage, tipe) {
+    constructor(scene, x, y, texture, velocityVector, damage) {
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.speed = 8;
-        this.setScale(0.05);
-        this.setBounce(0.2);
+        // Definir la velocidad del proyectil
+        this.speed = 700; // Puedes ajustar la velocidad según necesites
+
+        // Establecer la velocidad del proyectil basada en el vector de velocidad
+        this.body.velocity.copy(velocityVector.normalize().scale(this.speed));
+
+        // Configuraciones adicionales
+        this.setScale(0.05); // Ajustar la escala si es necesario
+        this.setBounce(0.2); // Ajustar el rebote si es necesario
         this.setCollideWorldBounds(true);
-        this.tipe = tipe; // true -> Aliado, false -> Enemigo
 
         // Tiempo de vida del proyectil
         this.lifespan = 5000; // 5000 milisegundos o 5 segundos
 
         // Destruir el proyectil después de su tiempo de vida
         this.setLifeTime(this.lifespan);
-  
+
         // Llama a esta función para manejar la colisión con el suelo.
         this.handleCollisionWithGround();
 
-        //Llama a esta funcion para manejar la colision de los proyectiles con un enemigo de la escena
+        // Llama a esta función para manejar la colisión con enemigos.
         this.handleCollisionWithEnemies();
 
-        this.dir = dir;
+        // Guardar el daño que el proyectil inflige
         this.damage = damage;
     }
 
@@ -38,46 +42,28 @@ export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
 
         // Añadir colisionador con el suelo
         this.scene.physics.add.collider(this, groundLayer, () => {
-            this.destroy(); // Destruye la poción al colisionar con el suelo
+            this.destroy(); // Destruye el proyectil al colisionar con el suelo
         }, null, this);
-
-        // colisiones con enemigos o jugador si es necesario
-        if(this.tipe){
-            this.scene.physics.add.collider(this, this.scene.enemiesGroup, (proyectil, enemy) => {
-                // Dañar al enemigo
-                enemy.recieveDamage(proyectil.damage);
-                
-                // Destruir el proyectil
-                proyectil.destroy();
-            });
-        }
-        else{
-            // Colisiones con player
-            this.scene.physics.add.collider(this, this.scene.player , () => {
-                this.scene.player.recieveDamage(this.damage);
-                this.destroy(); // Destruye la poción al colisionar con el suelo
-            }, null, this);
-        }
-
     }
 
     setLifeTime(duration) {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
 
-    handleCollisionWithEnemies(){
-        //Obtenemos a los enemigos de la escena con getEnemies
+    handleCollisionWithEnemies() {
+        // Obtiene una referencia a los enemigos de la escena
         let enemies = this.scene.getEnemies();
-        this.scene.physics.add.collider(this, enemies, () => {
-            this.destroy();
+
+        // Añadir colisionador con los enemigos
+        this.scene.physics.add.collider(this, enemies, (proyectil, enemy) => {
+            enemy.receiveDamage(this.damage); // Suponiendo que los enemigos tienen un método `receiveDamage`
+            this.destroy(); // Destruye el proyectil al colisionar con un enemigo
         });
     }
+
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        this.x += this.speed * this.dir;
-    }
 
-    getTipe(){
-        return this.tipe;
+        // Aquí podrías agregar lógica adicional que se ejecute en cada frame, si es necesario
     }
 }
