@@ -7,9 +7,10 @@
     "\\css",
     "\\js",
     "\\js\\Characters",
+    "\\js\\Characters\\Enemy",
     "\\js\\Objetos",
     "\\js\\WebPage"
   ],
-  "SelectedNode": "\\js\\Nivel2.js",
+  "SelectedNode": "\\js\\Objetos\\Proyectil.js",
   "PreviewInSolutionExplorer": false
 }

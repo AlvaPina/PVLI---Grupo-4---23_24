@@ -35,7 +35,7 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
             ['IDLE']: () => this.idleState(),
             ['PATROL']: () => this.patrolState(),
             ['RANGED_ATTACK']: () => this.rangedAttackState(),
-            ['MELEE_ATTACK']: () => this.meleeAttackState()
+            ['MELEE_ATTACK']: () => this.meleeAttackState(),
         };
 
         // Estado por defecto
@@ -102,21 +102,25 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
 
     atacarMelee() {
         const attackAnimationKey = 'puton_move_anim';
-        this.CalculateDirToPlayer();
-        this.manageAnims(attackAnimationKey);
-        this.setVelocityX(this.speed * this.direction);
+        // Verificar si el objeto aún es válido
+        if (this.scene && this.body && this.scene.physics.world.bodies.contains(this.body)) {
+            this.CalculateDirToPlayer();
+            this.manageAnims(attackAnimationKey);
+            this.setVelocityX(this.speed * this.direction);
 
-        // Verifica la superposición entre el jugador y el enemigo
-        const overlapping = this.scene.physics.overlap(this, this.player);
-        if (overlapping) {
-            console.log("DAÑO A JUGADOR");
-            this.player.recieveDamage(this.meleeDamage)
-            this.cooldown = true;
-            this.setCooldown(() => {
-                this.cooldown = false;
-            }, 1000);
+            // Verifica la superposición entre el jugador y el enemigo
+            const overlapping = this.scene.physics.overlap(this, this.player);
+            if (overlapping) {
+                console.log("DAÑO A JUGADOR");
+                this.player.recieveDamage(this.meleeDamage);
+                this.cooldown = true;
+                this.setCooldown(() => {
+                    this.cooldown = false;
+                }, 1000);
+            }
         }
     }
+
 
     setCooldown(callback, duration) {
         setTimeout(callback, duration);
@@ -161,14 +165,20 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
     }
     // Logica de aniciones por separado, solo se ejecuta la animación dependiendo del estado
     manageAnims(animationKey) {
-        const currentAnimKey = this.anims.currentAnim ? this.anims.currentAnim.key : null;
-        if (currentAnimKey !== animationKey) {
-            this.play(animationKey);
+        // Verificar si el objeto y la escena aún están definidos y si el objeto no ha sido destruido
+        if (this.scene && this.body && this.scene.physics.world.bodies.contains(this.body)) {
+            const currentAnimKey = this.anims.currentAnim ? this.anims.currentAnim.key : null;
+            if (currentAnimKey !== animationKey) {
+                this.play(animationKey);
+            }
         }
     }
+
+
     
     recieveDamage(damage){
         this.lifeComp.Damage(damage);
+
         console.log("AUUU");
     }
 }
