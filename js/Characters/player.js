@@ -226,7 +226,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
 
     }
-
     //Ataque del vitruoso (instanciar torreta)
     virtuousAttack(){
         //Controlamos las instancias de las torretas (recordemos que solo puede haber una)

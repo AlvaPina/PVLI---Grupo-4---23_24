@@ -25,10 +25,7 @@ export class MainScene extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
-    // Método llamado cuando el jugador colisiona con el punto de cambio
-    onOverlapChangeScene(player, changeScenePoint) {
-        this.scene.start('Nivel2'); // Cambia a la nueva escena
-    }
+   
     create() {
         // Dimensiones y configuración del juego
         const gameWidth = this.game.config.width;
@@ -85,12 +82,16 @@ export class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.enemigo1, this.groundLayer);
     }
 
+    // Método llamado cuando el jugador colisiona con el punto de cambio
+    onOverlapChangeScene(player, changeScenePoint) {
+        this.scene.start('Nivel2', {player: this.player}); // Cambia a la nueva escena
+    }
     //Metodo para cambiar al menu de seleccion (llamado a traves del input del jugador)
     changeToSelection(){
         //Pausamos el menu de juego...
         this.scene.pause();
         //Vamos al menu de seleccion
-        this.scene.launch('SelectionMenu');
+        this.scene.launch('SelectionMenu', {scene: this});
         console.log("Estas en el menú de cambio de personaje...");
     }
     //Metodo para ir al menu de GameOver
