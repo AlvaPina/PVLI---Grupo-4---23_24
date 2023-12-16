@@ -1,42 +1,54 @@
+button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
+    overflow: hidden;
+    margin: 0;
 }
 
 .pantalla-animada {
     position: relative;
-    width: 100%;
     height: 100vh;
-    overflow: hidden;
-    background-color: black;
+    transform-origin: center center;
+    background-color: black;    
 }
 
+/*Caracteristicas de la imagen Dummy*/
 .pantalla-animada img {
     position: absolute;
-    top: -50%;
-    left: 50%;
-    width: 50%;
-    height: auto;
-    transform: translate(-50%, 0);
-    animation: mover-imagen 3s ease-in-out;
+    width: 500px;
+    height: 500px;
+    animation: mover-imagen 8s ease-out;
 }
 
-@keyframes mover-imagen {
+/*Animacion de la imagen Dummy (Desplazamiento hacia el centro de la pantalla*/
+@keyframes mover-imagen { 
     0% {
-        top: -50%;
+        top: -100%;
     }
-    100% {
-        top: 50%;
+    50%{
+        top: 10%;
+    }
+    75%{
+        /*visibility: visible;*/
+    }
+    100%{
+       /* visibility: hidden;*/
     }
 }
 
-.texto-grande {
+/*.texto-grande {
     display: none;
     text-align: center;
     font-size: 48px;
     color: white;
     background-color: black;
-}
-
+}*/
+/*
 .contenido-pestañas {
     text-align: center;
     padding: 20px;
@@ -80,4 +92,4 @@ textarea {
     width: 100%;
     height: 100px;
     resize: none;
-}
+}*/
