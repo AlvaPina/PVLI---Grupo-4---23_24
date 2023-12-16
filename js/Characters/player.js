@@ -96,18 +96,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     //Input del Jugador
     playerInput() { 
-        //El jugador salta si se pulsa la tecla, toca el suelo, y si no está atacando
-        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down && !this.isAttack) {
+        //El jugador salta si se pulsa la tecla, toca el suelo
+        if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down) {
             this.setVelocityY(this.speed * -1);
         } 
         //Moverse a la izquierda
-        if (this.cursors.left.isDown && !this.isAttack) {
+        if (this.cursors.left.isDown) {
             this.dir = -1; 
             this.setVelocityX(this.speed * this.dir);
 			this.setFlip(true, false);
         }
         //Moverse a la derecha
-        else if (this.cursors.right.isDown && !this.isAttack) {
+        else if (this.cursors.right.isDown) {
             this.dir = 1;
             this.setVelocityX(this.speed * this.dir);
             this.setFlip(false, false);
@@ -145,8 +145,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
-    logicAttack(){
-        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, true);
+    logicAttack() {
+        // Obtener el vector de velocidad actual del jugador
+        let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
+
+        // Si el jugador está quieto, usar la dirección actual para el disparo
+        if (velocityVector.length() === 0) {
+            velocityVector = new Phaser.Math.Vector2(this.dir, 0);
+        }
+
+        // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
+        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage, true);
+        console.log("Ataque activado");
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -216,7 +226,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
 
     }
-
     //Ataque del vitruoso (instanciar torreta)
     virtuousAttack(){
         //Controlamos las instancias de las torretas (recordemos que solo puede haber una)
