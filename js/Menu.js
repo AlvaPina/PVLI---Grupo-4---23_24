@@ -11,6 +11,7 @@ export class MenuInicial extends Phaser.Scene{
         //Texturas del boton (cuando se le clica y cuando no)
         this.load.image('botonStartClaro', 'Assets/Pantallas/BotonStartClaro.png');
         this.load.image('botonStartOscuro', 'Assets/Pantallas/BotonStartOscuro.png');
+
     }
     create(){
         //Añadimos imagen de fondo

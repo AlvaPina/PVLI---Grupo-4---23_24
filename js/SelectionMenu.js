@@ -8,20 +8,6 @@ export class SelectionMenu extends Phaser.Scene {
         this.previousScene = data.scene;
     }
     preload(){
-        //Cargamos todos los recursos necesarios para el renderizado de la rueda
-        this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png'); 
-        //Selecciones no disponibles
-        this.load.image('down', 'Assets/SelectionWheel/Down.png');
-        this.load.image('up', 'Assets/SelectionWheel/Up.png' );
-        this.load.image('left', 'Assets/SelectionWheel/Left.png' );
-        this.load.image('right', 'Assets/SelectionWheel/Right.png' );
-        //Selecciones de personalidad
-        this.load.image('logic', 'Assets/SelectionWheel/Logic_Sel Escalado.png');
-        this.load.image('defender', 'Assets/SelectionWheel/Defender_Sel Escalado.png');
-        this.load.image('virtuous', 'Assets/SelectionWheel/Virtuous_Sel Escalado.png');
-        this.load.image('protagonist', 'Assets/SelectionWheel/Protagonist_Sel Escalado.png');
-        //Textos del menu
-        this.load.image('text', 'Assets/SelectionWheel/SelectionText.png')
         
         //Configuramos input de las teclas
         this.cursors = this.input.keyboard.addKeys({

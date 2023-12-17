@@ -49,6 +49,7 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
         }, 200);
 
         this.lifeComp = new LifeComponent(10, this);
+        this.scene.events.on('update', this.updateEnemy, this);
     }
 
     preUpdate(t, dt) {
@@ -56,16 +57,25 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
     }
 
     idleState() {
+        if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
+            return;
+        }
         this.manageAnims('puton_idle_anim');
         this.setVelocityX(0);
     }
 
-    patrolState(){
+    patrolState() {
+        if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
+            return;
+        }
         this.manageAnims('puton_move_anim');
         
     }
 
     rangedAttackState() {
+        if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
+            return;
+        }
         this.manageAnims('puton_kiss_anim');
         if(!this.lanzado){
             this.atacarRango(); 
@@ -75,6 +85,9 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
     }
 
     meleeAttackState() {
+        if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
+            return;
+        }
         this.manageAnims('puton_move_anim');
         this.atacarMelee();
 
@@ -82,22 +95,24 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
 
     atacarRango() {
         const attackAnimationKey = 'puton_kiss_anim';
-        // re-orientamos, quitamos velocity y manejamos anims
-        this.CalculateDirToPlayer();
-        this.setVelocityX(0);
-        this.manageAnims(attackAnimationKey);
-        // usamos lanzado para no volver a atacar hasta que pase la animacion de beso y el cooldown
-        this.lanzado = true;
-        // pcall function que se ejecuta cuando el evento se llama al terminar la animacion de ataque correspondiente
-        this.once('animationcomplete-' + attackAnimationKey, () => {
-            new Proyectil(this.scene, this.x, this.y,'potion', this.direction, this.rangeDamage, false);
-            // usamos cooldown para poner un delay en modo idle después de atacar
-            this.cooldown = true;
-            this.setCooldown(() => {
-                this.cooldown = false;
-                this.lanzado = false;
-            }, 500);
-        });
+        if (this.scene && this.body && this.scene.physics.world.bodies.contains(this.body)) {
+            // re-orientamos, quitamos velocity y manejamos anims
+            this.CalculateDirToPlayer();
+            this.setVelocityX(0);
+            this.manageAnims(attackAnimationKey);
+            // usamos lanzado para no volver a atacar hasta que pase la animacion de beso y el cooldown
+            this.lanzado = true;
+            // pcall function que se ejecuta cuando el evento se llama al terminar la animacion de ataque correspondiente
+            this.once('animationcomplete-' + attackAnimationKey, () => {
+                new Proyectil(this.scene, this.x, this.y, 'potion', this.direction, this.rangeDamage, false);
+                // usamos cooldown para poner un delay en modo idle después de atacar
+                this.cooldown = true;
+                this.setCooldown(() => {
+                    this.cooldown = false;
+                    this.lanzado = false;
+                }, 500);
+            });
+        }
     }
 
     atacarMelee() {
@@ -126,32 +141,34 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
         setTimeout(callback, duration);
     }
     // Calculamos el siguiente estado
-    updateEnemy(){
+    updateEnemy() {
+        if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
+            return;
+        }
         console.log("UpdateEnemy");
         this.CalculateDisToPlayer();
         // Si hay cooldown hemos dicho que estará en estado IDLE
-        if (!this.cooldown){
+        if (!this.cooldown) {
             // Obtener el estado dependiendo de la distancia
             if (this.distanceToPlayer < this.meleeDistance) {
                 if (this.currentState !== 'MELEE_ATTACK') {
                     this.currentState = 'MELEE_ATTACK';
                 }
-            }   else if (this.distanceToPlayer < this.rangeDisctance) {
+            } else if (this.distanceToPlayer < this.rangeDisctance) {
                 if (this.currentState !== 'RANGED_ATTACK') {
                     this.currentState = 'RANGED_ATTACK';
                 }
-            }   else {
+            } else {
                 if (this.currentState !== 'IDLE') {
                     this.currentState = 'IDLE';
                 }
             }
         }
-        else{
+        else {
             if (this.currentState !== 'IDLE') {
                 this.currentState = 'IDLE';
             }
         }
-        
     }
     // Calculamos a donde tiene que mirar el enemigo y corregimos su orientacion
     CalculateDirToPlayer(){

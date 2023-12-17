@@ -11,19 +11,6 @@ export class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        //Elementos del escenario
-        this.load.image('background1', 'Assets/Mapa/Img/TutorialFinal.png'); 
-        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
-        this.load.image('turret', 'Assets/Objetos/Torreta.png');
-        this.load.image('bullet', 'Assets/Objetos/Bala.png');
-        //Animaciones de Logica
-        /*this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });*/
-
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
    
     create() {

@@ -4,13 +4,6 @@ export class GameOver extends Phaser.Scene {
     }
     //Recargamos recursos
     preload(){
-        //Background
-        this.load.image('FondoGameOver', 'Assets/Pantallas/PantallaGameOver.png');
-        //Texto de GameOver
-        this.load.image('TextoGameOver', 'Assets/Pantallas/GameOver_Text.png');
-        //Texturas del boton (cuando se le clica y cuando no)
-        this.load.image('botonReintentarClaro', 'Assets/Pantallas/BotonRetryClaro.png');
-        this.load.image('botonReintentarOscuro', 'Assets/Pantallas/BotonRetryOscuro.png');
     }
     create(){
         //Añadimos imagen de fondo
