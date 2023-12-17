@@ -65,11 +65,15 @@ export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.delayedCall(duration, this.destroy, [], this);
     }
 
-    handleCollisionWithEnemies(){
-        //Obtenemos a los enemigos de la escena con getEnemies
+    handleCollisionWithEnemies() {
         let enemies = this.scene.getEnemies();
-        this.scene.physics.add.collider(this, enemies, () => {
-            this.destroy();
+        this.scene.physics.add.collider(this, enemies, (proyectil, enemy) => {
+            // Verifica si el enemigo tiene el método recieveDamage
+            if (typeof enemy.recieveDamage === 'function') {
+                enemy.recieveDamage(this.damage);
+            }
+            // Destruye el proyectil
+            proyectil.destroy();
         });
     }
     preUpdate(t, dt) {

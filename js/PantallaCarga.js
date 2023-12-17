@@ -65,13 +65,25 @@ export class LoadScene extends Phaser.Scene
         this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
         this.load.image('turret', 'Assets/Objetos/Torreta.png');
         this.load.image('bullet', 'Assets/Objetos/Bala.png');
-        //Animaciones de Logica
-        /*this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json')
+        //Nivel2            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
+        //Nivel3            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background3', 'Assets/Mapa/Img/Museo.png');
+        //Nivel4            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background4', 'Assets/Mapa/Img/Mapa4Provisional.png');
+
+        // Cargar animaciones de Logica
+        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
         this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });*/
+        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
+        // Cargar el mapa en formato JSON
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa2JSON.json');
         //Seleccion de menu
         //Cargamos todos los recursos necesarios para el renderizado de la rueda
         this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png');

@@ -1,7 +1,7 @@
 import Player from './Characters/player.js';
 import RedBull from './Objetos/RedBull.js';
 import Puton from './Characters/Enemy/puton.js';
-
+import Problemas from './Characters/Enemy/problemas.js';
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
@@ -70,6 +70,18 @@ export class MainScene extends Phaser.Scene {
         this.enemigo1.setScale(0.15, 0.15);
         this.physics.add.collider(this.enemigo1, this.groundLayer);
         this.enemiesGroup.add(this.enemigo1);
+
+
+        // Crear puntos de patrulla
+        const patrolPoints = [
+            { x: 100, y: 300 },
+            { x: 400, y: 300 }
+        ];
+
+        // Crear y añadir el enemigo Problemas a la escena
+        this.problemas = new Problemas(this, 100, 300, patrolPoints);
+        this.problemas.setScale(0.15, 0.15);
+        this.physics.add.collider(this.problemas, this.groundLayer);
     }
 
     // Método llamado cuando el jugador colisiona con el punto de cambio
