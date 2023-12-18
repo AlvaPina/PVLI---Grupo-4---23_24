@@ -51,6 +51,7 @@ export default class Player extends SerVivo {
         this.spriteId = spriteId;
         this.speed = speed;
         this.scene = scene;
+        this.potionSpeed = 10;
 
         //Stats de daño dependiendo a los enemigos de las diferentes personalidades
         this.logicDamage = 5;
@@ -153,7 +154,7 @@ export default class Player extends SerVivo {
         }
 
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, true);
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, this.potionSpeed, true);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -228,14 +229,11 @@ export default class Player extends SerVivo {
         //Controlamos las instancias de las torretas (recordemos que solo puede haber una)
         // Si ya hay una torreta existente, la destruimos antes de crear una nueva
         if (this.scene.oneTurret) {
-            this.scene.oneTurret.destroy();
+            this.scene.oneTurret.setActive(false, this.dir);
         }
         // Sino, instanciamos una nueva torreta (añadimos un poco de distancia entre la instancia y el jugador) y la igualamos
         // a la nueva torreta
-        this.scene.oneTurret = new Turret(this.scene, this.x - 30, this.y - 10, 'turret', this.dir, this.virtuousDamage);
-        if(this.dir != 1){ // voltear torreta dependiendo de la dir del player
-            this.scene.oneTurret.setFlip(true, false);
-        }
+        this.scene.oneTurret.setActive(true , this.dir);
     }
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego

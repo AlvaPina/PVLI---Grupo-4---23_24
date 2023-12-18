@@ -2,10 +2,12 @@ import Player from './Characters/player.js';
 import RedBull from './Objetos/RedBull.js';
 import Puton from './Characters/Enemy/puton.js';
 import Problemas from './Characters/Enemy/problemas.js';
+import Turret from './Objetos/Turret.js';
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         this.player = null;
+        this.oneTurret = null;
         this.cursors = null;
         this.groundLayer = null;
     }
@@ -38,11 +40,20 @@ export class MainScene extends Phaser.Scene {
         // Configuración de la gravedad
         this.physics.world.gravity.y = 100;
 
+        // Creacicón de los dos grupos
+        this.enemiesGroup = this.physics.add.group();
+        this.alliesGroup = this.physics.add.group();
+
         // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 280, 10, 'l');
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
+        this.alliesGroup.add(this.player);
+
+        // Creacion Torreta
+        this.oneTurret = new Turret(this, 'turret', this.player.virtuousDamage);
+        this.alliesGroup.add(this.oneTurret);
 
         // Configuración de la cámara
         let camera = this.cameras.main;
@@ -62,9 +73,6 @@ export class MainScene extends Phaser.Scene {
             //Llama al metodo de confirmar cambios ubicado en el player
             this.player.confirmChange(id);
         });
-
-        // Creacicón de enemigos
-        this.enemiesGroup = this.physics.add.group();
 
         this.enemigo1 = new Puton(this, 200, 250)
         this.enemigo1.setScale(0.15, 0.15);
