@@ -1,4 +1,4 @@
-import Bullet from  './Bullet.js';
+import Proyectil from "./Proyectil.js";
 //Constructor de la torreta (ataque propio del virtuoso)  
 export default class Turret extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, dir, damage) {
@@ -28,13 +28,13 @@ export default class Turret extends Phaser.Physics.Arcade.Sprite {
     };
     //Metodo para disparar
     shoot(){
-        new Bullet(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage);
+        new Proyectil(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage, true);
     }
     preUpdate(t, dt){
         super.preUpdate(t, dt);
         this.setVelocityX(0);
 
-        //Convertimos el dt a segundos e incrementamos elapsedTimes
+        //Convertimos el dt a segundos e incrementamos elapsedTime
         this.elapsedTimeShot += dt / 1000;
         this.elapsedTime += dt / 1000;
 
@@ -42,7 +42,7 @@ export default class Turret extends Phaser.Physics.Arcade.Sprite {
         if(this.elapsedTimeShot >= this.delayTime){
             //Dispara proyectil
             this.shoot();
-            console.log("Dispara Torretaaaa");
+            console.log(this.bulletDamage);
             //Reseteamos contador de elapsedTime
             this.elapsedTimeShot = 0;
         }

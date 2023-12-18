@@ -1,9 +1,10 @@
-import LifeComponent from "../lifeComponent.js";
 import Proyectil from "../../Objetos/Proyectil.js";
+import SerVivo from "../serVivo.js";
 
-export default class Punton extends Phaser.Physics.Arcade.Sprite{
+export default class Punton extends SerVivo{
     constructor(scene, x, y){
-        super(scene, x, y);
+        const life = 10;
+        super(scene, x, y, life);
         this.scene = scene;
         this.scene.physics.world.enable(this);
         this.scene.add.existing(this);
@@ -47,8 +48,6 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
             this.MaquinaEstados[this.currentState]();
     
         }, 200);
-
-        this.lifeComp = new LifeComponent(10, this);
         this.scene.events.on('update', this.updateEnemy, this);
     }
 
@@ -79,9 +78,7 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
         this.manageAnims('puton_kiss_anim');
         if(!this.lanzado){
             this.atacarRango(); 
-        }
-
-        
+        } 
     }
 
     meleeAttackState() {
@@ -104,7 +101,7 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
             this.lanzado = true;
             // pcall function que se ejecuta cuando el evento se llama al terminar la animacion de ataque correspondiente
             this.once('animationcomplete-' + attackAnimationKey, () => {
-                new Proyectil(this.scene, this.x, this.y, 'potion', this.direction, this.rangeDamage, false);
+                new Proyectil(this.scene, this.x, this.y - 10, 'heart', this.direction, this.rangeDamage, false);
                 // usamos cooldown para poner un delay en modo idle después de atacar
                 this.cooldown = true;
                 this.setCooldown(() => {
@@ -126,7 +123,6 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
             // Verifica la superposición entre el jugador y el enemigo
             const overlapping = this.scene.physics.overlap(this, this.player);
             if (overlapping) {
-                console.log("DAÑO A JUGADOR");
                 this.player.recieveDamage(this.meleeDamage);
                 this.cooldown = true;
                 this.setCooldown(() => {
@@ -145,7 +141,6 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
         if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
             return;
         }
-        console.log("UpdateEnemy");
         this.CalculateDisToPlayer();
         // Si hay cooldown hemos dicho que estará en estado IDLE
         if (!this.cooldown) {
@@ -189,13 +184,5 @@ export default class Punton extends Phaser.Physics.Arcade.Sprite{
                 this.play(animationKey);
             }
         }
-    }
-
-
-    
-    recieveDamage(damage){
-        this.lifeComp.Damage(damage);
-
-        console.log("AUUU");
     }
 }

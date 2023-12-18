@@ -45,6 +45,7 @@ export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
         if(this.tipe){
             this.scene.physics.add.collider(this, this.scene.enemiesGroup, (proyectil, enemy) => {
                 // Dañar al enemigo
+                console.log("Colisiono");
                 enemy.recieveDamage(proyectil.damage);
                 
                 // Destruir el proyectil

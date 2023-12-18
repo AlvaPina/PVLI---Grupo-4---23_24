@@ -39,7 +39,7 @@ export class MainScene extends Phaser.Scene {
         this.physics.world.gravity.y = 100;
 
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 280, 10, 'l');
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
