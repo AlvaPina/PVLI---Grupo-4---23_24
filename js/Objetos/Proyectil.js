@@ -2,7 +2,7 @@ import LifeComponent from "../Characters/lifeComponent.js";
 import Player from "../Characters/player.js";
 
 export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, dir, damage, tipe) {
+    constructor(scene, x, y, texture, velocityVector, damage, tipe) {
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -12,21 +12,22 @@ export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
         this.tipe = tipe; // true -> Aliado, false -> Enemigo
+        this.damage = damage;
 
         // Tiempo de vida del proyectil
         this.lifespan = 5000; // 5000 milisegundos o 5 segundos
 
         // Destruir el proyectil después de su tiempo de vida
         this.setLifeTime(this.lifespan);
-  
+
         // Llama a esta función para manejar la colisión con el suelo.
         this.handleCollisionWithGround();
 
-        //Llama a esta funcion para manejar la colision de los proyectiles con un enemigo de la escena
+        // Llama a esta función para manejar la colisión de los proyectiles con un enemigo de la escena
         this.handleCollisionWithEnemies();
 
-        this.dir = dir;
-        this.damage = damage;
+        // Asegúrate de que la dirección es un vector normalizado
+        this.velocityVector = velocityVector.normalize().scale(this.speed);
     }
 
     handleCollisionWithGround() {
@@ -79,9 +80,13 @@ export default class Proyectil extends Phaser.Physics.Arcade.Sprite {
     }
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        this.x += this.speed * this.dir;
-    }
 
+        // Asegúrate de que velocityVector está definido
+        if (this.velocityVector) {
+            this.x += this.velocityVector.x;
+            this.y += this.velocityVector.y;
+        }
+    }
     getTipe(){
         return this.tipe;
     }

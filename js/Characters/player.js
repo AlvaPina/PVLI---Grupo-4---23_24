@@ -144,17 +144,16 @@ export default class Player extends SerVivo {
 //#region Ataques de las distintas personalidades
     //Ataque de logica (pocion lanzable)
     logicAttack() {
-        // Obtener el vector de velocidad actual del jugador
         let velocityVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
 
-        // Si el jugador está quieto, usar la dirección actual para el disparo
         if (velocityVector.length() === 0) {
             velocityVector = new Phaser.Math.Vector2(this.dir, 0);
         }
 
-        // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, true);
+        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage, true);
     }
+
+
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
         //El ataque consiste en un rectangulo invisible que representa el área de ataque de la espada
