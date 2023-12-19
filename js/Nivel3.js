@@ -16,7 +16,6 @@ export class Nivel3 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa3JSON.json');
     }
 
     create() {
@@ -24,7 +23,7 @@ export class Nivel3 extends Phaser.Scene {
         const gameHeight = this.game.config.height;
         let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background3').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
-        var mapa = this.make.tilemap({ key: 'mapa' });
+        var mapa = this.make.tilemap({ key: 'mapa3' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
         this.groundLayer = this.physics.add.staticGroup();
@@ -76,5 +75,12 @@ export class Nivel3 extends Phaser.Scene {
         this.scene.stop('MainScene');
         this.scene.start('GameOver');
         console.log("Has muerto D:");
+    }
+    changeToSelection() {
+        //Pausamos el menu de juego...
+        this.scene.pause();
+        //Vamos al menu de seleccion
+        this.scene.launch('SelectionMenu', { scene: this });
+        console.log("Estas en el menú de cambio de personaje...");
     }
 }

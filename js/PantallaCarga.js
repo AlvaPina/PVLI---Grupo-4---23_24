@@ -83,7 +83,9 @@ export class LoadScene extends Phaser.Scene
         this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
         // Cargar el mapa en formato JSON
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa2JSON.json');
+        this.load.tilemapTiledJSON('mapa2', 'Assets/Mapa/JSON/Mapa2JSON.json');
+        this.load.tilemapTiledJSON('mapa3', 'Assets/Mapa/JSON/Mapa3JSON.json');
+        this.load.tilemapTiledJSON('mapa4', 'Assets/Mapa/JSON/Mapa4JSON.json');
         //Seleccion de menu
         //Cargamos todos los recursos necesarios para el renderizado de la rueda
         this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png');

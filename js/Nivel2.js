@@ -21,7 +21,7 @@ export class Nivel2 extends Phaser.Scene {
 
         let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background2').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
-        var mapa = this.make.tilemap({ key: 'mapa' });
+        var mapa = this.make.tilemap({ key: 'mapa2' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
 
         this.groundLayer = this.physics.add.staticGroup();
@@ -35,7 +35,7 @@ export class Nivel2 extends Phaser.Scene {
 
         this.physics.world.gravity.y = 700;
 
-        this.player = new Player(this, 100, 250, 280, this.previousLives, this.previousSpriteId);
+        this.player = new Player(this, 100, 150, 280, this.previousLives, this.previousSpriteId);
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer);
@@ -80,5 +80,12 @@ export class Nivel2 extends Phaser.Scene {
         this.scene.stop('MainScene');
         this.scene.start('GameOver');
         console.log("Has muerto D:");
+    }
+    changeToSelection() {
+        //Pausamos el menu de juego...
+        this.scene.pause();
+        //Vamos al menu de seleccion
+        this.scene.launch('SelectionMenu', { scene: this });
+        console.log("Estas en el menú de cambio de personaje...");
     }
 }
