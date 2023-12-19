@@ -4,7 +4,7 @@ import SerVivo from "../serVivo.js";
 export default class Punton extends SerVivo{
     constructor(scene, x, y){
         const life = 10;
-        super(scene, x, y, life);
+        super(scene, x, y, null, life);
         this.scene = scene;
         this.scene.physics.world.enable(this);
         this.scene.add.existing(this);

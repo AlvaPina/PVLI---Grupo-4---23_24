@@ -115,10 +115,6 @@ export class MainScene extends Phaser.Scene {
     getEnemies(){
         return this.enemies;
     }
-    handleCollision(enemy){
-        this.player.recieveDamage(enemy.damageAmount);
-        enemy.destroy();
-    }
     update() {
     
     }
