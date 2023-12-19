@@ -38,7 +38,7 @@ export class MainScene extends Phaser.Scene {
         });
 
         // Configuración de la gravedad
-        this.physics.world.gravity.y = 100;
+        this.physics.world.gravity.y = 700;
 
         // Creacicón de los dos grupos
         this.enemiesGroup = this.physics.add.group();
@@ -62,7 +62,7 @@ export class MainScene extends Phaser.Scene {
         camera.setZoom(1.4);
 
         // Creación del punto de cambio de escena
-        this.changeScenePoint = this.add.rectangle(100, 100, 100, 100, 0x0000ff, 0); // x, y, width, height son los parámetros de la posición y tamaño
+        this.changeScenePoint = this.add.rectangle(920, 275, 50, 50, 0x0000ff, 0); // x, y, width, height son los parámetros de la posición y tamaño
         this.physics.add.existing(this.changeScenePoint, true); // 'true' hace que sea estático
 
         // Configuración de la colisión entre el jugador y el punto de cambio
@@ -80,16 +80,16 @@ export class MainScene extends Phaser.Scene {
         this.enemiesGroup.add(this.enemigo1);
 
 
-        // Crear puntos de patrulla
-        const patrolPoints = [
-            { x: 100, y: 300 },
-            { x: 400, y: 300 }
-        ];
+        //// Crear puntos de patrulla
+        //const patrolPoints = [
+        //    { x: 100, y: 300 },
+        //    { x: 400, y: 300 }
+        //];
 
-        // Crear y añadir el enemigo Problemas a la escena
-        this.problemas = new Problemas(this, 100, 300, patrolPoints);
-        this.problemas.setScale(0.15, 0.15);
-        this.physics.add.collider(this.problemas, this.groundLayer);
+        //// Crear y añadir el enemigo Problemas a la escena
+        //this.problemas = new Problemas(this, 100, 300, patrolPoints);
+        //this.problemas.setScale(0.15, 0.15);
+        //this.physics.add.collider(this.problemas, this.groundLayer);
     }
 
     // Método llamado cuando el jugador colisiona con el punto de cambio
