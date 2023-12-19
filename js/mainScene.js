@@ -1,29 +1,18 @@
 import Player from './Characters/player.js';
 import RedBull from './Objetos/RedBull.js';
 import Puton from './Characters/Enemy/puton.js';
-
+import Problemas from './Characters/Enemy/problemas.js';
+import Turret from './Objetos/Turret.js';
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
         this.player = null;
+        this.oneTurret = null;
         this.cursors = null;
         this.groundLayer = null;
     }
 
     preload() {
-        //Elementos del escenario
-        this.load.image('background1', 'Assets/Mapa/Img/TutorialFinal.png'); 
-        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png' );
-        this.load.image('turret', 'Assets/Objetos/Torreta.png');
-        this.load.image('bullet', 'Assets/Objetos/Bala.png');
-        //Animaciones de Logica
-        /*this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png',{frameWidth: 300 , frameHeight: 300 });*/
-
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json');
     }
    
     create() {
@@ -51,11 +40,20 @@ export class MainScene extends Phaser.Scene {
         // Configuración de la gravedad
         this.physics.world.gravity.y = 100;
 
+        // Creacicón de los dos grupos
+        this.enemiesGroup = this.physics.add.group();
+        this.alliesGroup = this.physics.add.group();
+
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, null, 'l');
+        this.player = new Player(this, 100, 250, 280, 10, 'l');
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
+        this.alliesGroup.add(this.player);
+
+        // Creacion Torreta
+        this.oneTurret = new Turret(this, 'turret', this.player.virtuousDamage);
+        this.alliesGroup.add(this.oneTurret);
 
         // Configuración de la cámara
         let camera = this.cameras.main;
@@ -76,10 +74,22 @@ export class MainScene extends Phaser.Scene {
             this.player.confirmChange(id);
         });
 
-        // Creacicón de enemigos
         this.enemigo1 = new Puton(this, 200, 250)
         this.enemigo1.setScale(0.15, 0.15);
         this.physics.add.collider(this.enemigo1, this.groundLayer);
+        this.enemiesGroup.add(this.enemigo1);
+
+
+        // Crear puntos de patrulla
+        const patrolPoints = [
+            { x: 100, y: 300 },
+            { x: 400, y: 300 }
+        ];
+
+        // Crear y añadir el enemigo Problemas a la escena
+        this.problemas = new Problemas(this, 100, 300, patrolPoints);
+        this.problemas.setScale(0.15, 0.15);
+        this.physics.add.collider(this.problemas, this.groundLayer);
     }
 
     // Método llamado cuando el jugador colisiona con el punto de cambio

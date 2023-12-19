@@ -12,14 +12,6 @@ export class Nivel3 extends Phaser.Scene {
         this.previousLives = data.player.getLives();
     }
     preload() {
-        //Elementos del escenario
-        this.load.image('background3', 'Assets/Mapa/Img/Museo.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
-        //Animaciones de Logica
-        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa3JSON.json');
     }
@@ -28,7 +20,7 @@ export class Nivel3 extends Phaser.Scene {
         const gameHeight = this.game.config.height;
 
         // Configuraci�n del fondo y otros elementos de la escena
-        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background2').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
+        let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background3').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
         // Configuración del mapa y las capas de colisiones
         var mapa = this.make.tilemap({ key: 'mapa' });

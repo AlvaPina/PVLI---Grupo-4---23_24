@@ -1,11 +1,11 @@
-import LifeComponent from './lifeComponent.js';
 import Turret from '../Objetos/Turret.js';
 import UI from '../UI.js';
-import Proyectil from '../Objetos/Proyectil.js';
+import Proyectil     from '../Objetos/Proyectil.js';
+import SerVivo from './serVivo.js';
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, speed, iniLives, lifeComp, spriteId) {
-        super(scene, x, y, speed, iniLives, lifeComp, spriteId);
+export default class Player extends SerVivo {
+    constructor(scene, x, y, speed, iniLives, spriteId) {
+        super(scene, x, y, null, iniLives);
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
@@ -46,13 +46,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.attack();
             }
         });
-        //creamos componente de vida
-        this.lifeComp = new LifeComponent(iniLives, this);
         //Parametros del player
         this.dir = 1;
         this.spriteId = spriteId;
         this.speed = speed;
         this.scene = scene;
+        this.potionSpeed = 2.5;
 
         //Stats de daño dependiendo a los enemigos de las diferentes personalidades
         this.logicDamage = 5;
@@ -155,8 +154,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', velocityVector, this.logicDamage);
-        console.log("Ataque activado");
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, this.potionSpeed, true);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
@@ -231,24 +229,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //Controlamos las instancias de las torretas (recordemos que solo puede haber una)
         // Si ya hay una torreta existente, la destruimos antes de crear una nueva
         if (this.scene.oneTurret) {
-            this.scene.oneTurret.destroy();
+            this.scene.oneTurret.setActive(false, this.dir);
         }
         // Sino, instanciamos una nueva torreta (añadimos un poco de distancia entre la instancia y el jugador) y la igualamos
         // a la nueva torreta
-        if(this.dir == 1){ // si virtuoso apunta a la derecha
-            this.scene.oneTurret = new Turret(this.scene, this.x + 30, this.y - 150, 'turret', this.dir, this.virtuousDamage);
-        }
-        else { //Si apunta a la izquerda
-            this.scene.oneTurret = new Turret(this.scene, this.x - 30, this.y - 150, 'turret', this.dir, this.virtuousDamage);
-            //Invertimos la torreta
-            this.scene.oneTurret.setFlip(true, false);
-        }
-    }
-//#endregion
-    //Metodo para controlar la vida del jugador
-    recieveDamage(damage){
-        this.lifeComp.Damage(damage);
-        //console.log("AUUU");
+        this.scene.oneTurret.setActive(true , this.dir);
     }
 
     //Metodo para controlar que animaciones debe hacer el personaje en cada momento del juego
@@ -272,7 +257,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.play(this.spriteId + '_attack');
                 //Cuando se finaliza la animacion de ataque, se ejecuta lo que hay dentro
                 this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, function () {
-                    console.log('La animación ha terminado:', this.anims.currentAnim.key);
+                    //console.log('La animación ha terminado:', this.anims.currentAnim.key);
                     //Ponemos booleano de ataque a false
                     this.isAttack = false;
                 });
@@ -291,9 +276,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return true;
         }
         return false;
-    }
-
-    getLives(){
-        return this.lifeComp.getCurrentLives();
     }
 }

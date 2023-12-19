@@ -4,12 +4,12 @@
     "\\Assets",
     "\\Assets\\Mapa",
     "\\Assets\\Mapa\\Img",
-    "\\css",
     "\\js",
     "\\js\\Characters",
+    "\\js\\Characters\\Enemy",
     "\\js\\Objetos",
     "\\js\\WebPage"
   ],
-  "SelectedNode": "\\js\\Nivel2.js",
+  "SelectedNode": "\\js\\mainScene.js",
   "PreviewInSolutionExplorer": false
 }

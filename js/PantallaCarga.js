@@ -50,6 +50,56 @@ export class LoadScene extends Phaser.Scene
         this.load.spritesheet('puton_move', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
         this.load.spritesheet('puton_kiss', 'Assets/Enemies/Lady/Kiss.png', { frameWidth: 182, frameHeight: 300 });
         this.load.spritesheet('puton_heart', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 150, frameHeight: 150 });
+        //Game over
+        //Background
+        this.load.image('FondoGameOver', 'Assets/Pantallas/PantallaGameOver.png');
+        //Texto de GameOver
+        this.load.image('TextoGameOver', 'Assets/Pantallas/GameOver_Text.png');
+        //Texturas del boton (cuando se le clica y cuando no)
+        this.load.image('botonReintentarClaro', 'Assets/Pantallas/BotonRetryClaro.png');
+        this.load.image('botonReintentarOscuro', 'Assets/Pantallas/BotonRetryOscuro.png');
+        //MainScene
+        //Elementos del escenario
+        this.load.image('background1', 'Assets/Mapa/Img/TutorialFinal.png');
+        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
+        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
+        this.load.image('turret', 'Assets/Objetos/Torreta.png');
+        this.load.image('bullet', 'Assets/Objetos/Bala.png');
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json')
+        //Nivel2            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
+        //Nivel3            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background3', 'Assets/Mapa/Img/Museo.png');
+        //Nivel4            
+        // Cargar los recursos necesarios para la escena
+        this.load.image('background4', 'Assets/Mapa/Img/Mapa4Provisional.png');
+
+        // Cargar animaciones de Logica
+        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
+
+        // Cargar el mapa en formato JSON
+        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Mapa2JSON.json');
+        //Seleccion de menu
+        //Cargamos todos los recursos necesarios para el renderizado de la rueda
+        this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png');
+        //Selecciones no disponibles
+        this.load.image('down', 'Assets/SelectionWheel/Down.png');
+        this.load.image('up', 'Assets/SelectionWheel/Up.png');
+        this.load.image('left', 'Assets/SelectionWheel/Left.png');
+        this.load.image('right', 'Assets/SelectionWheel/Right.png');
+        //Selecciones de personalidad
+        this.load.image('logic', 'Assets/SelectionWheel/Logic_Sel Escalado.png');
+        this.load.image('defender', 'Assets/SelectionWheel/Defender_Sel Escalado.png');
+        this.load.image('virtuous', 'Assets/SelectionWheel/Virtuous_Sel Escalado.png');
+        this.load.image('protagonist', 'Assets/SelectionWheel/Protagonist_Sel Escalado.png');
+        //Textos del menu
+        this.load.image('text', 'Assets/SelectionWheel/SelectionText.png');
+
     }
     create() {
         // Crear animaciones aquí

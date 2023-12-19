@@ -1,8 +1,10 @@
-import Bullet from  './Bullet.js';
+import SerVivo from "../Characters/serVivo.js";
+import Proyectil from "./Proyectil.js";
 //Constructor de la torreta (ataque propio del virtuoso)  
-export default class Turret extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, dir, damage) {
-        super(scene, x, y, texture, dir)
+export default class Turret extends SerVivo {
+    constructor(scene, texture, damage) {
+        const life = 4;
+        super(scene, 0, 0, texture, life)
         //Añadimos torreta a la escena
         scene.add.existing(this);
         //Añadimos fisicas al objeto
@@ -21,36 +23,55 @@ export default class Turret extends Phaser.Physics.Arcade.Sprite {
         this.delayTime = 2;
         //Tiempo transcurrido desde el último disparo
         this.elapsedTimeShot = 0;
-        //Direccion a la que apunta la torreta
-        this.dir = dir;
         //Daño que produce la bala (pasada desde el player.js)
         this.bulletDamage = damage;
+        //Velocidad de la bala
+        this.bulletSpeed = 5;
+
+        //confi inicial
+        this.isActive = false;
+        this.setVisible(false);
     };
     //Metodo para disparar
     shoot(){
-        new Bullet(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage);
+        new Proyectil(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage, this.bulletSpeed, true);
     }
     preUpdate(t, dt){
         super.preUpdate(t, dt);
-        this.setVelocityX(0);
+        if(this.isActive){ //solo la actualizamos si está activa
+            this.setVelocityX(0);
 
-        //Convertimos el dt a segundos e incrementamos elapsedTimes
-        this.elapsedTimeShot += dt / 1000;
-        this.elapsedTime += dt / 1000;
-
-        //Si el tiempo transcurrido es igual al tiempo de delay
-        if(this.elapsedTimeShot >= this.delayTime){
-            //Dispara proyectil
-            this.shoot();
-            console.log("Dispara Torretaaaa");
-            //Reseteamos contador de elapsedTime
-            this.elapsedTimeShot = 0;
+            //Convertimos el dt a segundos e incrementamos elapsedTime
+            this.elapsedTimeShot += dt / 1000;
+            this.elapsedTime += dt / 1000;
+    
+            //Si el tiempo transcurrido es igual al tiempo de delay
+            if(this.elapsedTimeShot >= this.delayTime){
+                //Dispara proyectil
+                this.shoot();
+                console.log(this.bulletDamage);
+                //Reseteamos contador de elapsedTime
+                this.elapsedTimeShot = 0;
+            }
+            //Si el tiempo transcurrido es igual al timepo de vida
+            if(this.elapsedTime >= this.lifeTime){ 
+                //Destruimos proyectil
+                this.isActive = false;
+                console.log("Torreta desactivada!");
+                this.setActive(false, null);
+                this.elapsedTime = 0;
+            }
         }
-        //Si el tiempo transcurrido es igual al timepo de vida
-        if(this.elapsedTime >= this.lifeTime){ 
-            //Destruimos proyectil
-            this.destroy();
-            console.log("Torreta destruida!");
+    }
+    setActive(bool, dir){ // si true, activamos torreta; si false, desactivamos
+        this.isActive = bool;
+        this.setVisible(bool);
+        if(bool){
+            this.x = this.scene.player.x
+            this.y = this.scene.player.y
+            this.dir = dir;
+            this.elapsedTime = 0;
+            this.setFlipX(dir === -1);
         }
     }
 }

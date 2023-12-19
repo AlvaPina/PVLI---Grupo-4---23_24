@@ -6,8 +6,8 @@ export default class UI extends Phaser.GameObjects.Container {
         //Creamos el grupo de imagenes de los corazones
         this.heartsGroup = scene.add.group();
         //Leemos la vida del jugador
-        const heartsCount = this.player.lifeComp.getCurrentLives();
-        console.log(this.player.lifeComp.getCurrentLives());
+        const heartsCount = this.player.getLives();
+        console.log(this.player.getLives());
         //Distancia entre el renderizado de corazones (lo incremntamos en el bucle para que se rendericen separados)
         let distanceBetweenhearts = 0;
         //recorremos la cantidad de corazones recibida por el lifeComp
@@ -39,7 +39,7 @@ export default class UI extends Phaser.GameObjects.Container {
     // Actualiza la UI de vida cuando cambiamos la ui (lo llamamos en el update del Player)
     updateUI(){
         // Obtenemos las vidas actuales del jugador en timepo de ejecucion
-        const lives = this.player.lifeComp.getCurrentLives();
+        const lives = this.player.getLives();
         //Iteramos sobre los corazones en la UI y actualizamos la vida
         this.heartsGroup.children.iterate((heart, index) => {
             //Si el index actual es menor que las vidas -> corazon lleno
