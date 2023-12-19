@@ -3,7 +3,8 @@ import Player from "../Characters/player.js";
 import SerVivo from "../Characters/serVivo.js";
 
 export default class Proyectil extends SerVivo {
-    constructor(scene, x, y, texture, dir, damage, speed, tipe) {
+    constructor(scene, x, y, texture, velocityVector, damage, speed, tipe) {
+
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -12,19 +13,22 @@ export default class Proyectil extends SerVivo {
         this.setScale(0.05);
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
-        this.tipe = tipe; // true -> Proyectil de Aliado, false -> Proyectil de Enemigo
+        this.tipe = tipe; // true -> Aliado, false -> Enemigo
+        this.damage = damage;
+
 
         // Tiempo de vida del proyectil
         this.lifespan = 5000; // 5000 milisegundos o 5 segundos
 
         // Destruir el proyectil después de su tiempo de vida
         this.setLifeTime(this.lifespan);
-  
+
         // Llama a esta función para manejar la colisión con el suelo.
         this.handleCollisions();
 
-        this.dir = dir;
-        this.damage = damage;
+        // Asegúrate de que la dirección es un vector normalizado
+        velocityVector = new Phaser.Math.Vector2(velocityVector, 0);
+        this.velocityVector = velocityVector.normalize().scale(this.speed);
     }
 
     handleCollisions() {
@@ -73,9 +77,13 @@ export default class Proyectil extends SerVivo {
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        this.x += this.speed * this.dir;
-    }
 
+        // Asegúrate de que velocityVector está definido
+        if (this.velocityVector) {
+            this.x += this.velocityVector.x;
+            this.y += this.velocityVector.y;
+        }
+    }
     getTipe(){
         return this.tipe;
     }

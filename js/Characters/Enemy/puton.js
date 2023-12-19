@@ -15,7 +15,7 @@ export default class Punton extends SerVivo{
         this.speed = 40;
         this.meleeDistance = 150;
         this.rangeDisctance = 250;
-        this.rangeSpeed = 10;
+        this.rangeSpeed = 2.5;
         this.atackDelay = 1;
         this.direction = 1; // 1 es derecha, -1 es izquierda
         this.meleeDamage = 1;

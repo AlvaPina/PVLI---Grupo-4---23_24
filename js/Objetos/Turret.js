@@ -3,7 +3,8 @@ import Proyectil from "./Proyectil.js";
 //Constructor de la torreta (ataque propio del virtuoso)  
 export default class Turret extends SerVivo {
     constructor(scene, texture, damage) {
-        super(scene, 0, 0, texture)
+        const life = 4;
+        super(scene, 0, 0, texture, life)
         //Añadimos torreta a la escena
         scene.add.existing(this);
         //Añadimos fisicas al objeto
@@ -25,7 +26,7 @@ export default class Turret extends SerVivo {
         //Daño que produce la bala (pasada desde el player.js)
         this.bulletDamage = damage;
         //Velocidad de la bala
-        this.bulletSpeed = 10;
+        this.bulletSpeed = 5;
 
         //confi inicial
         this.isActive = false;
