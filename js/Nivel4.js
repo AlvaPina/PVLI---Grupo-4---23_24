@@ -57,7 +57,7 @@ export class Nivel4 extends Phaser.Scene {
         this.alliesGroup.add(this.oneTurret);
 
         // Creacion SpawnsEnemigos
-        this.enemySpawn = new EnemySpawn(this, 100, 250);
+        this.enemySpawn = new EnemySpawn(this, 100, 300);
 
         // Configuración de la cámara
         let camera = this.cameras.main;
