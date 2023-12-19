@@ -6,6 +6,7 @@ import SerVivo from './serVivo.js';
 export default class Player extends SerVivo {
     constructor(scene, x, y, speed, iniLives, spriteId) {
         super(scene, x, y, null, iniLives);
+        this.setScale(0.18, 0.18);
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
@@ -51,7 +52,7 @@ export default class Player extends SerVivo {
         this.spriteId = spriteId;
         this.speed = speed;
         this.scene = scene;
-        this.potionSpeed = 10;
+        this.potionSpeed = 2.5;
 
         //Stats de daño dependiendo a los enemigos de las diferentes personalidades
         this.logicDamage = 5;

@@ -1,12 +1,13 @@
 import Proyectil from "../../Objetos/Proyectil.js";
 import SerVivo from "../serVivo.js";
 
-export default class Punton extends SerVivo{
+export default class Puton extends SerVivo{
     constructor(scene, x, y){
         const life = 10;
         super(scene, x, y, null, life);
         this.scene = scene;
         this.scene.physics.world.enable(this);
+        this.setScale(0.15, 0.15);
         this.scene.add.existing(this);
         this.player = this.scene.player;
         this.distanceToPlayer = this.CalculateDisToPlayer();

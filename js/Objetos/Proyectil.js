@@ -3,7 +3,7 @@ import Player from "../Characters/player.js";
 import SerVivo from "../Characters/serVivo.js";
 
 export default class Proyectil extends SerVivo {
-    constructor(scene, x, y, texture, velocityVector, damage, speed, tipe) {
+    constructor(scene, x, y, texture, velocityVector, damage, speed, type) {
 
         super(scene, x, y, texture);
         scene.add.existing(this);
@@ -13,7 +13,7 @@ export default class Proyectil extends SerVivo {
         this.setScale(0.05);
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
-        this.tipe = tipe; // true -> Aliado, false -> Enemigo
+        this.type = type; // true -> Aliado, false -> Enemigo
         this.damage = damage;
 
 
@@ -44,7 +44,7 @@ export default class Proyectil extends SerVivo {
         }, null, this);
 
         // colisiones con enemigos o colisiones con alliados (player, torreta...)
-        if(this.tipe){
+        if(this.type){
             this.scene.physics.add.collider(this, this.scene.enemiesGroup, (proyectil, enemy) => {
                 // Dañar al enemigo
                 console.log("Colisiono");
@@ -84,7 +84,7 @@ export default class Proyectil extends SerVivo {
             this.y += this.velocityVector.y;
         }
     }
-    getTipe(){
-        return this.tipe;
+    getType(){
+        return this.type;
     }
 }

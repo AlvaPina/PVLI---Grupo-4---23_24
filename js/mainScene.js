@@ -47,7 +47,6 @@ export class MainScene extends Phaser.Scene {
         // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 280, 10, 'l');
         this.player.startAnimation();
-        this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
         this.alliesGroup.add(this.player);
 
@@ -75,7 +74,6 @@ export class MainScene extends Phaser.Scene {
         });
 
         this.enemigo1 = new Puton(this, 200, 250)
-        this.enemigo1.setScale(0.15, 0.15);
         this.physics.add.collider(this.enemigo1, this.groundLayer);
         this.enemiesGroup.add(this.enemigo1);
 
