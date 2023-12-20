@@ -75,6 +75,7 @@ export class LoadScene extends Phaser.Scene
         //Nivel4            
         // Cargar los recursos necesarios para la escena
         this.load.image('background4', 'Assets/Mapa/Img/Mapa4Provisional.png');
+        this.load.image('light', 'Assets/Mapa/Img/Light.png');
 
         // Cargar animaciones de Logica
         this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
@@ -133,7 +134,7 @@ export class LoadScene extends Phaser.Scene
         // Cambiar a MainScene despu�s de un tiempo determinado
         this.time.delayedCall(3000, () => {
             this.scene.stop('LoadScene');
-            this.scene.start('MainScene');
+            this.scene.start('Nivel4');
         });
     }
 

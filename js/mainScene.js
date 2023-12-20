@@ -116,4 +116,8 @@ export class MainScene extends Phaser.Scene {
     update() {
     
     }
+
+    desactivarTorreta(){
+        this.oneTurret.setActive(false, null);
+    }
 }

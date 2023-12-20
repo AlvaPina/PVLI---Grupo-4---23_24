@@ -155,7 +155,7 @@ export default class Player extends SerVivo {
         }
 
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
-        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, this.potionSpeed, true);
+        new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, this.potionSpeed, true, 1);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){

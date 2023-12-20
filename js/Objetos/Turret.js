@@ -3,7 +3,7 @@ import Proyectil from "./Proyectil.js";
 //Constructor de la torreta (ataque propio del virtuoso)  
 export default class Turret extends SerVivo {
     constructor(scene, texture, damage) {
-        const life = 4;
+        const life = 3;
         super(scene, 0, 0, texture, life)
         //Añadimos torreta a la escena
         scene.add.existing(this);
@@ -16,7 +16,7 @@ export default class Turret extends SerVivo {
         //this.scene.physics.add.collider(this , this.scene.player);
 
         //Tiempo de vida de la torreta
-        this.lifeTime = 10;
+        this.lifeTime = 15;
         //Tiempo transcurrido desde la instanciacion de la torreta
         this.elapsedTime = 0;
         //Tiempo de delay entre disparos (en segundos)
@@ -26,7 +26,7 @@ export default class Turret extends SerVivo {
         //Daño que produce la bala (pasada desde el player.js)
         this.bulletDamage = damage;
         //Velocidad de la bala
-        this.bulletSpeed = 5;
+        this.bulletSpeed = 3;
 
         //confi inicial
         this.isActive = false;
@@ -34,7 +34,7 @@ export default class Turret extends SerVivo {
     };
     //Metodo para disparar
     shoot(){
-        new Proyectil(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage, this.bulletSpeed, true);
+        new Proyectil(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage, this.bulletSpeed, true, 1);
     }
     preUpdate(t, dt){
         super.preUpdate(t, dt);
@@ -67,11 +67,13 @@ export default class Turret extends SerVivo {
         this.isActive = bool;
         this.setVisible(bool);
         if(bool){
+            const offset = 20;
             this.x = this.scene.player.x
-            this.y = this.scene.player.y
+            this.y = this.scene.player.y - offset;
             this.dir = dir;
             this.elapsedTime = 0;
             this.setFlipX(dir === -1);
+            this.lifeComp.Health(4);
         }
     }
 }

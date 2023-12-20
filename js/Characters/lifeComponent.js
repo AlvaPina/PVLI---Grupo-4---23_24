@@ -1,3 +1,5 @@
+import Turret from "../Objetos/Turret.js";
+
 export default class LifeComponent {
     //Constructor de la clase LifeCompoenent de la que heredaran todos aquellos objetos que manejen sistema de vidas
     //Por ejemplo: personalidades jugables y enemigos
@@ -29,8 +31,7 @@ export default class LifeComponent {
     }
     //Metodo que destruye el gameObject asociado al LifeComponent cuando muere
     Die(){
-        console.log("muelto");
-        this.gameObject.destroy();
+        this.gameObject.Die();
     }
     //Metodo que devuelve las vidas actuales de la entidad asociada
     getCurrentLives(){

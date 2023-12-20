@@ -13,7 +13,7 @@ export default class Puton extends SerVivo{
         this.distanceToPlayer = this.CalculateDisToPlayer();
 
         //Ajustes
-        this.speed = 40;
+        this.speed = 100;
         this.meleeDistance = 150;
         this.rangeDisctance = 250;
         this.rangeSpeed = 2.5;
@@ -103,7 +103,7 @@ export default class Puton extends SerVivo{
             this.lanzado = true;
             // pcall function que se ejecuta cuando el evento se llama al terminar la animacion de ataque correspondiente
             this.once('animationcomplete-' + attackAnimationKey, () => {
-                new Proyectil(this.scene, this.x, this.y - 10, 'heart', this.direction, this.rangeDamage, this.rangeSpeed, false);
+                new Proyectil(this.scene, this.x, this.y - 10, 'heart', this.direction, this.rangeDamage, this.rangeSpeed, false, 1);
                 // usamos cooldown para poner un delay en modo idle después de atacar
                 this.cooldown = true;
                 this.setCooldown(() => {

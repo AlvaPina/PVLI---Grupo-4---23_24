@@ -21,12 +21,19 @@ export class Nivel4 extends Phaser.Scene {
         const gameWidth = this.game.config.width;
         const gameHeight = this.game.config.height;
 
+        // Creacicón de los dos grupos
+        this.enemiesGroup = this.physics.add.group();
+        this.alliesGroup = this.physics.add.group();
+        this.enemySpawns = this.add.group();
+
         // Configuración del fondo y otros elementos de la escena
         let background = this.add.image(gameWidth / 2, gameHeight / 2, 'background4').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
+        this.light = this.add.image(gameWidth / 2, gameHeight / 2, 'light').setOrigin(0.5, 0.5).setScale(0.5, 0.5);
 
         // Configuración del mapa y las capas de colisiones
         var mapa = this.make.tilemap({ key: 'mapa4' });
         var capaColisiones = mapa.getObjectLayer('Capa de Objetos 1');
+        var capaSpawnEnemigos = mapa.getObjectLayer('Spawns Enemigos');
 
         // Creación del suelo
         this.groundLayer = this.physics.add.staticGroup();
@@ -37,13 +44,16 @@ export class Nivel4 extends Phaser.Scene {
             this.groundLayer.create(colisionObject.x, colisionObject.y, 'ground').setOrigin(0, 0).setDisplaySize(colisionObject.width, colisionObject.height).refreshBody();
             colisionObject.destroy();
         });
+        // Creación Spawns
+        const offset = 50;
+        capaSpawnEnemigos.objects.forEach(objeto => {
+            var spawnObject = new EnemySpawn(this, objeto.x/2 + offset, objeto.y/2 + offset); //CAMBIAR LA POS QUE ESTA SIN TRASFORMAR
+            this.enemySpawns.add(spawnObject);
+        });
+
 
         // Configuración de la gravedad
         this.physics.world.gravity.y = 500;
-
-        // Creacicón de los dos grupos
-        this.enemiesGroup = this.physics.add.group();
-        this.alliesGroup = this.physics.add.group();
 
         // Creación y configuración del jugador
         this.player = new Player(this, 100, 250, 280, 10, 'l');
@@ -55,9 +65,6 @@ export class Nivel4 extends Phaser.Scene {
         // Creacion Torreta
         this.oneTurret = new Turret(this, 'turret', this.player.virtuousDamage);
         this.alliesGroup.add(this.oneTurret);
-
-        // Creacion SpawnsEnemigos
-        this.enemySpawn = new EnemySpawn(this, 100, 300);
 
         // Configuración de la cámara
         let camera = this.cameras.main;
@@ -115,7 +122,11 @@ export class Nivel4 extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.enemySpawn.preUpdate(time, delta);
+        this.enemySpawns.children.iterate(function(child) {
+            child.preUpdate(time, delta);
+        });
+        const smoothStepFactor = 0.1;
+        this.light.x += (this.player.x - this.light.x) * smoothStepFactor;
     }
 
     spawnEnemy(type, x, y){
@@ -140,5 +151,9 @@ export class Nivel4 extends Phaser.Scene {
         }
         this.physics.add.collider(enemigo, this.groundLayer);
         this.enemiesGroup.add(enemigo);
+    }
+
+    desactivarTorreta(){
+        this.oneTurret.setActive(false, null);
     }
 }

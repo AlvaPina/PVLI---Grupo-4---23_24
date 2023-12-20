@@ -3,18 +3,27 @@ import Player from "../Characters/player.js";
 import SerVivo from "../Characters/serVivo.js";
 
 export default class Proyectil extends SerVivo {
-    constructor(scene, x, y, texture, velocityVector, damage, speed, type) {
+    constructor(scene, x, y, texture, dir, damage, speed, type, gravity) {
 
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
         this.speed = speed;
+        this.gravity = gravity;
+        this.dir = dir; //valor 1 derecha, valor -1 izquierda
         this.setScale(0.05);
         this.setBounce(0.2);
         this.setCollideWorldBounds(true);
         this.type = type; // true -> Aliado, false -> Enemigo
         this.damage = damage;
+
+        // Calcular la velocidad inicial en las direcciones x e y
+        this.velX = this.speed * this.dir * 100; // Ajusta el multiplicador según sea necesario
+        this.velY = -this.speed * 40; // Ajusta el multiplicador según sea necesario
+        // Aplicar la gravedad
+        this.setVelocityX(this.velX); // Mantener la velocidad en la dirección x constante
+        this.setVelocityY(this.velY);
 
 
         // Tiempo de vida del proyectil
@@ -25,10 +34,6 @@ export default class Proyectil extends SerVivo {
 
         // Llama a esta función para manejar la colisión con el suelo.
         this.handleCollisions();
-
-        // Asegúrate de que la dirección es un vector normalizado
-        velocityVector = new Phaser.Math.Vector2(velocityVector, 0);
-        this.velocityVector = velocityVector.normalize().scale(this.speed);
     }
 
     handleCollisions() {
@@ -77,12 +82,11 @@ export default class Proyectil extends SerVivo {
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-
-        // Asegúrate de que velocityVector está definido
-        if (this.velocityVector) {
-            this.x += this.velocityVector.x;
-            this.y += this.velocityVector.y;
+        // Si el proyectil ha alcanzado el suelo, destruirlo
+        if (this.y >= this.scene.game.config.height) {
+            this.destroy();
         }
+        this.setVelocityY(this.body.velocity.y -= this.gravity);
     }
     getType(){
         return this.type;
