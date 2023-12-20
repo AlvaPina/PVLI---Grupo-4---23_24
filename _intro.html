@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Assets/WebPage/Img/LogoDummy.png">
+    <title>Dummy Studios</title>
+    <link rel="stylesheet" href="css/intro.css">
+
+    <script>
+        // Script para manejar eventos en la pestaña de Intro
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.addEventListener('click', function() {
+                // Redirige a la siguiente pestaña
+                window.location.href = 'Html/_historia.html';
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="intro-animacion1">
+        <img src="Assets/WebPage/Img/LogoDummy.png" alt="Animación1">
+        <div class="intro-animacion2">
+            <img src="Assets/WebPage/Img/LoadingScreen.png" alt="Animación2">
+            <div class="presents"> 
+                <p>Presents</p>
+            </div>
+            <div class="tid">
+                <p>TID</p>
+            </div>
+        </div>
+        
+    </div>
+    <div class="click-to-continue">
+        <p>Haz click para continuar.</p>
+    </div>
+</body>
+</html>

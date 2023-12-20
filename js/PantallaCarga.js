@@ -10,108 +10,108 @@ export class LoadScene extends Phaser.Scene
 
     preload() {
         // Preload assets
-        this.load.image('backgroundINI', 'Assets/WebPage/Img/LoadingScreen.png');
-        this.load.image('background', 'Assets/Mapa/Img/TutorialFinal.png');
+        this.load.image('backgroundINI', './Assets/WebPage/Img/LoadingScreen.png');
+        this.load.image('background', './Assets/Mapa/Img/TutorialFinal.png');
 
         //Cargamos objetos
-        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
-        this.load.image('redbull' , 'Assets/Objetos/RedBull.png');
+        this.load.image('ground', './Assets/WebPage/Img/groundInvisible.png');
+        this.load.image('potion', './Assets/Objetos/PocionLanzable.png');
+        this.load.image('redbull' , './Assets/Objetos/RedBull.png');
         //Elementos de la UI
-        this.load.image('heart', 'Assets/UI/Heart.png');
-        this.load.image('no_heart', 'Assets/UI/No-Heart.png');
-        this.load.image('l_icon', 'Assets/UI/Logic_Icon.png');
-        this.load.image('d_icon', 'Assets/UI/Defender_Icon.png');
-        this.load.image('p_icon', 'Assets/UI/Protagonist_Icon.png');
-        this.load.image('v_icon', 'Assets/UI/Virtuous_Icon.png');
+        this.load.image('heart', './Assets/UI/Heart.png');
+        this.load.image('no_heart', './Assets/UI/No-Heart.png');
+        this.load.image('l_icon', './Assets/UI/Logic_Icon.png');
+        this.load.image('d_icon', './Assets/UI/Defender_Icon.png');
+        this.load.image('p_icon', './Assets/UI/Protagonist_Icon.png');
+        this.load.image('v_icon', './Assets/UI/Virtuous_Icon.png');
         // Cargar los spritesheets
-        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_idle', './Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_jump', './Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_move', './Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_attack', './Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
         // ... cargar otros spritesheets ...
         //SpriteSheets de Protagonista
-        this.load.spritesheet('protagonist_idle', 'Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('protagonist_jump', 'Assets/Characters/Protagonist_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('protagonist_move', 'Assets/Characters/Protagonist_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('protagonist_attack', 'Assets/Characters/Protagonist_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('protagonist_idle', './Assets/Characters/Protagonist_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('protagonist_jump', './Assets/Characters/Protagonist_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('protagonist_move', './Assets/Characters/Protagonist_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('protagonist_attack', './Assets/Characters/Protagonist_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //SpriteSheets de Defensor
-        this.load.spritesheet('defender_idle', 'Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('defender_jump', 'Assets/Characters/Defender_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('defender_move', 'Assets/Characters/Defender_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('defender_attack', 'Assets/Characters/Defender_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('defender_idle', './Assets/Characters/Defender_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('defender_jump', './Assets/Characters/Defender_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('defender_move', './Assets/Characters/Defender_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('defender_attack', './Assets/Characters/Defender_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //SpriteSheets de Virtuoso
-        this.load.spritesheet('virtuous_idle', 'Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('virtuous_jump', 'Assets/Characters/Virtuous_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('virtuous_move', 'Assets/Characters/Virtuous_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('virtuous_attack', 'Assets/Characters/Virtuous_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('virtuous_idle', './Assets/Characters/Virtuous_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('virtuous_jump', './Assets/Characters/Virtuous_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('virtuous_move', './Assets/Characters/Virtuous_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('virtuous_attack', './Assets/Characters/Virtuous_Attack.png', { frameWidth: 300, frameHeight: 300 });
         //Cargar assets de puton
-        this.load.spritesheet('puton_idle', 'Assets/Enemies/Lady/Idle.png', { frameWidth: 182, frameHeight: 300 });
-        this.load.spritesheet('puton_move', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
-        this.load.spritesheet('puton_kiss', 'Assets/Enemies/Lady/Kiss.png', { frameWidth: 182, frameHeight: 300 });
-        this.load.spritesheet('puton_heart', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 150, frameHeight: 150 });
+        this.load.spritesheet('puton_idle', './Assets/Enemies/Lady/Idle.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_move', './Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_kiss', './Assets/Enemies/Lady/Kiss.png', { frameWidth: 182, frameHeight: 300 });
+        this.load.spritesheet('puton_heart', './Assets/Enemies/Lady/Hug.png', { frameWidth: 150, frameHeight: 150 });
         //Game over
         //Background
-        this.load.image('FondoGameOver', 'Assets/Pantallas/PantallaGameOver.png');
+        this.load.image('FondoGameOver', './Assets/Pantallas/PantallaGameOver.png');
         //Texto de GameOver
-        this.load.image('TextoGameOver', 'Assets/Pantallas/GameOver_Text.png');
+        this.load.image('TextoGameOver', './Assets/Pantallas/GameOver_Text.png');
         //Texturas del boton (cuando se le clica y cuando no)
-        this.load.image('botonReintentarClaro', 'Assets/Pantallas/BotonRetryClaro.png');
-        this.load.image('botonReintentarOscuro', 'Assets/Pantallas/BotonRetryOscuro.png');
+        this.load.image('botonReintentarClaro', './Assets/Pantallas/BotonRetryClaro.png');
+        this.load.image('botonReintentarOscuro', './Assets/Pantallas/BotonRetryOscuro.png');
         //MainScene
         //Elementos del escenario
-        this.load.image('background1', 'Assets/Mapa/Img/TutorialFinal.png');
-        this.load.image('ground', 'Assets/WebPage/Img/groundInvisible.png');
-        this.load.image('potion', 'Assets/Objetos/PocionLanzable.png');
-        this.load.image('turret', 'Assets/Objetos/Torreta.png');
-        this.load.image('bullet', 'Assets/Objetos/Bala.png');
-        this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json')
+        this.load.image('background1', './Assets/Mapa/Img/TutorialFinal.png');
+        this.load.image('ground', './Assets/WebPage/Img/groundInvisible.png');
+        this.load.image('potion', './Assets/Objetos/PocionLanzable.png');
+        this.load.image('turret', './Assets/Objetos/Torreta.png');
+        this.load.image('bullet', './Assets/Objetos/Bala.png');
+        this.load.tilemapTiledJSON('mapa', './Assets/Mapa/JSON/Tutorial.json')
         //Nivel2            
         // Cargar los recursos necesarios para la escena
-        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
+        this.load.image('background2', './Assets/Mapa/Img/MapaCiudad.png');
         //Nivel3            
         // Cargar los recursos necesarios para la escena
-        this.load.image('background3', 'Assets/Mapa/Img/Museo.png');
+        this.load.image('background3', './Assets/Mapa/Img/Museo.png');
         //Nivel4            
         // Cargar los recursos necesarios para la escena
-        this.load.image('background4', 'Assets/Mapa/Img/Mapa4Provisional.png');
-        this.load.image('light', 'Assets/Mapa/Img/Light.png');
+        this.load.image('background4', './Assets/Mapa/Img/Mapa4Provisional.png');
+        this.load.image('light', './Assets/Mapa/Img/Light.png');
 
         // Cargar animaciones de Logica
-        this.load.spritesheet('logic_idle', 'Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_jump', 'Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_move', 'Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
-        this.load.spritesheet('logic_attack', 'Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_idle', './Assets/Characters/Logic_Idle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_jump', './Assets/Characters/Logic_Jump.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_move', './Assets/Characters/Logic_Walk.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('logic_attack', './Assets/Characters/Logic_Attack.png', { frameWidth: 300, frameHeight: 300 });
 
         // Cargar el mapa en formato JSON
-        this.load.tilemapTiledJSON('mapa2', 'Assets/Mapa/JSON/Mapa2JSON.json');
-        this.load.tilemapTiledJSON('mapa3', 'Assets/Mapa/JSON/Mapa3JSON.json');
-        this.load.tilemapTiledJSON('mapa4', 'Assets/Mapa/JSON/Mapa4JSON.json');
+        this.load.tilemapTiledJSON('mapa2', './Assets/Mapa/JSON/Mapa2JSON.json');
+        this.load.tilemapTiledJSON('mapa3', './Assets/Mapa/JSON/Mapa3JSON.json');
+        this.load.tilemapTiledJSON('mapa4', './Assets/Mapa/JSON/Mapa4JSON.json');
         //Seleccion de menu
         //Cargamos todos los recursos necesarios para el renderizado de la rueda
-        this.load.image('wheel', 'Assets/SelectionWheel/Rueda.png');
+        this.load.image('wheel', './Assets/SelectionWheel/Rueda.png');
         //Selecciones no disponibles
-        this.load.image('down', 'Assets/SelectionWheel/Down.png');
-        this.load.image('up', 'Assets/SelectionWheel/Up.png');
-        this.load.image('left', 'Assets/SelectionWheel/Left.png');
-        this.load.image('right', 'Assets/SelectionWheel/Right.png');
+        this.load.image('down', './Assets/SelectionWheel/Down.png');
+        this.load.image('up', './Assets/SelectionWheel/Up.png');
+        this.load.image('left', './Assets/SelectionWheel/Left.png');
+        this.load.image('right', './Assets/SelectionWheel/Right.png');
         //Selecciones de personalidad
-        this.load.image('logic', 'Assets/SelectionWheel/Logic_Sel Escalado.png');
-        this.load.image('defender', 'Assets/SelectionWheel/Defender_Sel Escalado.png');
-        this.load.image('virtuous', 'Assets/SelectionWheel/Virtuous_Sel Escalado.png');
-        this.load.image('protagonist', 'Assets/SelectionWheel/Protagonist_Sel Escalado.png');
+        this.load.image('logic', './Assets/SelectionWheel/Logic_Sel Escalado.png');
+        this.load.image('defender', './Assets/SelectionWheel/Defender_Sel Escalado.png');
+        this.load.image('virtuous', './Assets/SelectionWheel/Virtuous_Sel Escalado.png');
+        this.load.image('protagonist', './Assets/SelectionWheel/Protagonist_Sel Escalado.png');
         //Textos del menu
-        this.load.image('text', 'Assets/SelectionWheel/SelectionText.png');
+        this.load.image('text', './Assets/SelectionWheel/SelectionText.png');
         //Audios
-        this.load.audio('musicaFondo', 'Assets/Sonidos/MusicaFondo.mp3');
-        this.load.audio('potionSound', 'Assets/Sonidos/PotionFinal.mp3');
-        this.load.audio('heartSound', 'Assets/Sonidos/HeartPuton.mp3');
-        this.load.audio('protagonistaAtack', 'Assets/Sonidos/ProtagonistaAtack.wav');
-        this.load.audio('protectorAtack', 'Assets/Sonidos/ProtectorAtack.wav');
-        this.load.audio('hitSound', 'Assets/Sonidos/Hit.mp3');
-        this.load.audio('turretSound', 'Assets/Sonidos/TurretDeploy.mp3');
-        this.load.audio('turretShootSound', 'Assets/Sonidos/TurretShoot.mp3');
-        this.load.audio('jumpSound', 'Assets/Sonidos/Jump.mp3');
+        this.load.audio('musicaFondo', './Assets/Sonidos/MusicaFondo.mp3');
+        this.load.audio('potionSound', './Assets/Sonidos/PotionFinal.mp3');
+        this.load.audio('heartSound', './Assets/Sonidos/HeartPuton.mp3');
+        this.load.audio('protagonistaAtack', './Assets/Sonidos/ProtagonistaAtack.wav');
+        this.load.audio('protectorAtack', './Assets/Sonidos/ProtectorAtack.wav');
+        this.load.audio('hitSound', './Assets/Sonidos/Hit.mp3');
+        this.load.audio('turretSound', './Assets/Sonidos/TurretDeploy.mp3');
+        this.load.audio('turretShootSound', './Assets/Sonidos/TurretShoot.mp3');
+        this.load.audio('jumpSound', './Assets/Sonidos/Jump.mp3');
 
     }
     create() {

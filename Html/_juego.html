@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/juego.css">
+    <title>Juego</title>
+    <script src="../js/phaser.min.js"></script> <!--Libreria phaser-->
+    <script src="../js/game.js" type="module"></script>
+    
+</head>
+<body>
+    <div class="title-container">
+        <h1>Juego</h1>
+    </div>
+    <div class="characters-container">
+        <li>
+            <img src="../Assets/WebPage/Img/Protagonist_Icon.png" alt="Protagonist_Icon">
+            <img src="../Assets/WebPage/Img/Logic_Icon.png" alt="Logic_Icon">
+            <img src="../Assets/WebPage/Img/Defender_Icon.png" alt="Defender_Icon">
+            <img src="../Assets/WebPage/Img/Virtuous_Icon.png" alt="Virtuous_Icon">
+        </li>
+    </div>
+    <div class="buttons-container">
+        <div class="buttons">
+            <a href="_historia.html">Historia</a>
+            <a href="_quienes_somos.html">Quiénes somos</a>
+        </div>
+    </div>
+
+    <!-- Phaser Game Screen -->
+    <div class="game-container">
+        <div>
+            <canvas id="mainCanvas"></canvas>
+        </div>
+    </div>
+
+    <!--RRSS por aqui-->
+    <div class="rrss-container">
+        <img src="../Assets/WebPage/Img/X.png" alt="X">
+        <a href="https://twitter.com/DummyStudiosUCM">DUMMY ON X</a>
+    </div>
+
+    <!-- Comentarios Section -->
+    <div class="comments-section-container">
+        <div class="comment-box">
+            <h2>Deja un Comentario</h2>
+            <form action="#" method="post">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="comment">Comentario:</label>
+                <textarea id="comment" name="comment" rows="4" required></textarea>
+
+                <button type="submit">Enviar Comentario</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

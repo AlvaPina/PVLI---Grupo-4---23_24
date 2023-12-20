@@ -9,7 +9,7 @@ import { Nivel4 } from "./Nivel4.js";
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'phaser-example',
+    parent: 'mainCanvas',
     width: 960,
     height: 540,
     scene: [MenuInicial , LoadScene, MainScene, Nivel2, Nivel3, Nivel4, SelectionMenu, GameOver], // Añade aquí la nueva escena
