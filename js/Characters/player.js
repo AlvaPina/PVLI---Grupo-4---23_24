@@ -84,14 +84,14 @@ export default class Player extends SerVivo {
         this.animationManager();
         //Controlamos cambio de personaje, si el jugador, pulsa control, cambiamos de escena
         if(this.changePersonality()) this.scene.changeToSelection(this.SpriteId);
-        //Actualizamos UI
-        this.ui.updateUI();
         //Si nos preciciptamos al vacio... morimos
-        if(this.y > 510) {
+        if(this.y > 510 || this.lifeComp.getCurrentLives() <= 0) {
             //Vamos a la pantalla de GameOver
             this.scene.GameOver();
+            this.destroy();
         }
-        
+        //Actualizamos UI
+        this.ui.updateUI();
     }
 
     //Input del Jugador
@@ -163,9 +163,15 @@ export default class Player extends SerVivo {
         this.scene.sound.add('protagonistaAtack').play();
         //El ataque consiste en un rectangulo invisible que representa el área de ataque de la espada
         //Diemnsiones
-        const rectWidth = 80 , rectHeight = 80; 
+        const rectWidth = 40 , rectHeight = 40; 
         //Area de ataque
-        const swordAttackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        let swordAttackArea;
+        if(this.dir == 1) {
+            swordAttackArea = this.scene.add.rectangle(this.x + 35, this.y, rectWidth, rectHeight, 0x000FF);
+        }
+        else {
+            swordAttackArea = this.scene.add.rectangle(this.x - 35, this.y, rectWidth, rectHeight, 0x000FF);
+        }
         //Añadimos fisicas y hacemos que no tenga gravedad
         this.scene.physics.add.existing(swordAttackArea);
         swordAttackArea.body.setAllowGravity(false);
@@ -173,7 +179,6 @@ export default class Player extends SerVivo {
         swordAttackArea.setActive(false);
         swordAttackArea.setVisible(false);
         this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
-            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
                 swordAttackArea.setActive(true);
                 //swordAttackArea.setVisible(true);
                 //Hacemos evento overlap para controlar el numero de daño que le hace y evitar que haga mas daño de la cuenta
@@ -186,7 +191,6 @@ export default class Player extends SerVivo {
                         sword.setActive(false); 
                     }
                 });
-            //}
              // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
              this.scene.time.delayedCall(100, () => {
                 swordAttackArea.destroy();
@@ -198,9 +202,15 @@ export default class Player extends SerVivo {
         this.scene.sound.add('protectorAtack').play();
         //El ataque consiste en un rectangulo invisible que representa el área de ataque del puño
         //Dimensiones
-        const rectWidth = 80 , rectHeight = 80; 
+        const rectWidth = 40 , rectHeight = 40; 
         //Area de ataque
-        const fistAttackArea = this.scene.add.rectangle(this.x + 80, this.y, rectWidth, rectHeight, 0x000FF);
+        let fistAttackArea;
+        if(this.dir == 1){
+            fistAttackArea = this.scene.add.rectangle(this.x + 35, this.y, rectWidth, rectHeight, 0x000FF);
+        }else{
+            fistAttackArea = this.scene.add.rectangle(this.x - 35, this.y, rectWidth, rectHeight, 0x000FF);
+        }
+       
         //Añadimos fisicas y hacemos que no tenga gravedad
         this.scene.physics.add.existing(fistAttackArea);
         fistAttackArea.body.setAllowGravity(false);
@@ -208,7 +218,6 @@ export default class Player extends SerVivo {
         fistAttackArea.setActive(false);
         fistAttackArea.setVisible(false);
         this.on(Phaser.Animations.Events.ANIMATION_UPDATE, function (anims, frame) {
-            //if(this.anims.currentFrame === 3 || this.anims.currentFrame === 4){
                 fistAttackArea.setActive(true);
                 //swordAttackArea.setVisible(true);
                 this.scene.physics.add.overlap(fistAttackArea, this.scene.getEnemies(), function (fist, enemy) {
@@ -220,7 +229,6 @@ export default class Player extends SerVivo {
                         fist.setActive(false); 
                     }
                 });
-            //}
              // Destruir swordAttackArea después de un tiempo para que le de tiempo a detectar la colision
              this.scene.time.delayedCall(100, () => {
                 fistAttackArea.destroy();
