@@ -77,6 +77,10 @@ export class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.enemigo1, this.groundLayer);
         this.enemiesGroup.add(this.enemigo1);
 
+        //creacion musica
+        this.sound.add('musicaFondo', { loop: true }).setVolume(0.5).play();
+        
+
 
         //// Crear puntos de patrulla
         //const patrolPoints = [

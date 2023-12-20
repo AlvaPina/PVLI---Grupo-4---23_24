@@ -7,6 +7,7 @@ export default class SerVivo extends Phaser.Physics.Arcade.Sprite {
     }
 
     recieveDamage(damage){
+        this.scene.sound.add('hitSound').play();
         this.lifeComp.Damage(damage);
         console.log("AUUU");
     }

@@ -34,6 +34,7 @@ export default class Turret extends SerVivo {
     };
     //Metodo para disparar
     shoot(){
+        this.scene.sound.add('turretShootSound').play();
         new Proyectil(this.scene, this.x, this.y, 'bullet', this.dir, this.bulletDamage, this.bulletSpeed, true, 1);
     }
     preUpdate(t, dt){
@@ -67,6 +68,7 @@ export default class Turret extends SerVivo {
         this.isActive = bool;
         this.setVisible(bool);
         if(bool){
+            this.scene.sound.add('turretSound').play();
             const offset = 20;
             this.x = this.scene.player.x
             this.y = this.scene.player.y - offset;

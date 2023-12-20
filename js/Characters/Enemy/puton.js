@@ -103,6 +103,7 @@ export default class Puton extends SerVivo{
             this.lanzado = true;
             // pcall function que se ejecuta cuando el evento se llama al terminar la animacion de ataque correspondiente
             this.once('animationcomplete-' + attackAnimationKey, () => {
+                this.scene.sound.add('heartSound').play();
                 new Proyectil(this.scene, this.x, this.y - 10, 'heart', this.direction, this.rangeDamage, this.rangeSpeed, false, 1);
                 // usamos cooldown para poner un delay en modo idle después de atacar
                 this.cooldown = true;

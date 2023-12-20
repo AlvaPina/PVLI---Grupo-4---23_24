@@ -102,6 +102,16 @@ export class LoadScene extends Phaser.Scene
         this.load.image('protagonist', 'Assets/SelectionWheel/Protagonist_Sel Escalado.png');
         //Textos del menu
         this.load.image('text', 'Assets/SelectionWheel/SelectionText.png');
+        //Audios
+        this.load.audio('musicaFondo', 'Assets/Sonidos/MusicaFondo.mp3');
+        this.load.audio('potionSound', 'Assets/Sonidos/PotionFinal.mp3');
+        this.load.audio('heartSound', 'Assets/Sonidos/HeartPuton.mp3');
+        this.load.audio('protagonistaAtack', 'Assets/Sonidos/ProtagonistaAtack.wav');
+        this.load.audio('protectorAtack', 'Assets/Sonidos/ProtectorAtack.wav');
+        this.load.audio('hitSound', 'Assets/Sonidos/Hit.mp3');
+        this.load.audio('turretSound', 'Assets/Sonidos/TurretDeploy.mp3');
+        this.load.audio('turretShootSound', 'Assets/Sonidos/TurretShoot.mp3');
+        this.load.audio('jumpSound', 'Assets/Sonidos/Jump.mp3');
 
     }
     create() {
@@ -134,7 +144,7 @@ export class LoadScene extends Phaser.Scene
         // Cambiar a MainScene despu�s de un tiempo determinado
         this.time.delayedCall(3000, () => {
             this.scene.stop('LoadScene');
-            this.scene.start('Nivel4');
+            this.scene.start('MainScene');
         });
     }
 

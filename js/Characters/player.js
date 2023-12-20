@@ -98,6 +98,7 @@ export default class Player extends SerVivo {
     playerInput() { 
         //El jugador salta si se pulsa la tecla, toca el suelo
         if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down) {
+            this.scene.sound.add('jumpSound').play();
             this.setVelocityY(this.speed * -1);
         } 
         //Moverse a la izquierda
@@ -153,12 +154,13 @@ export default class Player extends SerVivo {
         if (velocityVector.length() === 0) {
             velocityVector = new Phaser.Math.Vector2(this.dir, 0);
         }
-
+        this.scene.sound.add('potionSound').play();
         // Crear el proyectil con la velocidad actual del jugador (esto permite disparar en diagonal)
         new Proyectil(this.scene, this.x, this.y, 'potion', this.dir, this.logicDamage, this.potionSpeed, true, 1);
     }
     //Ataque de protagonista (espadazo)
     protagonistAttack(){
+        this.scene.sound.add('protagonistaAtack').play();
         //El ataque consiste en un rectangulo invisible que representa el área de ataque de la espada
         //Diemnsiones
         const rectWidth = 80 , rectHeight = 80; 
@@ -193,6 +195,7 @@ export default class Player extends SerVivo {
     }
     //Ataque de defensor (puñetazo)
     defenderAttack(){
+        this.scene.sound.add('protectorAtack').play();
         //El ataque consiste en un rectangulo invisible que representa el área de ataque del puño
         //Dimensiones
         const rectWidth = 80 , rectHeight = 80; 
