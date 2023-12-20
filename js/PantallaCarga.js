@@ -50,6 +50,9 @@ export class LoadScene extends Phaser.Scene
         this.load.spritesheet('puton_move', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 182, frameHeight: 300 });
         this.load.spritesheet('puton_kiss', 'Assets/Enemies/Lady/Kiss.png', { frameWidth: 182, frameHeight: 300 });
         this.load.spritesheet('puton_heart', 'Assets/Enemies/Lady/Hug.png', { frameWidth: 150, frameHeight: 150 });
+        //Cargar assets de sombra
+        this.load.spritesheet('sombra_idle', 'Assets/Enemies/Sombra/SombraIdle.png', { frameWidth: 300, frameHeight: 300 });
+        this.load.spritesheet('sombra_move', 'Assets/Enemies/Sombra/SombraMoveNuevo.png', { frameWidth: 300, frameHeight: 300 });
         //Game over
         //Background
         this.load.image('FondoGameOver', 'Assets/Pantallas/PantallaGameOver.png');
@@ -112,7 +115,8 @@ export class LoadScene extends Phaser.Scene
         this.load.audio('turretSound', 'Assets/Sonidos/TurretDeploy.mp3');
         this.load.audio('turretShootSound', 'Assets/Sonidos/TurretShoot.mp3');
         this.load.audio('jumpSound', 'Assets/Sonidos/Jump.mp3');
-
+        this.load.audio('botellaRotaSound', 'Assets/Sonidos/BotellaRotaLogica.mp3');
+        this.load.audio('lataSound', 'Assets/Sonidos/LataSound.mp3');
     }
     create() {
         // Crear animaciones aquí
@@ -276,6 +280,19 @@ export class LoadScene extends Phaser.Scene
         frameRate: 7,
         repeat: -1
     });
+        //--ANIMACIONES PARA SOMBRA--
+        this.anims.create({
+            key: 'sombra_idle_anim',
+            frames: this.anims.generateFrameNumbers('sombra_idle', { start: 0, end: 3 }),
+            frameRate: 7,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'sombra_move_anim',
+            frames: this.anims.generateFrameNumbers('sombra_move', { start: 0, end: 7 }),
+            frameRate: 7,
+            repeat: -1
+        });
     console.log("Se han creado las animaciones!");
 }
 //#endregion

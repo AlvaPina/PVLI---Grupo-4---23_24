@@ -77,7 +77,6 @@ export default class Puton extends SerVivo{
         if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
             return;
         }
-        this.manageAnims('puton_kiss_anim');
         if(!this.lanzado){
             this.atacarRango(); 
         } 
@@ -87,9 +86,7 @@ export default class Puton extends SerVivo{
         if (!this.scene || !this.body || !this.scene.physics.world.bodies.contains(this.body)) {
             return;
         }
-        this.manageAnims('puton_move_anim');
         this.atacarMelee();
-
     }
 
     atacarRango() {

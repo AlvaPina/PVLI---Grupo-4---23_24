@@ -3,6 +3,7 @@ import RedBull from './Objetos/RedBull.js';
 import Puton from './Characters/Enemy/puton.js';
 import Problemas from './Characters/Enemy/problemas.js';
 import Turret from './Objetos/Turret.js';
+import Sombra from './Characters/Enemy/sombra.js';
 export class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
@@ -73,15 +74,26 @@ export class MainScene extends Phaser.Scene {
             this.player.confirmChange(id);
         });
 
-        this.enemigo1 = new Puton(this, 200, 250)
+        //Añadir Enemigos
+        this.enemigo1 = new Puton(this, 500, 200);
         this.physics.add.collider(this.enemigo1, this.groundLayer);
         this.enemiesGroup.add(this.enemigo1);
 
+        this.enemigo2 = new Sombra(this, 300, 250);
+        this.physics.add.collider(this.enemigo2, this.groundLayer);
+        this.enemiesGroup.add(this.enemigo2);
+
+        this.enemigo3 = new Sombra(this, 700, 200);
+        this.physics.add.collider(this.enemigo3, this.groundLayer);
+        this.enemiesGroup.add(this.enemigo3);
+
+        //Añadir lata
+        this.lata = new RedBull(this, 700, 200);
+        this.physics.add.collider(this.lata, this.groundLayer);
+
         //creacion musica
-        this.sound.add('musicaFondo', { loop: true }).setVolume(0.5).play();
+        this.sound.add('musicaFondo', { loop: true }).setVolume(0.25).play();
         
-
-
         //// Crear puntos de patrulla
         //const patrolPoints = [
         //    { x: 100, y: 300 },

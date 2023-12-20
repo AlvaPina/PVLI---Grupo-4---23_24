@@ -7,3 +7,4 @@ export default class Enemy extends SerVivo {
         scene.physics.add.existing(this);
     }
 }
+// EN UN FUTURO CUANDO TENGAMOS TODOS LOS ENEMIGOS ESTA CLASE SERÁ UTIL

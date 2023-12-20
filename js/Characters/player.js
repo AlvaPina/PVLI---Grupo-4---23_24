@@ -6,7 +6,7 @@ import SerVivo from './serVivo.js';
 export default class Player extends SerVivo {
     constructor(scene, x, y, speed, iniLives, spriteId) {
         super(scene, x, y, null, iniLives);
-        this.setScale(0.18, 0.18);
+        this.setScale(0.15, 0.15);
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
