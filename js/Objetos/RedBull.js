@@ -10,7 +10,7 @@ export default class RedBull extends Phaser.Physics.Arcade.Sprite {
         //Seteamos escala y origen
         this.setScale(0.04);
         this.setOrigin(0,0);
-        this.body.setGravity(0);
+        this.body.setAllowGravity(false);
         //Animacion del redBull mediante un Tween
         scene.tweens.add({
             targets: this,

@@ -40,7 +40,6 @@ export default class Turret extends SerVivo {
     preUpdate(t, dt){
         super.preUpdate(t, dt);
         if(this.isActive){ //solo la actualizamos si está activa
-            this.setVelocityX(0);
 
             //Convertimos el dt a segundos e incrementamos elapsedTime
             this.elapsedTimeShot += dt / 1000;
@@ -68,6 +67,7 @@ export default class Turret extends SerVivo {
         this.isActive = bool;
         this.setVisible(bool);
         if(bool){
+            this.setVelocityY(0)
             this.scene.sound.add('turretSound').play();
             const offset = 20;
             this.x = this.scene.player.x

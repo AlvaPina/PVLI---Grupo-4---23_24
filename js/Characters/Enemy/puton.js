@@ -15,7 +15,7 @@ export default class Puton extends SerVivo{
         //Ajustes
         this.speed = 100;
         this.meleeDistance = 150;
-        this.rangeDisctance = 250;
+        this.rangeDisctance = 270;
         this.rangeSpeed = 2.5;
         this.atackDelay = 1;
         this.direction = 1; // 1 es derecha, -1 es izquierda

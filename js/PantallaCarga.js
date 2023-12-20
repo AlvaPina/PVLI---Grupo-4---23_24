@@ -71,7 +71,7 @@ export class LoadScene extends Phaser.Scene
         this.load.tilemapTiledJSON('mapa', 'Assets/Mapa/JSON/Tutorial.json')
         //Nivel2            
         // Cargar los recursos necesarios para la escena
-        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad.png');
+        this.load.image('background2', 'Assets/Mapa/Img/MapaCiudad1.png');
         //Nivel3            
         // Cargar los recursos necesarios para la escena
         this.load.image('background3', 'Assets/Mapa/Img/Museo.png');

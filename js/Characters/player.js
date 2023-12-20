@@ -4,14 +4,13 @@ import Proyectil     from '../Objetos/Proyectil.js';
 import SerVivo from './serVivo.js';
 
 export default class Player extends SerVivo {
-    constructor(scene, x, y, speed, iniLives, spriteId) {
+    constructor(scene, x, y, iniLives, spriteId) {
         super(scene, x, y, null, iniLives);
         this.setScale(0.15, 0.15);
         //Instanciamos personaje en escena
         scene.add.existing(this);
         //Añadimos físicas
         scene.physics.add.existing(this);
-
         // Ajustar el tamaño y la posición del collider para que se centre en el jugador
         const colliderWidth = 300;
         const colliderHeight = 300;
@@ -20,7 +19,6 @@ export default class Player extends SerVivo {
         this.body.setSize(colliderWidth - 170, colliderHeight - 10);
         //Establecer el desplazamiento del collider para centrarlo
         this.body.setOffset((300 - (colliderWidth - 170)) / 2, (300 - (colliderHeight - 10)) / 2);
-        
         //this.body.setOffset(0, 0);
         
         // Configuración de la física del jugador
@@ -50,9 +48,10 @@ export default class Player extends SerVivo {
         //Parametros del player
         this.dir = 1;
         this.spriteId = spriteId;
-        this.speed = speed;
+        this.speed = 200;
         this.scene = scene;
         this.potionSpeed = 2.5;
+        this.gravity = 290;
 
         //Stats de daño dependiendo a los enemigos de las diferentes personalidades
         this.logicDamage = 5;
@@ -99,7 +98,7 @@ export default class Player extends SerVivo {
         //El jugador salta si se pulsa la tecla, toca el suelo
         if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.body.touching.down) {
             this.scene.sound.add('jumpSound').play();
-            this.setVelocityY(this.speed * -1);
+            this.setVelocityY(this.gravity * -1);
         } 
         //Moverse a la izquierda
         if (this.cursors.left.isDown) {
@@ -186,7 +185,7 @@ export default class Player extends SerVivo {
                     //Si el area de ataque esta activa
                     if (sword.active) {
                         //Hacemos daño al enemigo enviando la cantidad de daño infligida por el protagonista
-                        enemy.enemyRecieveDamage(this.protagonistAttack);
+                        enemy.recieveDamage(1);
                         // Desactivamos el área de ataque después de dañar a un enemigo
                         sword.setActive(false); 
                     }

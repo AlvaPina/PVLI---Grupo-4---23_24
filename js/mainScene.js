@@ -46,7 +46,7 @@ export class MainScene extends Phaser.Scene {
         this.alliesGroup = this.physics.add.group();
 
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, 'l');
+        this.player = new Player(this, 100, 250, 10, 'l');
         this.player.startAnimation();
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
         this.alliesGroup.add(this.player);
@@ -88,11 +88,18 @@ export class MainScene extends Phaser.Scene {
         this.enemiesGroup.add(this.enemigo3);
 
         //Añadir lata
-        this.lata = new RedBull(this, 700, 200);
+        this.lata = new RedBull(this, 700, 260);
         this.physics.add.collider(this.lata, this.groundLayer);
+        this.lata = new RedBull(this, 800, 370);
+        this.physics.add.collider(this.lata, this.groundLayer); 
 
         //creacion musica
-        this.sound.add('musicaFondo', { loop: true }).setVolume(0.25).play();
+        this.cancion = this.sound.add('musicaFondo', { loop: true }).setVolume(0.25);
+        if(this.cancion){
+            this.cancion.play();
+            this.cancion = null;
+        }
+
         
         //// Crear puntos de patrulla
         //const patrolPoints = [

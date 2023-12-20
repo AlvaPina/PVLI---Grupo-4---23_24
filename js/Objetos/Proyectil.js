@@ -86,7 +86,9 @@ export default class Proyectil extends SerVivo {
         if (this.y >= this.scene.game.config.height) {
             this.destroy();
         }
-        this.setVelocityY(this.body.velocity.y -= this.gravity);
+        if(this.body){
+            this.setVelocityY(this.body.velocity.y -= this.gravity);
+        }
     }
     getType(){
         return this.type;

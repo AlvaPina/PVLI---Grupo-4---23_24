@@ -4,6 +4,7 @@ import Puton from './Characters/Enemy/puton.js';
 import Problemas from './Characters/Enemy/problemas.js';
 import Turret from './Objetos/Turret.js';
 import EnemySpawn from './Objetos/EnemySpawn.js';
+import Sombra from './Characters/Enemy/sombra.js';
 export class Nivel4 extends Phaser.Scene {
     constructor() {
         super({ key: 'Nivel4' });
@@ -56,7 +57,7 @@ export class Nivel4 extends Phaser.Scene {
         this.physics.world.gravity.y = 500;
 
         // Creación y configuración del jugador
-        this.player = new Player(this, 100, 250, 280, 10, 'l');
+        this.player = new Player(this, 100, 250, 10, 'l');
         this.player.startAnimation();
         this.player.setScale(0.18, 0.18);
         this.physics.add.collider(this.player, this.groundLayer); // Colisión entre el jugador y el suelo
@@ -65,6 +66,7 @@ export class Nivel4 extends Phaser.Scene {
         // Creacion Torreta
         this.oneTurret = new Turret(this, 'turret', this.player.virtuousDamage);
         this.alliesGroup.add(this.oneTurret);
+        this.physics.add.collider(this.player, this.groundLayer);
 
         // Configuración de la cámara
         let camera = this.cameras.main;
@@ -118,7 +120,7 @@ export class Nivel4 extends Phaser.Scene {
     }
     //Getter de todos los enemigos del nivel
     getEnemies(){
-        return this.enemies;
+        return this.enemiesGroup;
     }
 
     update(time, delta) {
@@ -137,13 +139,13 @@ export class Nivel4 extends Phaser.Scene {
                 enemigo = new Puton(this, x, y);
                 break;
             case 2:
-                enemigo = new Puton(this, x, y);
+                enemigo = new Sombra(this, x, y);
                 break;
             case 3:
-                enemigo = new Puton(this, x, y);
+                enemigo = new Puton(this, x, y); //cambiar enemigo cuando esté
                 break;
             case 4:
-                enemigo = new Puton(this, x, y);
+                enemigo = new Sombra(this, x, y); //cambiar enemigo cuando esté
                 break;
             default:
                 console.error("Tipo de enemigo no válido:", type);
