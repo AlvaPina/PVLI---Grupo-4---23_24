@@ -125,20 +125,20 @@ Es un plataformas en las que iras viendo el proceso de fragmentarse la personali
 ## III - HUD
 ### 1.Explicación de los elementos del HUD y su funcionamiento
         ● El HUD InGame consta de un par de elementos muy sencillos en la esquina superior izquierda. Primero tenemos un icono que muestra el personaje que el jugador controla en ese momento y una barra de corazones que indican la cantidad de energía vital que le queda. 
-        ![HUD del Juego]
+        ![HUD del Juego](Assets/Readme/hud%20juego.PNG)
  ### 2.HUD Selección de personaje       
         ● Si  pulsamos la tecla Control, podremos acceder al menú de selección de personalidad. En el momento que accedemos a este menú, nos encontramos con una rueda de selección. Los personajes que están en gris no se pueden seleccionar y se desbloquearán más tarde. Para seleccionar una personalidad, solo deberá clicar en el icono.
 
-        ![Selección de Personaje]
+        ![Selección de Personaje](Assets/Readme/seleccion%20de%20pj.PNG)
 
 ### 3. HUD de Inicio
         
         ● Este es el menú de inicio en el que podemos empezar a jugar dando al botón de Start.
-        ![Inicio]
+        ![Inicio](Assets/Readme/inicio.PNG)
 ### 4. HUD Gameover
         
         ● Este es el menú de inicio en el que podemos empezar a jugar dando al botón de Start.
-        ![Game Over]
+![Game Over](Assets/Readme/game%20over.PNG)
 
 [Go back to index -->][indice]  
 
@@ -220,7 +220,8 @@ A lo largo de los niveles habrá objetos curativos esparcidos, llamados RedBull,
 ---
 UML
 
-![UML]
+![UML](Assets/Readme/uml.PNG)
+
 ---
 ASSETS
 Todos los assets han sido de creacion propia
@@ -233,8 +234,7 @@ Si no está instalado http-server, ejecutar: `npm install http-server`
 Si node.js no está instalado, descargar e instalar: https://nodejs.org/dist/v16.17.0/node-v16.17.0-x64.msi  
 > Phaser docs: https://photonstorm.github.io/phaser3-docs/  
 
-![Game Over](Assets/Readme/game%20over.PNG)
-![HUD del Juego](Assets/Readme/hud%20juego.PNG)
-![Inicio](Assets/Readme/inicio.PNG)
-![Selección de Personaje](Assets/Readme/seleccion%20de%20pj.PNG)
-![UML](Assets/Readme/uml.PNG)
+
+
+
+
