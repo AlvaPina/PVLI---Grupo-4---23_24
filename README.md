@@ -61,29 +61,29 @@ El juego, titulado "TID", sigue la historia de Will, un joven con trastornos men
 
 ## Índice  
 
-[**I - Aspectos generales**][1]  
+[**I - Aspectos generales**]  
 
-[**II - Jugabilidad**][2]  
+[**II - Jugabilidad**]  
 1. Movimiento del personaje  
 2. Cámara  
 3. Mecánicas del jugador  
 4. Mecánicas del escenario
    
-[**III - HUD**][3]  
+[**III - HUD**]  
 1.Explicación de los elementos del HUD y su funcionamiento
 2.HUD Selección de personaje
 
-[**IV - Visual**][4]  
+[**IV - Visual**]  
 
-[**V - Contenido**][5]  
+[**V - Contenido**]  
 1. Historia  
 2. Niveles  
 3. Personajes y enemigos  
 4. Objetos  
 
-[**VI - Arquitectura y gestión**][6]
+[**VI - Arquitectura y gestión**]
 
-[**VII - Referencias**][7]  
+[**VII - Referencias**]  
 
 ---  
 
@@ -91,7 +91,6 @@ El juego, titulado "TID", sigue la historia de Will, un joven con trastornos men
 Es un plataformas en las que iras viendo el proceso de fragmentarse la personalidad de alguien con tid 
 
 
-[Go back to index -->][indice]  
 
 ---  
 
@@ -118,7 +117,7 @@ Es un plataformas en las que iras viendo el proceso de fragmentarse la personali
     ● En cuanto a mecánicas de escenario, los distintos niveles del juego van a poseer varias plataformas flotantes en las cuales el jugador se va a poder posar.
     ● Todos los niveles del juego están compuestos por enemigos que intentarán herir al jugador. Hay enemigos que pueden lanzar proyectiles y otros que intentan hacerte daño cuerpo a cuerpo. 
 
-[Go back to index -->][indice]  
+
 
 ---  
 
@@ -140,7 +139,7 @@ Es un plataformas en las que iras viendo el proceso de fragmentarse la personali
         ● Este es el menú de inicio en el que podemos empezar a jugar dando al botón de Start.
 ![Game Over](Assets/Readme/game%20over.PNG)
 
-[Go back to index -->][indice]  
+
 
 ---  
 
@@ -165,24 +164,18 @@ Diseño de nivel (Protagonista):
 Entorno: Un escenario con focos que le apuntan todo el rato con el fin de agobiar al protagonista. Es un mapa preparado para oleadas.
 Enemigos: Sombras de conocidos de Will, como amigos y familiares, pero que intentan atrapar a nuestro personaje para llevarlo a la depresión mediante comentarios hirientes.
 
- 
+
 ## V - Contenido
-1. Historia  
-2. Niveles  
-3. Personajes y enemigos  
-4. Objetos  
 
-[Go back to index -->][indice]  
+5.1. Historia
 
-
-## VI - Contenido
-7.1. Historia
 Will es un niño normal con demasiada imaginación que en un momento bajo el estrés de bachillerato desarrolla múltiples personalidades, la primera que se manifiesta es la lógica, siendo sus enemigos los problemas de matemáticas, a medida que termina bachillerato “consigue” pareja (enemigos Putones) y desarrolla la personalidad de protección, cuando entra a la universidad se mete a una carrera de bellas artes y queriendo seguir a los grandes maestros desarrolla una personalidad virtuosa, que le permite encontrar caminos que antes no existían y por último cuando ya la gente a su alrededor se da cuenta de sus problemas desarrolla una personalidad de protagonista ya que todo el mundo intenta hablar con él para ayudarle, (a partir de aquí opcional depende de si nos da la vida), antes de que le intenten internar en un centro psiquiátrico donde las pastillas le quitan todo lo conseguido.(personalidades, pareja….).
 
-7.2. Niveles
+5.2. Niveles
+
 Tras el hito anterior, se ha decidido que el juego tendrá 3 4 niveles en los que cada uno tendrá una ambientación distinta basada en la personalidad protagonista de dicho nivel tal y como se explicó anteriormente.
 
-7.3. Personajes y enemigos
+5.3. Personajes y enemigos
 
   Personajes: 
   | **Nombre** |  Descripción | 
@@ -202,7 +195,8 @@ Tras el hito anterior, se ha decidido que el juego tendrá 3 4 niveles en los qu
 Son expertos en ataques a corta distancia y no pararán de seguir a nuestro protagonista |
 
 
-7.4. Objetos
+5.4. Objetos
+
 A lo largo de los niveles habrá objetos curativos esparcidos, llamados RedBull, que sirve para recuperar energía vital (si es necesario añadiremos más). Otorgarán 1 corazón de energía al jugador.
 
 [Go back to index -->][indice] 
@@ -214,8 +208,6 @@ A lo largo de los niveles habrá objetos curativos esparcidos, llamados RedBull,
 ●   Castlevania (Konami Corporation, 1986)
 ●   Super Mario Bros. 3. (1988). [Nintendo EAD]. Nintendo.
 
-
-[Go back to index -->][indice]  
 
 ---
 UML
