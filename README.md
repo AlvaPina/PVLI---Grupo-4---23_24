@@ -2,7 +2,7 @@
 Proyecto de PVLI curso 23/24 UCM.  
 
 > Twitter: [https://www.twitter.com/StormSudio](https://twitter.com/DummyStudiosUCM)  
-> Videojuego: [https://acedpol.github.io/PVLI-2022-23/  ](https://github.com/AlvaPina/PVLI---Grupo-4---23_24)
+> Videojuego: [https://github.com/AlvaPina/PVLI---Grupo-4---23_24](https://alvapina.github.io/PVLI---Grupo-4---23_24/))
 
 ---  
 
