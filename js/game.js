@@ -17,7 +17,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 }, // Gravedad
-            debug: true
+            debug: false
         }
     },
     //backgroundColor: '#304858',

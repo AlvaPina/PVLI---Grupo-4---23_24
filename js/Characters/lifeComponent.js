@@ -37,5 +37,4 @@ export default class LifeComponent {
     getCurrentLives(){
         return this.lives;
     }
-
 }

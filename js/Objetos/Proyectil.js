@@ -50,7 +50,7 @@ export default class Proyectil extends SerVivo {
 
         // colisiones con enemigos o colisiones con alliados (player, torreta...)
         if(this.type){
-            this.scene.physics.add.collider(this, this.scene.enemiesGroup, (proyectil, enemy) => {
+            this.scene.physics.add.overlap(this, this.scene.enemiesGroup, (proyectil, enemy) => {
                 // Dañar al enemigo
                 console.log("Colisiono");
                 enemy.recieveDamage(proyectil.damage);
@@ -60,7 +60,7 @@ export default class Proyectil extends SerVivo {
             });
         }
         else{
-            this.scene.physics.add.collider(this, this.scene.alliesGroup, (proyectil, allie) => {
+            this.scene.physics.add.overlap(this, this.scene.alliesGroup, (proyectil, allie) => {
                 // Dañar al enemigo
                 console.log("Colisiono");
                 allie.recieveDamage(proyectil.damage);

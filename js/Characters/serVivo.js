@@ -18,8 +18,10 @@ export default class SerVivo extends Phaser.Physics.Arcade.Sprite {
 
     Die(){
         if(this.texture == 'turret'){
-            console.log("torreta");
             this.scene.desactivarTorreta();
+        }
+        if(this.spriteId == 'l'){
+            console.log("player morir");
         }
         else{
             this.destroy();

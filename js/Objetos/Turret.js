@@ -68,6 +68,7 @@ export default class Turret extends SerVivo {
         this.setVisible(bool);
         if(bool){
             this.setVelocityY(0)
+            this.setVelocityX(0)
             this.scene.sound.add('turretSound').play();
             const offset = 20;
             this.x = this.scene.player.x
