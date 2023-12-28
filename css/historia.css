@@ -1,0 +1,77 @@
+body{
+    background-color: #2a2836;
+    overflow: auto;
+}
+
+.title-container {
+    margin: 50px 100px 50px 100px; /* Ajustado el margen derecho */
+    font-family: 'Press Start 2P', cursive; /* Fuente estilo videojuegos */
+    font-size: 48px; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color blanco */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Ajusta el espacio entre caracteres */
+    text-align: left; /* Alineación a la izquierda */
+}
+
+.characters-container li {
+    position: relative;
+    display: flex;
+    margin: -200px 50px 0px 50px; /* Ajuste de margen izquierdo */
+    justify-content: right;
+}
+
+.characters-container img {
+    width: 150px; /* Ajuste del ancho de las imágenes */
+    height: 150px; /* Ajuste de la altura de las imágenes */
+}
+
+.buttons-container {
+    margin: 50px auto; /* Centra el contenedor horizontalmente */
+    width: 90%;
+    height: 60px;
+    display: flex; /* Usa flexbox para centrar verticalmente */
+    align-items: center;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    background-color: #3e3766;
+    border-radius: 10px;
+}
+
+.buttons {
+    display: flex; /* Usa flexbox para los botones */
+    margin-left: 150px;
+    gap: 150px; /* Espacio entre los botones */
+}
+
+.buttons a {
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px; /* Ajusta el espacio alrededor del texto en los botones */
+    border-radius: 5px;
+    background-color: rgb(54, 6, 117);
+    outline: 2px inset white;
+}
+
+.buttons a:hover {
+    background-color: #724c4c; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+.history-container {
+    margin: 50px 100px 50px 100px;
+    background-color: #463897;
+}
+
+.history-container p:first-child {
+    margin-bottom: -50px; /* Ajusta el espacio entre el primer y segundo párrafo */
+}
+
+.history-container p {
+    color:aliceblue;
+    text-align: justify;
+    font-family: 'Roboto', sans-serif;
+    padding: 30px 70px 30px;
+}
+

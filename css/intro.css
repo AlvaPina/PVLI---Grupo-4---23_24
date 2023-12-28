@@ -1,0 +1,191 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #5A5673;
+    overflow: hidden;
+}
+
+/* Estilos específicos para cada pestaña */
+.intro-animacion1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}   
+
+.intro-animacion1 img {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    animation: mover-imagen 5s ease-out;
+    animation-fill-mode: forwards;
+    opacity: 1;
+}
+
+/*Animacion de la imagen Dummy (Desplazamiento hacia el centro de la pantalla*/
+@keyframes mover-imagen {
+    0% {
+        transform: translateY(-50%);
+        opacity: 1;
+    }
+    60%{
+        transform: translateY(5%);
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.intro-animacion2 {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    height: 0px;
+}
+
+.intro-animacion2 img {
+    position: absolute;
+    top: -20%;
+    width: 0px;
+    height: 0px;   
+    animation: mostrar-imagen 4s ease-out;
+    animation-delay: 6s;
+    animation-fill-mode: forwards;
+    opacity: 0; 
+}
+
+@keyframes mostrar-imagen { /*Realicion entre width y height de 1'8 aprox*/
+    1%{
+        width: 1%;
+        height: 1%;
+        opacity: 1;
+    }
+    2%, 99%{
+        width: 1480px;
+        height: 852px;
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.presents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.presents p {
+    font-size: 0px;
+    color:aliceblue;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Alinea el contenido en la parte inferior */
+    position: absolute;
+    animation: mostrar-texto 4s ease-in;
+    animation-delay: 6s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes mostrar-texto {
+    1%{
+        font-size: 1px;
+        opacity: 1;
+    }
+    50%, 80%{
+        font-size: 30px;
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.tid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-bottom: 200px;
+    position: absolute;
+    justify-content: center;
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-top: -1200px;
+}  
+
+.tid p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0px;
+    color: #44c4c9;
+    position: relative;
+    opacity: 0;
+    animation: aparicion 2s ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 11.5s;
+}
+
+@keyframes aparicion {
+    0% {
+        font-size: 1px;
+        opacity: 1;
+    }
+    100% {
+        font-size: 450px;
+        opacity: 1;
+    }
+}
+
+.click-to-continue {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.click-to-continue p {
+    color:antiquewhite;
+    font-size: 0px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 150px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Alinea el contenido en la parte inferior */
+    position: absolute;
+    animation: texto-start 0.5s ease-in;
+    animation-delay: 16s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+.click-to-continue p:hover{
+    color: #333141;
+}
+
+@keyframes texto-start {
+    1%{
+        font-size: 1px;
+        opacity: 1;
+    }
+    100%{
+        font-size: 20px;
+        opacity: 1;
+    }
+}

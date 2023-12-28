@@ -1,0 +1,175 @@
+body{
+    background-color: #2a2836;
+    overflow: auto;
+}
+
+.title-container {
+    margin: 50px 100px 50px 100px; /* Ajustado el margen derecho */
+    font-family: 'Press Start 2P', cursive; /* Fuente estilo videojuegos */
+    font-size: 48px; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color blanco */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Ajusta el espacio entre caracteres */
+    text-align: left; /* Alineación a la izquierda */
+}
+
+.characters-container li {
+    position: relative;
+    display: flex;
+    margin: -200px 50px 0px 50px; /* Ajuste de margen izquierdo */
+    justify-content: right;
+}
+
+.characters-container img {
+    width: 150px; /* Ajuste del ancho de las imágenes */
+    height: 150px; /* Ajuste de la altura de las imágenes */
+}
+
+.buttons-container {
+    margin: 50px auto; /* Centra el contenedor horizontalmente */
+    width: 90%;
+    height: 60px;
+    display: flex; /* Usa flexbox para centrar verticalmente */
+    align-items: center;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    background-color: #3e3766;
+    border-radius: 10px;
+}
+
+.buttons {
+    display: flex; /* Usa flexbox para los botones */
+    margin-left: 150px;
+    gap: 150px; /* Espacio entre los botones */
+}
+
+.buttons a {
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px; /* Ajusta el espacio alrededor del texto en los botones */
+    border-radius: 5px;
+    background-color: rgb(54, 6, 117);
+    outline: 2px inset white;
+}
+
+.buttons a:hover {
+    background-color: #724c4c; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+/*CANVAS CON EL JUEGO*/
+
+.game-container {
+    margin: 50px 100px 50px 100px;
+    width: auto;
+    height: 600px;
+    background-color: #362980;
+}
+
+.mainCanvas {
+
+    width: 100%; /* O el ancho deseado */
+    height: 400px; /* O la altura deseada */
+    margin: 0; /* Ajusta el margen según sea necesario */
+    background-color: #000; /* Color de fondo, puedes ajustarlo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+/*RRSS*/
+.rrss-container {
+    display: inline-block;
+    justify-content: space-between;
+    margin: 10px auto 10px 50px;
+    width: 200px;
+    padding: 10px 10px;
+    background-color: #241753;
+    border-radius: 15px; 
+}
+
+.rrss-container img {
+    margin: 10px 15px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.rrss-container a {
+    text-justify: center;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color:#807b9e;
+    vertical-align: middle;
+}
+
+/*SECCION DE COMENTARIOS*/
+.comments-section-container {
+    margin: 10px auto 50px;
+    background-color: #3e3766;
+    padding: 20px;
+    width: 90%;
+    border-radius: 5px;
+    outline: 3px solid white;
+}
+
+.comment-box {
+    text-align: left;
+}
+
+.comment-box h2 {
+    font-weight: bold; /* Texto en negrita */
+    font-size: 24px;
+    color: #fff;
+    margin: 10px auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+label {
+    margin: 10px auto 5px 10px;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    color: #d6d7e675;
+}
+
+input {
+    width: 200px;
+    padding: 8px;
+    margin: 6px auto 0px 0px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #bcbabe;
+    border: 1px solid #2c7565;
+}
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #bcbabe;
+    border: 1px solid #2c7565;
+}
+
+button {
+    margin: 12px 20px auto auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: rgb(54, 6, 117);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    outline: 2px inset white;
+
+}
+
+button:hover {
+    background-color: #724c4c;
+}

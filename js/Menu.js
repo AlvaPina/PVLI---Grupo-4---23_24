@@ -5,12 +5,12 @@ export class MenuInicial extends Phaser.Scene{
     //Recargamos recursos
     preload(){
         //Background
-        this.load.image('FondoMenuInicial', 'Assets/Pantallas/PantallaInicio.png');
+        this.load.image('FondoMenuInicial', '../Assets/Pantallas/PantallaInicio.png');
         //Texto de las siglas de TID
-        this.load.image('Siglas', 'Assets/Pantallas/TID_Text.png');
+        this.load.image('Siglas', '../Assets/Pantallas/TID_Text.png');
         //Texturas del boton (cuando se le clica y cuando no)
-        this.load.image('botonStartClaro', 'Assets/Pantallas/BotonStartClaro.png');
-        this.load.image('botonStartOscuro', 'Assets/Pantallas/BotonStartOscuro.png');
+        this.load.image('botonStartClaro', '../Assets/Pantallas/BotonStartClaro.png');
+        this.load.image('botonStartOscuro', '../Assets/Pantallas/BotonStartOscuro.png');
 
     }
     create(){
